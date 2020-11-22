@@ -1,0 +1,43 @@
+﻿<header> @*id="header" class="header"*@
+    <div class="container_full">
+        <div class="Top-header">
+            <div class="container-Top-header row">
+                <div class="col-md-4">
+                    <div class="contactno">
+                        <i class="fa fa-phone"></i>
+                        <span>Sales: +91-97247 00247</span>
+                    </div>
+                    <div class="contactno">
+                        <i class="fa fa-headphones"></i>
+                        <span>Support: +91-96870 00247</span>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <ul class="social-network social-network-home pull-right">
+                        <li>
+                            <a class="btn-link"  href="@Url.Action("FAQ","Home")">FAQs</a>
+                        </li>
+                        <li>
+                            <a class="btn-link" href="@Url.Action("About","Home")">About Us</a> 
+                        </li>
+                        <li class="link-separator">
+                            <span>|</span>
+                        </li>
+                        <li><a href="https://www.facebook.com/TenderAssist247-100189498429830" class="fb tool-tip" title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://twitter.com/TAssist247" class="twitter tool-tip" title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.linkedin.com/company/tenderassist247" class="icon-linkedin-alt" title="Linked in"><i class="fa fa-linkedin-square"></i></a></li>
+                        <li><a href="https://www.instagram.com/tenderassist247" class="insta tool-tip" title="Insta Gram"><i class="fa fa-instagram"></i></a></li>
+                    </ul>                    
+                </div>
+            </div>
+        </div>
+        <div class="Bottom-header">
+            <div class="container-Bottom-header row">
+                <nav class="navbar navbar-static-top" role="navigation">
+                    @Html.Partial("Header/_MenuLinks")
+                </nav>
+                
+            </div>
+        </div>
+    </div>          
+</header>

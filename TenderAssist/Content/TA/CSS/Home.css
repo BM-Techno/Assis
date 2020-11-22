@@ -1,0 +1,45 @@
+﻿#search_wrapper {
+    /*margin-top: 20em;*/
+}
+
+#margintop {
+    height: 70px;
+}
+
+#search_form {
+    margin-bottom: 5px;
+}
+
+.HomeBanner {
+    position: absolute;
+    min-height: 230px;
+    height: 230px;
+    width: 100%;
+    top: 82px;
+    left: 0;
+    z-index: 1;
+}
+
+.section_div_text {
+    z-index: 9999;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+
+.mega-search {
+    margin-top: 240px;
+}
+
+@@media screen and (max-width: 639px) {
+    .HomeBanner {
+        display: block !important;
+        position: absolute;
+        min-height: 85px;
+        height: 85px;
+        width: 100%;
+        top: 60px;
+        left: 0;
+        z-index: 1;
+    }
+}

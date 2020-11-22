@@ -1,0 +1,260 @@
+﻿@using System.Globalization
+@model TenderAssist.ViewModel.TenderDetail
+@{
+    ViewBag.Title = "TenderAssist247 :: Global Tender Detail";
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+<style>
+    .listPageBlock {
+        min-height: 75px;
+        width: 99%;
+    }
+
+    .linkDownloadDoc {
+        font-size: 20px;
+    }
+
+    .box .box-header > .fa, .box .box-header > .glyphicon, .box .box-header > .ion, .box .box-header .box-title {
+        font-size: 18px;
+    }
+
+    .box .box-header a {
+        color: #9c5700;
+    }
+
+        .box .box-header a:hover {
+            color: #000;
+        }
+</style>
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('.linkDownloadDoc').click(function () {
+            var id = this.id;
+            $.ajax({
+                type: 'GET',
+                url: "/User/DownloadDocument",
+                cache: false,
+                data: ({ refno: id }),
+                success: function (data) {
+                    $.each(data.FileName, function (i, item) {
+                        window.location.href = item.Text;
+                    });
+                }
+            });
+        });
+    })
+</script>
+
+@{
+    var location = new CultureInfo("en-US", false).TextInfo.ToTitleCase(ViewBag.Location.ToLower() as String);
+    var ownership = new CultureInfo("en-US", false).TextInfo.ToTitleCase(ViewBag.Ownership.ToLower());
+    var agencyName = new CultureInfo("en-US", false).TextInfo.ToTitleCase(ViewBag.AgencyName.ToLower());
+}
+<div class="container_fullInner">
+    <div class="row">
+
+        <div class="col-md-12">
+            <div class="well wellWhiteBg">
+                @Html.Partial("~/Views/User/partialBreadCrumbForUser.cshtml", "Global Tender Notice :: " + Model.TenderDetails.OurRefNo)
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="pagetitle">
+                            Tender Information : @Model.TenderDetails.OurRefNo
+                            <br />
+                            <small>Tender For @Model.TenderDetails.WorkDesc</small>
+                        </h1>
+                        <div>
+                            <a href="#" id="@Model.TenderDetails.OurRefNo" class="btn-lg btn-link linkDownloadDoc">
+                                <i class="fa fa-download"></i><span class="mar5">Download Tender Documets</span>
+                            </a>
+                        </div>
+                        @if (Model.TenderDetails == null)
+                    {
+                    <div class="alert alert-danger alert-dismissible">
+                        <strong>Sorry!</strong> No record found.
+                    </div>
+                    }
+                    else
+                    {
+                    <div class="box">
+                        <div class="box-body">
+                            <div class="box box-warning">
+                                <div class="box-header">
+                                    <span class="box-title">
+                                        Global Tender Basic Info
+                                    </span>
+                                </div>
+                                <div class="box-body">
+                                    <div class="row tenderDetailInfoPanel">
+                                        <div class="col-md-3">
+                                            <span class="tenderTitleForDetail">Global Reference No </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span class="tendertDetForDetail">@Model.TenderDetails.OurRefNo</span>
+                                        </div>
+                                    </div>
+                                    <div class="row tenderDetailInfoPanel">
+                                        <div class="col-md-3">
+                                            <span class="tenderTitleForDetail">Agency </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span class="tendertDetForDetail">@agencyName</span>
+                                        </div>
+                                    </div>
+                                    <div class="row tenderDetailInfoPanel">
+                                        <div class="col-md-3">
+                                            <span class="tenderTitleForDetail">Tender No </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span class="tendertDetForDetail">@Model.TenderDetails.TenderNo</span>
+                                        </div>
+                                    </div>
+                                    <div class="row tenderDetailInfoPanel">
+                                        <div class="col-md-3">
+                                            <span class="tenderTitleForDetail">Tender Brief</span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span class="tendertDetForDetail">
+                                                Tenders for @Model.TenderDetails.WorkDesc
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row tenderDetailInfoPanel">
+                                        <div class="col-md-3">
+                                            <span class="tenderTitleForDetail">Location </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span class="tendertDetForDetail">@location</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="row tenderDetailInfoPanel">
+                                        <div class="col-md-3">
+                                            <span class="tenderTitleForDetail">Tender Type </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span class="tendertDetForDetail">
+                                                @{var tendertype = "";
+                                                        switch (Model.TenderDetails.DocumentId)
+                                                        {
+                                                            case 1: tendertype = "Buy"; break;
+                                                            case 2: tendertype = "Sell"; break;
+                                                            case 3: tendertype = "Contract"; break;
+                                                        }
+                                                }
+                                                @tendertype
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div class="row tenderDetailInfoPanel">
+                                        <div class="col-md-3">
+                                            <span class="tenderTitleForDetail">Ownership </span>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <span class="tendertDetForDetail">@ownership</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="box box-primary">
+                                        <div class="box-header">
+                                            <span class="box-title">
+                                                Tender Amount Info
+                                            </span>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="row tenderDetailInfoPanel">
+                                                <div class="col-md-3">
+                                                    <span class="tenderTitleForDetail">Work Value </span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    @if (Model.TenderDetails.TenderAmount == 0)
+                                                        {   <span class="tendertDetForDetail">@Html.Raw("NA")</span>}
+                                                        else
+                                                        {
+                                                        <span class="tendertDetForDetail">@Html.Raw(Math.Round(Model.TenderDetails.TenderAmount, 2).ToString(CultureInfo.InvariantCulture))</span>
+                                                        }
+                                                </div>
+                                            </div>
+                                            <div class="row tenderDetailInfoPanel">
+                                                <div class="col-md-3">
+                                                    <span class="tenderTitleForDetail">EMD </span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    @if (Model.TenderDetails.EarnestAmount == 0)
+                                                        {   <span class="tendertDetForDetail">@Html.Raw("NA")</span>}
+                                                        else
+                                                        {
+                                                        <span class="tendertDetForDetail">@Html.Raw(Math.Round(Model.TenderDetails.EarnestAmount, 2).ToString(CultureInfo.InvariantCulture))</span>
+                                                        }
+
+                                                </div>
+                                            </div>
+                                            <div class="row tenderDetailInfoPanel">
+                                                <div class="col-md-3">
+                                                    <span class="tenderTitleForDetail">Document Fee </span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    @if (Model.TenderDetails.DocCost == 0)
+                                                        {   <span class="tendertDetForDetail">@Html.Raw("NA")</span>}
+                                                        else
+                                                        {
+                                                        <span class="tendertDetForDetail">@Html.Raw(Math.Round(Model.TenderDetails.DocCost, 2).ToString(CultureInfo.InvariantCulture))</span>
+                                                        }
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="box box-primary">
+                                        <div class="box-header">
+                                            <span class="box-title">
+                                                Important Dates
+                                            </span>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="row tenderDetailInfoPanel">
+                                                <div class="col-md-3">
+                                                    <span class="tenderTitleForDetail">Published on </span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <span class="tendertDetForDetail">@Model.TenderDetails.PubDate.ToString("dd MMM, yyyy")</span>
+                                                </div>
+                                            </div>
+                                            <div class="row tenderDetailInfoPanel">
+                                                <div class="col-md-3">
+                                                    <span class="tenderTitleForDetail">Due date </span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <span class="tendertDetForDetail">@Model.TenderDetails.SubmDate.ToString("dd MMM, yyyy")</span>
+                                                </div>
+                                            </div>
+                                            <div class="row tenderDetailInfoPanel">
+                                                <div class="col-md-3">
+                                                    <span class="tenderTitleForDetail">Opening Date </span>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <span class="tenderTitleForDetail">@Model.TenderDetails.OpenDate.ToString("dd MMM, yyyy")</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<section class="content"></section>

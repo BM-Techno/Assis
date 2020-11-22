@@ -1,0 +1,30 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle selectButton" type="button" data-toggle="dropdown" id="btnTenderStatus">
+        <span id="lblTenderStatus">TENDER STATUS</span>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        @{
+            var selectedTenderStatusText = "";
+            var TenderStatusValue = 0;
+
+            foreach (var item in (SelectList)ViewData["TenderStatus"])
+            {
+                if (Model.AdvanceSearchPara != null)
+                {
+                    if (Model.AdvanceSearchPara.TenderStatusFlag != null)
+                    {
+                        TenderStatusValue = Model.AdvanceSearchPara.TenderStatusFlag.Value;
+                        if (item.Value == Model.AdvanceSearchPara.TenderStatusFlag.Value.ToString())
+                        { selectedTenderStatusText = item.Text; }
+                    }
+                }
+                <li><a href='javascript:void(0);' id='@item.Value' class='DisplayTenderStatus'> @item.Text </a></li>
+            }
+        }
+    </ul>
+</div>
+@Html.Hidden("hdnTenderStatus", TenderStatusValue)
+@Html.Hidden("hdnTenderStatusText", selectedTenderStatusText)

@@ -1,0 +1,14 @@
+﻿.small-box h3 {
+    font-size: 20px;
+}
+
+.small-box p {
+    font-size: 13px;
+    min-height: 100px;
+}
+
+@media screen and (max-width: 479px) {
+    .small-box p {
+        min-height: auto;
+    }
+}

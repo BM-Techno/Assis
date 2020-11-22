@@ -1,0 +1,508 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.CommonHelper;
+@using System.Configuration;
+
+@{
+    var activeLocationClass = (Model.TendersBy == Utility.TenderTypeList.State || Model.TendersBy == Utility.TenderTypeList.City) ? "active tablinks" : "tablinks";
+    var activeCategoryClass = (Model.TendersBy == Utility.TenderTypeList.Industry || Model.TendersBy == Utility.TenderTypeList.SubIndustry) ? "active tablinks" : "tablinks";
+    var activeAgencySectorOwnershipClass = (Model.TendersBy == Utility.TenderTypeList.Agency || Model.TendersBy == Utility.TenderTypeList.Sector || Model.TendersBy == Utility.TenderTypeList.Ownership) ? "active tablinks" : "tablinks";
+    var activeKeywordClass = (Model.TendersBy == Utility.TenderTypeList.Keyword) ? "active tablinks" : "tablinks";
+    var stateUrl = ConfigurationManager.AppSettings["TenderByStateUrl"].ToString();
+    var cityUrl = ConfigurationManager.AppSettings["TenderByCityUrl"].ToString();
+    var indUrl = ConfigurationManager.AppSettings["TenderByIndustryUrl"].ToString();
+    var subIndUrl = ConfigurationManager.AppSettings["TenderBySubIndustryUrl"].ToString();
+    var agencyUrl = ConfigurationManager.AppSettings["TenderByAgencyUrl"].ToString();
+    var sectorUrl = ConfigurationManager.AppSettings["TenderBySectorUrl"].ToString();
+    var ownershipUrl = ConfigurationManager.AppSettings["TenderByOwnershipUrl"].ToString();
+    var keywordUrl = ConfigurationManager.AppSettings["TenderByKeywordUrl"].ToString();
+}
+
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="https://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <a href="@Url.Action("Tenders", "IndianTenders")" itemprop="url" style="text-decoration: none;">
+                                <span itemprop="title">Indian Tenders</span>
+                            </a>
+
+                        </div>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="https://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">
+                                @Model.FormTitle
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="pagetitle">
+                @Model.FormTitle
+            </h1>
+            <p class="pagedescription">
+                @{
+                    switch (Model.TendersBy)
+                    {
+                        default:
+                        case @Utility.TenderTypeList.City:
+                        case @Utility.TenderTypeList.State:
+                            <span>
+                                List of Indian <b><a href="@stateUrl">States</a> / <a href="@cityUrl">Cities</a></b>. To find City, expand the State.
+                                Click any <b><a href="@stateUrl">State</a> / <a href="@cityUrl">City</a></b> name to get the latest tenders list.
+                                Also, you find any <b><a href="@stateUrl">State</a> / <a href="@cityUrl">City</a></b> by searching the name.
+                            </span>
+                            break;
+                        case @Utility.TenderTypeList.Industry:
+                        case @Utility.TenderTypeList.SubIndustry:
+                            <span>
+                                List of <b><a href="@indUrl">Industries</a> / <a href="@subIndUrl">Sub-Industries</a></b>. To find SubIndustry, expand the Industry.
+                                Click any <b><a href="@indUrl">Industry</a> / <a href="@subIndUrl">SubIndustry</a></b> name to get the latest tenders list.
+                                Also, you find any <b><a href="@indUrl">Industry</a> / <a href="@subIndUrl">SubIndustry</a></b> by searching the name.
+                            </span>
+                            break;
+                        case @Utility.TenderTypeList.Agency:
+                        case @Utility.TenderTypeList.Sector:
+                        case @Utility.TenderTypeList.Ownership:
+                            <span>
+                                List of <b><a href="@agencyUrl">Agencies</a> / <a href="@sectorUrl">Company Sectors</a> / <a href="@ownershipUrl">Ownerships</a></b>.
+                                To find Company Sectors, expand the Ownership and To find Agency, expand the Company Sectors.
+                                <br />
+                                Click any <b><a href="@agencyUrl">Agency</a> / <a href="@sectorUrl">Sector</a> / <a href="@ownershipUrl">Ownership</a></b>
+                                name to get the latest tenders list.
+                                Also, you find any <b><a href="@agencyUrl">Agency</a> / <a href="@sectorUrl">Sector</a> / <a href="@ownershipUrl">Ownership</a></b> by searching the name.
+                            </span>
+                            break;
+                        case @Utility.TenderTypeList.Keyword:
+                            <span>
+                                List of <b><a href="@keywordUrl">Keywords</a></b>.
+                                Click any <b><a href="@keywordUrl">Keyword</a></b> name to get the latest tenders list.
+                                Also, you find any <b><a href="@keywordUrl">Keyword</a></b> by searching the name.
+                            </span>
+                            break;
+                    }
+                }
+
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-10">
+            <div class="well well-sm">
+                <div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <ul class="nav nav-pills">
+                                <li class="@activeLocationClass">
+                                    <a href="@stateUrl">
+                                        @Utility.TenderTypeDisplayText.Locations.ToUpper().ToString()
+                                    </a>
+                                </li>
+                                <li class="@activeCategoryClass">
+                                    <a href="@indUrl">
+                                        @Utility.TenderTypeDisplayText.Category.ToUpper().ToString()
+                                    </a>
+                                </li>
+                                <li class="@activeAgencySectorOwnershipClass">
+                                    <a href="@ownershipUrl">
+                                        @Utility.TenderTypeDisplayText.AgencySectorOwnership.ToUpper().ToString()
+                                    </a>
+                                </li>
+                                <li class="@activeKeywordClass">
+                                    <a href="@keywordUrl">
+                                        @Utility.TenderTypeDisplayText.Keyword.ToUpper().ToString()
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="categories">
+                                <div class="row ">
+                                    <div class="col-md-12">
+                                        <div id="search_form" class="section_panel">
+                                            <div class="input-group">
+                                                @Html.TextBox("filterSearchText", Model.DisplayText, new { @class = "form-control SearchTextBox1 searchfill", @placeholder = "Filter result" })
+                                                <span class="input-group-btn">
+                                                    <button type="button" class="btn btn-primary SearchBtn searchsubmitbtn searchBtn1 btn-lg" id="btnFilterSearch">
+                                                        <i class="fa fa-search searchIcon"></i>
+                                                        <label class="webview nomargin">Filter </label>
+                                                    </button>
+                                                    <button type="button" class="btn btn-danger SearchBtn searchsubmitbtn btn-lg" id="btnFilterReset">
+                                                        <i class="fa fa-refresh searchIcon"></i>
+                                                        <label class="webview nomargin">Reset</label>
+                                                    </button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section_panel">
+                                    <div id="loader" style="display:none;">
+                                        @Html.Partial("partialSpinnerLoadingView")
+                                    </div>
+                                    @switch (Model.TendersBy)
+                                    {
+                                        default:
+                                        case Utility.TenderTypeList.State:
+                                        case Utility.TenderTypeList.City:
+                                            <div id="divLocationData">
+                                                @Html.Partial("Partial/IndianCategory/_partialLocation")
+                                            </div>
+                                            break;
+                                        case Utility.TenderTypeList.Industry:
+                                        case Utility.TenderTypeList.SubIndustry:
+                                            <div id="divCategoryData">
+                                                @Html.Partial("Partial/IndianCategory/_partialIndSubInd")
+                                            </div>
+                                            break;
+                                        case Utility.TenderTypeList.Agency:
+                                        case Utility.TenderTypeList.Sector:
+                                        case Utility.TenderTypeList.Ownership:
+                                            <div id="divAgencySectorOwnershipData">
+                                                @Html.Partial("Partial/IndianCategory/_partialAgencySectorOwnership")
+                                            </div>
+                                            break;
+                                        case Utility.TenderTypeList.Keyword:
+                                            <div id="divKeywordData">
+                                                @Html.Partial("Partial/IndianCategory/_partialKeywords")
+                                            </div>
+                                            break;
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Home/Sections/_HomeAdvertiesment.cshtml")
+        </div>
+    </div>
+
+</div>
+
+<style>
+    .nav-pills > li.active > a,
+    .nav-pills > li.active > a:hover,
+    .nav-pills > li.active > a:focus {
+        color: #f39525;
+        background-color: #fff;
+        font-weight: bold;
+    }
+
+    .nav > li > a:hover, .nav > li > a:focus {
+        background: #fff;
+    }
+
+    .accordion, .accordion2 {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 12px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 18px;
+        transition: 0.4s;
+        border: 1px solid #dcdcdc;
+        margin-top: 1px;
+        /*margin-bottom: 2px;*/
+    }
+
+        .accordion.active, .accordion:hover,
+        .accordion2.active, .accordion2:hover {
+            background-color: #ccc;
+        }
+
+        .accordion:after, .accordion2:after {
+            content: '\002B';
+            color: #FFF;
+            font-weight: bold;
+            float: left;
+            margin-right: 10px;
+            background: #f39525;
+            padding: 0px 6px;
+            border-radius: 50%;
+            font-size: 21px;
+        }
+
+        .accordion.active:after, .accordion2.active:after {
+            content: "\2212";
+        }
+
+    .panel {
+        padding: 0px 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        margin-bottom: 0px;
+        font-size: 15px;
+        /*border: 1px solid #dcdcdc;*/
+        border-radius: 0px;
+    }
+
+    .morelink {
+        float: right;
+        color: #f39525;
+        font-weight: bold;
+    }
+
+    .pagination {
+        display: inline-block;
+        width: 100%;
+        margin: 1px;
+        background-color: #fcfcff;
+        border: 1px solid #dcdcdc;
+    }
+
+        .pagination a {
+            color: black;
+            float: left;
+            padding: 8px 16px;
+            text-decoration: none;
+        }
+
+            .pagination a.active {
+                background-color: #ccc;
+                color: #000;
+            }
+
+            .pagination a:hover:not(.active) {
+                background-color: #ddd;
+            }
+</style>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+    if ('@Model.TendersBy' == '@Utility.TenderTypeList.City' || '@Model.TendersBy' == '@Utility.TenderTypeList.SubIndustry' || '@Model.TendersBy' == '@Utility.TenderTypeList.Sector') {
+        for (i = 0; i < acc.length; i++) {
+            LoadData(acc[i]);
+        }
+    }
+
+    var acc2 = document.getElementsByClassName("accordion2");
+    if ('@Model.TendersBy' == '@Utility.TenderTypeList.Agency') {
+        i = 0;
+        for (i = 0; i < acc.length; i++) {
+            LoadData(acc[i]);
+        }
+        for (i = 0; i < acc2.length; i++) {
+            LoadData(acc2[i]);
+        }
+
+    }
+
+    function LoadData(selectedItem) {
+        selectedItem.classList.toggle("active");
+        var panel = selectedItem.nextElementSibling;
+        if (panel.style.maxHeight) {
+            panel.style.maxHeight = null;
+            panel.style.border = null;
+            panel.style.marginBottom = "0px";
+        } else {
+            panel.style.maxHeight = (panel.scrollHeight * 10) + "px";
+            panel.style.border = "1px solid #dcdcdc";
+            panel.style.marginBottom = "5px";
+        }
+    }
+
+
+    $(document).ready(function () {
+        $('.searchfill').keydown(function (e) {
+            if (e.keyCode == 13)
+            { $("#btnFilterSearch").click(); }
+        });
+
+        $("#btnFilterSearch").click(function () {
+            var searchFilterText = $("#filterSearchText").val();
+            if (searchFilterText.length < 1) {
+                $('#filterSearchText').focus();
+                DisplayError('Please enter search text');
+                //alert('Please enter search text');
+                return false;
+            }
+
+            switch ('@Model.TendersBy') {
+                default:
+                case '@Utility.TenderTypeList.City':
+                case '@Utility.TenderTypeList.State':
+                    LoadLocations(false);
+                    break;
+                case '@Utility.TenderTypeList.Industry':
+                case '@Utility.TenderTypeList.SubIndustry':
+                    LoadIndSubInd(false);
+                    break;
+                case '@Utility.TenderTypeList.Agency':
+                case '@Utility.TenderTypeList.Sector':
+                case '@Utility.TenderTypeList.Ownership':
+                    LoadAgencySectorOwnership(false);
+                    break;
+                case '@Utility.TenderTypeList.Keyword':
+                    LoadKeywords(false, '');
+                    break;
+
+            }
+        });
+
+        $('#btnFilterReset').click(function () {
+            //window.location.reload();
+            switch ('@Model.TendersBy') {
+                default:
+                case '@Utility.TenderTypeList.City':
+                case '@Utility.TenderTypeList.State':
+                    LoadLocations(true);
+                    break;
+                case '@Utility.TenderTypeList.Industry':
+                case '@Utility.TenderTypeList.SubIndustry':
+                    LoadIndSubInd(true);
+                    break;
+                case '@Utility.TenderTypeList.Agency':
+                case '@Utility.TenderTypeList.Sector':
+                case '@Utility.TenderTypeList.Ownership':
+                    LoadAgencySectorOwnership(true);
+                    break;
+                case '@Utility.TenderTypeList.Keyword':
+                    LoadKeywords(true, 'A');
+                    break;
+            }
+        });
+    });
+
+
+    function LoadLocations(isReset) {
+        ShowLoading();
+        if (isReset) {
+            $("#filterSearchText").val('');
+            $("#filterSearchText").focus();
+        }
+        var searchFilterText = $("#filterSearchText").val();
+        $('#divLocationData').html('');
+        $.ajax({
+            url: '/IndianTenders/SearchLocations/',
+            type: 'GET',
+            contentType: 'application/json',
+            data: ({ searchText: searchFilterText.trim() }),
+            success: function (returndata) {
+                HideLoading();
+                $('#divLocationData').html(returndata);
+                if (!isReset) {
+                    acc = document.getElementsByClassName("accordion");
+                    i = 0;
+                    for (i = 0; i < acc.length; i++) {
+                        LoadData(acc[i]);
+                    }
+                }
+            },
+            error: function (returndata, a, b) {
+                alert('error');
+            }
+        });
+    }
+    function LoadIndSubInd(isReset) {
+        ShowLoading();
+        if (isReset) {
+            $("#filterSearchText").val('');
+            $("#filterSearchText").focus();
+        }
+        var searchFilterText = $("#filterSearchText").val();
+        $('#divCategoryData').html('');
+        $.ajax({
+            url: '/IndianTenders/SearchIndustrySubIndustry/',
+            type: 'GET',
+            contentType: 'application/json',
+            data: ({ searchText: searchFilterText.trim() }),
+            success: function (returndata) {
+                HideLoading();
+                $('#divCategoryData').html(returndata);
+                if (!isReset) {
+                    acc = document.getElementsByClassName("accordion");
+                    i = 0;
+                    for (i = 0; i < acc.length; i++) {
+                        LoadData(acc[i]);
+                    }
+                }
+            },
+            error: function (returndata, a, b) {
+                alert('error');
+            }
+        });
+    }
+    function LoadAgencySectorOwnership(isReset) {
+        ShowLoading();
+        if (isReset) {
+            $("#filterSearchText").val('');
+            $("#filterSearchText").focus();
+        }
+        var searchFilterText = $("#filterSearchText").val();
+        $('#divAgencySectorOwnershipData').html('');
+        $.ajax({
+            url: '/IndianTenders/SearchAgencySectorOwnership/',
+            type: 'GET',
+            contentType: 'application/json',
+            data: ({ searchText: searchFilterText.trim() }),
+            success: function (returndata) {
+                HideLoading();
+                $('#divAgencySectorOwnershipData').html(returndata);
+                if (!isReset) {
+                    acc = document.getElementsByClassName("accordion");
+                    acc2 = document.getElementsByClassName("accordion2");
+                    i = 0;
+                    for (i = 0; i < acc.length; i++) {
+                        LoadData(acc[i]);
+                    }
+                    for (i = 0; i < acc2.length; i++) {
+                        LoadData(acc2[i]);
+                    }
+                }
+            },
+            error: function (returndata, a, b) {
+                alert('error');
+            }
+        });
+    }
+    function LoadKeywords(isReset, selectedWord) {
+        ShowLoading();
+        if (isReset) {
+            $("#filterSearchText").val('');
+            $("#filterSearchText").focus();
+            //selectedWord = 'A';
+        }
+        var searchFilterText = $("#filterSearchText").val();
+        $('#divKeywordData').html('');
+        $.ajax({
+            url: '/IndianTenders/SearchKeywordList/',
+            type: 'GET',
+            contentType: 'application/json',
+            data: ({ searchText: searchFilterText.trim(), wordSearch: selectedWord }),
+            success: function (returndata) {
+                HideLoading();
+                $('#divKeywordData').html(returndata);
+            },
+            error: function (returndata, a, b) {
+                alert('error');
+            }
+        });
+    }
+</script>

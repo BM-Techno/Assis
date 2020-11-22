@@ -1,0 +1,196 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Title = "TenderAssist247 :: My Profile";
+}
+
+
+<div class="container_fullMiddle">
+    <div class="row">        
+        <div class="col-md-12 ">
+            <div class="well wellWhiteBg well-sm">
+                <div class="breadcrumbgrid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <div class="CurrentDiv">
+                                    <a href="@Url.Action("MyDashboard", "User")" itemprop="url" style="text-decoration: none;">
+                                        <span itemprop="title">Home</span>
+                                    </a>
+                                </div>
+                                <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <div class="CurrentDiv">
+                                        <span class="seperator">›</span>
+                                    </div>
+                                    <div class="CurrentDiv">
+                                        <span itemprop="title" class="text-bold">My Profile</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="pagetitle">
+                            My Profile
+                            <small>Personal Information</small>
+                        </h1>
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Partial("partialUserSideMenu", Model)
+                            </div>
+                            <div class="col-md-9">
+                                <div class="box ">
+                                    @if (Model.LoginUserDetails == null)
+                                {
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="box box-warning">
+                                                        <div class="pagination">
+                                                            <span class="awards_detai2"><b>No Personal Information available</b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                }
+                                else
+                                {
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <div class="box box-solid box-warning">
+                                                        <div class="box-header">
+                                                            <h3 class="box-title">Login Detail</h3>
+                                                        </div>
+                                                        <div class="box-body">
+                                                            <div class="form-group">
+                                                                <label>Login ID</label>
+                                                                <p class="text-muted well well-sm no-shadow">
+                                                                    @Model.LoginUserDetails.strEmailId1
+                                                                </p>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Password</label>
+                                                                <p class="text-muted well well-sm no-shadow">
+                                                                    ******
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <div class="box box-solid box-warning">
+                                                        <div class="box-header">
+                                                            <h3 class="box-title">Personal Detail</h3>
+                                                        </div>
+                                                        <div class="box-body">
+                                                            <div class="form-group">
+                                                                <label>User Name</label>
+                                                                <p class="text-muted well well-sm no-shadow">
+                                                                    @Model.LoginUserDetails.strFName
+                                                                    &nbsp;&nbsp;@Model.LoginUserDetails.strLName
+                                                                </p>
+                                                            </div>
+                                                            <div class="form-group">
+                                                                <label>Designation</label>
+                                                                <p class="text-muted well well-sm no-shadow">
+                                                                    @( !string.IsNullOrEmpty(Model.LoginUserDetails.strDesignation) ? Model.LoginUserDetails.strDesignation : "-")
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="box box-solid box-primary">
+                                                        <div class="box-header">
+                                                            <h3 class="box-title">Contact Detail</h3>
+                                                        </div>
+                                                        <div class="box-body">
+                                                            <div class="row">
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label>Company</label>
+                                                                        <p class="text-muted well well-sm no-shadow">
+                                                                            @Model.LoginUserDetails.strCmpName
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Address</label>
+                                                                        <p class="text-muted well well-sm no-shadow">
+                                                                            @( !string.IsNullOrEmpty(Model.LoginUserDetails.strAddress) ? Model.LoginUserDetails.strAddress : "-")
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Phone No</label>
+                                                                        <p class="text-muted well well-sm no-shadow">
+                                                                            @( !string.IsNullOrEmpty(Model.LoginUserDetails.intPhoneNo) ? Model.LoginUserDetails.intPhoneNo : "-")
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Email</label>
+                                                                        <p class="text-muted well well-sm no-shadow">
+                                                                            @(!string.IsNullOrEmpty(Model.LoginUserDetails.strEmailId2) ? Model.LoginUserDetails.strEmailId2 : "-")
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label>Country</label>
+                                                                        <p class="text-muted well well-sm no-shadow">
+                                                                            @Model.ClientCountryName
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>State</label>
+                                                                        <p class="text-muted well well-sm no-shadow">
+                                                                            @Model.ClientStateName
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>City</label>
+                                                                        <p class="text-muted well well-sm no-shadow">
+                                                                            @Model.ClientCityName
+                                                                        </p>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>PIN Code</label>
+                                                                        <p class="text-muted well well-sm no-shadow">
+                                                                            @Model.LoginUserDetails.intPinCode
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <button class="btn btn-success" onclick="window.location.href='@Url.Action("EditProfile", "User")'">
+                                                <i class="fa fa-edit"></i>
+                                                Edit
+                                            </button>
+                                            <button class="btn btn-primary" onclick="window.location.href='@Url.Action("MyDashboard", "User")'">
+                                                <i class="fa fa-reply"></i>
+                                                Cancel
+                                            </button>
+                                        </div>
+                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+

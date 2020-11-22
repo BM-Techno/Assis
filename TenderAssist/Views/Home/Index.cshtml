@@ -1,0 +1,62 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.CommonHelper;
+
+@Html.Partial("Sections/_HomeImageSlider")
+
+<div class="container_fullMiddle">
+    <div class="row">
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            @Html.Partial("Sections/_HomeSearchPanel")
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+    <div id="loader" style="display:none;">
+        @Html.Partial("partialSpinnerLoadingView")
+    </div>
+    <div class="row">
+        <div class="col-md-2">
+            @Html.Partial("Sections/_HomeAdvertiesment")
+        </div>
+        <div class="col-md-10">
+            <div class="well well-sm">
+                @Html.Partial("Sections/_HomeMenuLinks")
+                <div id="categories">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_panel">
+                                <div id="displayPanel" class="display_panel">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="grayline"></div>   
+    @Html.Partial("Sections/_HomeCategoryPanel")
+
+</div>
+
+<script>
+    var loadDataList = '@Url.Action("GetHomeLinkData", "Home")';
+    var loadTendersByList = '@Url.Action("GetTendersByType", "Home")';
+
+    var StateId = parseInt('@Utility.TenderTypeList.State');
+    var CityId = parseInt('@Utility.TenderTypeList.City');
+    var IndustryId = parseInt('@Utility.TenderTypeList.Industry');
+    var SubIndustryId = parseInt('@Utility.TenderTypeList.SubIndustry');
+    var AgencyId = parseInt('@Utility.TenderTypeList.Agency');
+    var SectorId = parseInt('@Utility.TenderTypeList.Sector');
+    var OwnershipId = parseInt('@Utility.TenderTypeList.Ownership');
+    var KeywordId = parseInt('@Utility.TenderTypeList.Keyword');
+
+    var isHomePage = true;
+</script>
+
+@Scripts.Render("~/bundles/load-dataformenu-script")

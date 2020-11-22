@@ -1,0 +1,289 @@
+﻿@using TenderAssist.CommonHelper;
+@model  TenderAssist.ViewModel.TenderDetail
+
+@Scripts.Render("~/bundles/inquiry-script")
+
+<form id="SubmitInquiry" method="post" action="@Url.Action("SubmitInquiryDetail", "InquiryForms")">
+    @Html.Hidden("BrowserLink", Request.Url.AbsoluteUri)
+    @if (Model.FormType != Utility.FormType.PopupForms)
+    {
+        <div class="box box-primary">
+            <div class="box-header">
+                <span class="box-title">
+                    <i class="fa fa-envelope"></i>
+                    @Model.FormTitle
+                </span>
+            </div>
+            <div class="grayline"></div>
+            <div class="box-body">
+                <div>
+                    @Html.Hidden("FormType", Model.FormType)
+                    @Html.Hidden("InquiryTypeName", Model.FormTitle)
+                    @Html.Hidden("InquiryTypeID", @Model.Subscribetype)
+                    @Html.Hidden("TenderID", @Model.DownloadTenderRefNo)
+                    @Html.ValidationSummary(true)
+                    <div class="errMsg mar5" id="errmsg">
+                    </div>
+
+                    @switch (Model.FormType)
+                {
+                    case Utility.FormType.OtherForms:
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    @Html.TextBox("txtName", "", new { @class = "form-control textbox", @placeholder = "Your Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    @Html.TextBox("txtCompanyName", "", new { @class = "form-control textbox", @placeholder = "Company Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    @Html.TextBox("txtMobileNo", "", new { @class = "form-control textbox", @maxlength = "13", @placeholder = "Phone No" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                    @Html.TextBox("txtEmailId", "", new { @class = "form-control textbox", @placeholder = "Email Id" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+                                    @Html.DropDownList("drpState", Model.StateList, new { @class = "form-control textbox", @placeholder = "State" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+                                    @Html.DropDownList("drpCity", Model.CityList, new { @class = "form-control textbox", @placeholder = "State" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-comments-o"></i></span>
+                                    @Html.TextArea("txtInterestedTenders", "", new
+                               {
+                                   @class = "keyword form-control textbox",
+                                   @style = "height:50px;",
+                                   @placeholder = "Tenders Interested In"
+                               })
+                                </div>
+                            </div>
+                            break;
+                        case Utility.FormType.RegistrationForm:
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    @Html.TextBox("txtName", "", new { @class = "form-control textbox", @placeholder = "Your Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    @Html.TextBox("txtCompanyName", "", new { @class = "form-control textbox", @placeholder = "Company Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    @Html.TextBox("txtMobileNo", "", new { @class = "form-control textbox", @maxlength = "13", @placeholder = "Phone No" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                    @Html.TextBox("txtEmailId", "", new { @class = "form-control textbox", @placeholder = "Email Id" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+                                    @Html.DropDownList("drpCountry", Model.CountryList, new { @class = "form-control textbox", @placeholder = "Country" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+                                    @Html.DropDownList("drpState", Model.StateList, new { @class = "form-control textbox", @placeholder = "State" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+                                    @Html.DropDownList("drpCity", Model.CityList, new { @class = "form-control textbox", @placeholder = "State" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-comments-o"></i></span>
+                                    @Html.TextArea("txtInterestedTenders", "", new
+                               {
+                                   @class = "keyword form-control textbox",
+                                   @style = "height:50px;",
+                                   @placeholder = "Tenders Interested In"
+                               })
+                                </div>
+                            </div>
+                            break;
+
+                        case Utility.FormType.ContactForm:
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    @Html.TextBox("txtName", "", new { @class = "form-control textbox", @placeholder = "Your Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    @Html.TextBox("txtMobileNo", "", new { @class = "form-control textbox", @maxlength = "13", @placeholder = "Phone No" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                    @Html.TextBox("txtEmailId", "", new { @class = "form-control textbox", @placeholder = "Email Id" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-comments-o"></i></span>
+                                    @Html.TextArea("txtInterestedTenders", "", new
+                               {
+                                   @class = "keyword form-control textbox",
+                                   @style = "height:50px;",
+                                   @placeholder = "Your Message"
+                               })
+                                </div>
+                            </div>
+                            break;
+                    }
+
+
+                    @Html.Partial("GenerateCaptcha")
+                </div>
+
+                @Html.Hidden("NewID", 0)
+            </div>
+            <div class="box-footer">
+                <div class="row mar5">
+                    <div class="col-md-12">
+                        <button class="btn btn-primary btn-block btn-lg" type="button" id="btnInquiryData">
+                            <i class="fa fa-envelope"></i>
+                            Submit Inquiry
+                        </button>
+                        <div id="loader" style="display:none;">
+                            @Html.Partial("partialSpinnerLoadingView")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <!-- Modal -->
+        <div id="myModal" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title" id="formTitle">@Model.FormTitle</h4>
+                    </div>
+                    <div class="modal-body">
+                        <div>
+                            @Html.Hidden("FormType", Model.FormType)
+                            @Html.Hidden("InquiryTypeName", Model.FormTitle)
+                            @Html.Hidden("InquiryTypeID", Model.Subscribetype)
+                            @Html.Hidden("TenderID", Model.DownloadTenderRefNo)
+                            @Html.ValidationSummary(true)
+                            <div class="errMsg mar5" id="errmsg">
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                    @Html.TextBox("txtName", "", new { @class = "form-control textbox", @placeholder = "Your Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-home"></i></span>
+                                    @Html.TextBox("txtCompanyName", "", new { @class = "form-control textbox", @placeholder = "Company Name" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                    @Html.TextBox("txtMobileNo", "", new { @class = "form-control textbox", @maxlength = "13", @placeholder = "Phone No" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                    @Html.TextBox("txtEmailId", "", new { @class = "form-control textbox", @placeholder = "Email Id" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+                                    @Html.DropDownList("drpState", Model.StateList, new { @class = "form-control textbox", @placeholder = "State" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-code"></i></span>
+                                    @Html.DropDownList("drpCity", Model.CityList, new { @class = "form-control textbox", @placeholder = "State" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-comments-o"></i></span>
+                                    @Html.TextArea("txtInterestedTenders", "", new
+                               {
+                                   @class = "keyword form-control textbox",
+                                   @style = "height:50px;",
+                                   @placeholder = "Tenders Interested In"
+                               })
+                                </div>
+                            </div>
+                            @Html.Partial("GenerateCaptcha")
+                        </div>
+                        @Html.Hidden("NewID", 0)
+
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary btn-lg" type="button" id="btnInquiryData">
+                            <i class="fa fa-envelope"></i>
+                            Submit Inquiry
+                        </button>
+                        <button type="button" class="btn btn-default btn-lg" data-dismiss="modal">Close</button>
+                        <div id="loader" style="display:none;">
+                            @Html.Partial("partialSpinnerLoadingView")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</form>
+
+<style>
+    .textbox {
+        border-bottom-left-radius: 0 !important;
+        border-top-left-radius: 0 !important;
+    }
+
+
+    @@media screen and (min-width: 768px) {
+        .modal-dialog {
+            width: 400px;
+        }
+    }
+</style>

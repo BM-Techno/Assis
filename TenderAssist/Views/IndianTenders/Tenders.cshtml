@@ -1,0 +1,177 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using System.Configuration;
+
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="https://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="https://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">
+                                Indian Tenders
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="well well-sm">
+                <div id="categories">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_panel">
+                                @Html.Partial("Search/partialSearchPanel")
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="lineseperatorOrange"></div>
+                                    </div>
+                                </div>
+                                <div id="loader" style="display:none;">
+                                    @Html.Partial("partialSpinnerLoadingView")
+                                </div>
+                                <div class="section_panel">
+                                    <div id="displayPanel" class="display_panel">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card linkcard center">
+                        <a href="@ConfigurationManager.AppSettings["TenderByStateUrl"].ToString()" class="margin-top btn-link">
+                            <img src="~/Images/Category/state.png" class="categoryImage" />
+                            Get State Tenders
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card linkcard center">
+                        <a href="@ConfigurationManager.AppSettings["TenderByCityUrl"].ToString()" class="margin-top btn-link">
+                            <img src="~/Images/Category/city.png" class="categoryImage" />
+                            Get City Tenders
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card linkcard center">
+                        <a href="/Indian-Tenders/Industry-List/" class="margin-top btn-link">
+                            <img src="~/Images/Category/industry.png" class="categoryImage" />
+                            Get Industry Tenders
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card linkcard center">
+                        <a href="/Indian-Tenders/SubIndustry-List/" class="margin-top btn-link">
+                            <img src="~/Images/Category/subindustry.png" class="categoryImage" />
+                            Get SubIndustry Tenders
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card linkcard center">
+                        <a href="/Indian-Tenders/Products/" class="margin-top btn-link">
+                            <img src="~/Images/Category/keyword.png" class="categoryImage" />
+                            Get Keyword Tenders
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card linkcard center">
+                        <a href="/Indian-Tenders/Agency-List/" class="margin-top btn-link">
+                            <img src="~/Images/Category/agency.jpg" class="categoryImage" />
+                            Get Agency Tenders
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card linkcard center">
+                        <a href="/Indian-Tenders/Sector-List/" class="margin-top btn-link">
+                            <img src="~/Images/Category/companysector.png" class="categoryImage" />
+                            Get Sector Tenders
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card linkcard center">
+                        <a href="/Indian-Tenders/Ownership-List/" class="margin-top btn-link">
+                            <img src="~/Images/Category/ownership.png" class="categoryImage" />
+                            Get Ownership Tenders
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="grayline"></div>
+
+            @Html.Partial("~/Views/Home/Sections/_HomeAdvertiesment.cshtml")
+
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_partialInquiryForm", Model)
+
+<script>
+    var loadDataList = '@Url.Action("GetHomeLinkData", "Home")';
+    var isHomePage = false;
+</script>
+
+
+<style>
+    .linkcard {
+        margin: 5px;
+        padding: 6px;
+    }
+
+        .linkcard a {
+            font-size: 16px;
+            margin-left: 5px;
+        }
+
+    .categoryImage {
+        width: 50px;
+        height: 40px;
+        margin: 0;
+        box-shadow: 0 1px 9px rgba(43, 59, 93, .29);
+        cursor: pointer;
+        background: #fff;
+        position: relative;
+        -webkit-transition: all .3s ease-out;
+        transition: all .3s ease-out;
+    }
+</style>
+
+
+@Scripts.Render("~/bundles/load-dataformenu-script")

@@ -1,0 +1,67 @@
+﻿.permissiontitle {
+    font-size: 16px;
+    margin: 2px;
+}
+
+.topheader span {
+    margin: 5px !important;
+    font-size: 15px !important;
+}
+
+
+.link-separator {
+    color: #fff;
+    display: block;
+    height: 100%;
+    margin-top: 7px;
+}
+
+.TopNavLinks ul li.link-separator:hover {
+    background-color: transparent !important;
+    border-bottom: 0px !important;
+}
+
+
+
+.categoryHeader {
+    width: 100%;
+    font-size: 16px !important;
+}
+
+    .categoryHeader label.seperator {
+        color: #fff !important;
+    }
+
+    .categoryHeader a {
+        color: #fff !important;
+    }
+
+        .categoryHeader a:hover {
+            color: #000 !important;
+        }
+
+
+h1 small, .h1 small {
+    font-size: 80% !important;
+}
+
+
+.rightdata a {
+    color: #fff;
+}
+
+    .rightdata a:hover {
+        color: #ff851b;
+    }
+
+
+
+#AdvanceFilterSearch_form {
+    display: block !important;
+}
+
+.advanceSearchButton {  
+    padding: 0px !important;
+    line-height: none !important;
+    font-size: 15px !important;
+}

@@ -1,0 +1,187 @@
+﻿@using System.Configuration;
+<style>
+    .pricing-area {
+        min-height: 170px;
+    }
+
+    .categorycard {
+        min-height: 385px;
+        /*height: 450px !important;*/
+        background-color: #fff;
+        padding-bottom: 5px;
+    }
+
+        .categorycard h3 {
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+            background-color: #3c8dbc;
+            border-color: #367fa9;
+            padding: 10px;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+
+        .categorycard p {
+            font-size: 15px;
+            margin: 5px 0px;
+            color: #4b4b4b;
+            /*line-height: 29px;*/
+        }
+
+        .categorycard img {
+            margin: 0;
+            box-shadow: 0 1px 9px rgba(43, 59, 93, .29);
+            cursor: pointer;
+            background: #fff;
+            position: relative;
+            -webkit-transition: all .3s ease-out;
+            transition: all .3s ease-out;
+            width: 100px !important;
+            height: 80px;
+            border-radius: 5px;
+            padding: 2px;
+        }
+
+        /*.categorycard p, .categorycard  .pricing-area {
+            
+            padding:5px;
+        }*/
+
+    .center {
+        text-align: center !important;
+    }
+</style>
+
+<div id="pricing">
+    <div class="text-center home-title">
+        <h2 class="pricinghomeh2">
+            Supported Links <small>Search Tender By</small>
+        </h2>
+    </div>
+    <div class="padTB10 padLR10">
+        <div class="row">
+
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card categorycard center small-box">
+                            <h3>State Tenders</h3>
+                            <img src="/Images/Category/state.png" alt="All Tenders State" />
+                            <p>Click on any state from below list to get its latest tenders Information.</p>
+                            <div class="lineseperatorOrange"></div>
+                            <div class="pricing-area" id="stateList">
+                                @Html.Partial("partialSpinnerLoadingView")
+                            </div>
+                            <a href="@ConfigurationManager.AppSettings["TenderByStateUrl"].ToString()" class="btn btn-block btn-lg btn-danger">
+                                Get more State Tenders <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card categorycard center small-box">
+                            <h3>City Tenders</h3>
+                            <img src="/Images/Category/city.png" alt="All Tenders City Wise" />
+                            <p>Click on any location to get its latest tenders Information.</p>
+                            <div class="lineseperatorOrange"></div>
+                            <div class="pricing-area" id="cityList">
+                                @Html.Partial("partialSpinnerLoadingView")
+                            </div>
+                            <a href="@ConfigurationManager.AppSettings["TenderByCityUrl"].ToString()" class="btn btn-block btn-lg btn-danger">
+                                Get more City Tenders <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card categorycard center small-box">
+                            <h3>Industry Tenders</h3>
+                            <img src="/Images/Category/industry.png" alt="All Tenders Industry Wise" />
+                            <p>Click on any industry to get its latest tenders Information.</p>
+                            <div class="lineseperatorOrange"></div>
+                            <div class="pricing-area" id="indList">
+                                @Html.Partial("partialSpinnerLoadingView")
+                            </div>
+                            <a href="@ConfigurationManager.AppSettings["TenderByIndustryUrl"].ToString()" class="btn btn-block btn-lg btn-danger">
+                                Get more Industry Tenders <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card categorycard center small-box">
+                            <h3>Sub Industry Tenders</h3>
+                            <img src="/Images/Category/subindustry.png" alt="All Tenders Subindustry Wise" />
+                            <p>Click on any subindustry to get its latest tenders Information.</p>
+                            <div class="lineseperatorOrange"></div>
+                            <div class="pricing-area" id="subIndList">
+                                @Html.Partial("partialSpinnerLoadingView")
+                            </div>
+                            <a href="@ConfigurationManager.AppSettings["TenderBySubIndustryUrl"].ToString()" class="btn btn-block btn-lg btn-danger">
+                                Get more SubIndustry Tenders <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card categorycard center small-box">
+                            <h3>Keyword Tenders</h3>
+                            <img src="/Images/Category/keyword.png" alt="All Tenders Keyword Wise" />
+                            <p>Click on any keyword to get its latest tenders Information.</p>
+                            <div class="lineseperatorOrange"></div>
+                            <div class="pricing-area" id="keywordList">
+                                @Html.Partial("partialSpinnerLoadingView")
+                            </div>
+                            <a href="@ConfigurationManager.AppSettings["TenderByKeywordUrl"].ToString()" class="btn btn-block btn-lg btn-danger">
+                                Get more Keyword Tenders <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card categorycard center small-box">
+                            <h3>Agency Tenders</h3>
+                            <img src="/Images/Category/agency.jpg" alt="All Tenders Agency Wise" />
+                            <p>Click on any agency to get its latest tenders Information.</p>
+                            <div class="lineseperatorOrange"></div>
+                            <div class="pricing-area" id="agencyList">
+                                @Html.Partial("partialSpinnerLoadingView")
+                            </div>
+                            <a href="@ConfigurationManager.AppSettings["TenderByAgencyUrl"].ToString()" class="btn btn-block btn-lg btn-danger">
+                                Get more Agency Tenders <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card categorycard center small-box">
+                            <h3>Company Sector Tenders</h3>
+                            <img src="/Images/Category/companysector.png" alt="All Tenders CompanySector Wise" />
+                            <p>Click on any sector to get its latest tenders Information.</p>
+                            <div class="lineseperatorOrange"></div>
+                            <div class="pricing-area" id="sectorList">
+                                @Html.Partial("partialSpinnerLoadingView")
+                            </div>
+                            <a href="@ConfigurationManager.AppSettings["TenderBySectorUrl"].ToString()" class="btn btn-block btn-lg btn-danger">
+                                Get more Company-Sector Tenders <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card categorycard center small-box">
+                            <h3>Ownership Tenders</h3>
+                            <img src="/Images/Category/ownership.png" alt="All Tenders Ownership Wise" />
+                            <p>Click on any ownership to get its latest tenders Information.</p>
+                            <div class="lineseperatorOrange"></div>
+                            <div class="pricing-area" id="ownershipList">
+                                @Html.Partial("partialSpinnerLoadingView")
+                            </div>
+                            <a href="@ConfigurationManager.AppSettings["TenderByOwnershipUrl"].ToString()" class="btn btn-block btn-lg btn-danger">
+                                Get more Ownership Tenders <i class="fa fa-arrow-circle-right"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>

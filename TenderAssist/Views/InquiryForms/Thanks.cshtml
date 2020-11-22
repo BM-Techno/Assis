@@ -1,0 +1,40 @@
+﻿@model  TenderAssist.ViewModel.TenderDetail
+
+
+<div class="container_fullMiddle">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well SuccessMessageHeaderSpan">
+                <span>
+                    Thank you for submitting the details.
+                </span>
+                <br />
+                <br />
+                <span>
+                    Check your email <b>@ViewBag.EmailId </b>for further details.
+                </span>
+                <br />
+                <br />
+                <span>
+                    You may also reach us on +91 97247 00247.
+                </span>
+                <br />
+                <br />
+                <a class="btn btn-success btn-flat btn-lg" href="@Url.Action("Index", "Payonline")">
+                    <i class="fa fa-rupee"></i>
+                    PayNow
+                </a>
+                <br />
+                <br />
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+<style>
+    .SuccessMessageHeaderSpan {
+        font-size:15px;
+    }
+</style>

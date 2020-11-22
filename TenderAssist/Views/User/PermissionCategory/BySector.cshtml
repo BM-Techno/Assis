@@ -1,0 +1,37 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    var isSectorPermission = Model.AllCompanySector.Any();
+    var sectorLinkId = "Sector_Link_" + Model.PermissionId;
+    var sectorPanelId = "Sector_Panel_" + Model.PermissionId; 
+}
+
+<div class="box box-solid "> 
+    <div class="box-header">
+        <span class="box-title categoryHeader"> 
+            <i class="fa fa-check-circle text-success"></i>
+            My Sectors 
+        </span>
+    </div>
+    <div class="box-body">
+        @if (isSectorPermission)
+        {
+            <div id="@sectorPanelId"> 
+                @{
+                    var count = 0;
+                    foreach (var item in Model.AllCompanySector)
+                    {
+                        <a href="#nogo" onclick="CategorySearch(@TenderAssist.CommonHelper.Utility.TenderTypeList.Sector,@item.SectorId,@Model.PermissionId)">
+                            @item.SectorName
+                        </a>
+                        count++;
+                        if (count != Model.AllCompanySector.Count)
+                        {
+                            <span>,</span>
+                        }
+                    }
+                }
+            </div>
+                    } 
+                </div>
+            </div> 

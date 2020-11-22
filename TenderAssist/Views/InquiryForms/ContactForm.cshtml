@@ -1,0 +1,76 @@
+﻿@model  TenderAssist.ViewModel.TenderDetail
+
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">@Model.FormTitle</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="col-md-12">
+            <div class="row">
+                <h1 class="pagetitle">
+                    @Model.FormTitle
+                </h1>
+                <div class="col-md-8">
+                    @{
+                        switch (Model.Subscribetype)
+                        {
+                            case TenderAssist.CommonHelper.Utility.SubscribType.ContactUs:
+                                <h3 class="subtitle">
+                                    Contact Sales
+                                </h3>
+                                <p class="pagedescription">
+                                    Our experienced sales team is available 24*7 to help you with Support (Tender Information and Tender Assistance) for your need.
+                                </p>
+                                <p class="pagedescription">
+                                    Receive expert advice, custom solutions for Tender Alert and Tender Assistance, We pride ourselves on our close customer relationship; please call today.
+                                </p>
+                                <p class="pagedescription">
+                                    <i class="fa fa-clock-o"></i>
+                                    <b>Hours of operation: </b>
+                                    Monday-Saturday : 10:30 a.m. - 6:30 p.m.
+                                </p>
+                                <p class="pagedescription">
+                                    <i class="fa fa-phone"></i>
+                                    Call 97247 00247, or <a href="">Click</a> to Chat with a sales representative Contact Technical Support.
+                                </p>
+                                <p class="pagedescription">
+                                    Our technical support team is here five days a week to help you through all of your Technical needs and beyond.
+                                </p>
+                                <div class="grayline"> </div>
+                                <h3 class="subtitle">
+                                    Want an Immediate Response?
+                                </h3>
+                                <p class="pagedescription">
+                                    If it is after normal business hours, use the e-mail form on this page and a representative will respond the next business day or you may call us on above mention number for further assistance.
+                                </p>
+
+                                break;
+
+                        }
+                    }
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("_partialInquiryForm", Model)                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

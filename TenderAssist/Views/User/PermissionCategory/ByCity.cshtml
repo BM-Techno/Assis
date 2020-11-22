@@ -1,0 +1,36 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@{
+    var isCityPermission = Model.AllCityList.Any();
+    var cityLinkId = "City_Link_" + Model.PermissionId;
+    var cityPanelId = "City_Panel_" + Model.PermissionId; 
+}
+<div class="box"> 
+    <div class="box-header">
+        <span class="box-title categoryHeader"> 
+            <i class="fa fa-check-circle text-success"></i>
+            My Cities 
+        </span>
+    </div>
+    <div class="box-body">
+        @if (isCityPermission)
+        {
+            <div id="@cityPanelId">  
+                @{
+                    var count = 0;
+                    foreach (var item in Model.AllCityList)
+                    {
+                        <a href="#nogo" onclick="CategorySearch(@TenderAssist.CommonHelper.Utility.TenderTypeList.City,@item.LocId,@Model.PermissionId)">
+                            @item.Location
+                        </a>
+                        count++;
+                        if (count != Model.AllCityList.Count)
+                        {
+                            <span>,</span>
+                        }
+                    }
+                }
+            </div>
+                    }
+                   
+    </div>
+</div>

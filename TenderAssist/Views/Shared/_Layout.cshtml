@@ -1,0 +1,218 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    <meta name="description" content="@ViewBag.Description">
+    <meta name="keywords" content="@ViewBag.Keywords">
+    <meta name="author" content="https://www.tenderassist247.com/">
+
+    <!-- Open Graph - [OG] / Facebook / Whats App -->
+    <meta property="og:card" content="summary_large_image">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://www.tenderassist247.com/">
+    <meta property="og:title" content="Online Tender Information, E Tenders, Government Tenders, International Tenders,Indian Tenders, Tender Assistance, Latest Tenders">
+    <meta property="og:description" content="TenderAssist247 will give all Tenders information Online, Government Tenders, Private Tenders, India tenders, Global Tenders, Auction Tenders, Corporation Tenders, Industry Tenders, Subscribe Today">
+    <meta property="og:image" content="https://www.tenderassist247.com/Images/tenderassistlogo.png">
+    <meta property="fb:page_id" content="100189498429830" />
+    <meta property="og:email" content="sales@tenderassist247.com" />
+    <meta property="og:phone_number" content="9724-700-247" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://www.tenderassist247.com/">
+    <meta property="twitter:title" content="Online Tender Information, E Tenders, Government Tenders, International Tenders,Indian Tenders, Tender Assistance, Latest Tenders">
+    <meta property="twitter:description" content="Tender Alert, Online Tender Information, Global Tenders, Tenders India, Tender Information service Provider, Tender Notifications, Online Tender India.">
+    <meta property="twitter:image" content="https://www.tenderassist247.com/Images/tenderassistlogo.png">
+
+    <script type='application/ld+json'>
+        {
+        "@@context": "http://www.schema.org",
+        "@@type": "WebSite",
+        "name": "TenderAssist247",
+        "alternateName": "Tender Assist Technology",
+        "url": "https://www.tenderassist247.com"
+        }
+    </script>
+    <script type='application/ld+json'>
+        {
+        "@@context": "http://www.schema.org",
+        "@@type": "Organization",
+        "name": "TenderAssist247",
+        "url": "https://www.tenderassist247.com/",
+        "sameAs": [
+        "https://www.quora.com/profile/Tender-Assist",
+        "https://www.linkedin.com/company/tenderassist247",
+        "https://twitter.com/TAssist247",
+        "https://www.instagram.com/tenderassist247/",
+        "https://www.facebook.com/TenderAssist247-100189498429830"
+        ],
+        "logo": "https://www.tenderassist247.com/Images/tenderassistlogo.png",
+        "image": "https://www.tenderassist247.com/Images/tenderassistlogo.png",
+        "description": "Tender Alert, Online Tender Information, Global Tenders, Tenders India, Tender Information service Provider, Tender Notifications, Online Tender India",
+        "contactPoint": {
+        "@@type": "ContactPoint",
+        "telephone": "+919724700247",
+        "contactType": "Sales"
+        }
+        }
+    </script>
+    
+    <link rel="icon" href="@Url.Content("~/favicon.png")" type="image/x-icon">
+    <link rel="shortcut icon" href="@Url.Content("~/favicon.png")" type="image/x-icon" />
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/other-css")
+    @Styles.Render("~/Content/autocomplete-css")
+
+    @Scripts.Render("~/bundles/modernizr")
+
+    <meta name="google-site-verification" content="5U11C4r6ZMP8i2Q9UqqqpHle8tROK-3yGvwkaTUBwTo" /><meta name="google-site-verification" content="5U11C4r6ZMP8i2Q9UqqqpHle8tROK-3yGvwkaTUBwTo" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <!--Start of Tawk.to Script-->
+    <script type="text/javascript">
+        var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+        (function () {
+            var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+            s1.async = true;
+            s1.src = 'https://embed.tawk.to/5dc691aa43be710e1d1c7d5d/default';
+            s1.charset = 'UTF-8';
+            s1.setAttribute('crossorigin', '*');
+            s0.parentNode.insertBefore(s1, s0);
+        })();
+    </script>
+    <!--End of Tawk.to Script-->
+
+
+</head>
+<body>
+    @Html.Partial("Header/_Header")
+    @RenderBody()
+    @Html.Partial("Footer/_Footer")
+    @Html.Partial("Footer/_FooterCopyright")
+
+
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/common-js")
+
+
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>
+
+
+<style>
+    .Top-header {
+        background: rgba(45,55,72,255);
+        color: #fff;
+        /*height: 40px;*/
+    }
+
+        .Top-header .container-Top-header {
+            padding: 8px 13px !important;
+        }
+
+    .Bottom-header {
+        background: #fcfcff;
+        color: #000;
+        border-bottom: 1px solid #dcdcdc;
+    }
+
+        .Bottom-header .container-Bottom-header {
+            padding: 5px 20px !important;
+        }
+
+    .Top-header .contactno {
+        font-size: 13px;
+        float: left;
+        margin-right: 28px;
+    }
+
+
+
+    .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+    }
+
+        .overlay:target {
+            visibility: visible;
+            opacity: 1;
+        }
+
+    .popup {
+        margin: 150px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 5px;
+        width: 30%;
+        position: relative;
+        transition: all 5s ease-in-out;
+    }
+
+        .popup h2 {
+            margin-top: 0;
+            color: #333;
+            font-family: Tahoma, Arial, sans-serif;
+        }
+
+        .popup .close {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            transition: all 200ms;
+            font-size: 30px;
+            font-weight: bold;
+            text-decoration: none;
+            color: #333;
+        }
+
+            .popup .close:hover {
+                color: #3c8dbc;
+            }
+
+        .popup .content {
+            max-height: 30%;
+            overflow: auto;
+        }
+
+    @@media screen and (max-width: 700px) {
+        /*.box {
+            width: 70%;
+        }*/
+
+        .popup {
+            width: 70%;
+        }
+    }
+</style>
+
+
+<a class="button" href="#errorPopup" id="btnErrorMsg" style="display:none;"></a>
+<div id="errorPopup" class="overlay">
+    <div class="popup">
+        <h2><span id="errorTitle" class="text-red"></span></h2>
+        <a class="close pointercursor" href="#">&times;</a>
+        <div class="content" id="errorPopupContent">
+        </div>
+    </div>
+</div>

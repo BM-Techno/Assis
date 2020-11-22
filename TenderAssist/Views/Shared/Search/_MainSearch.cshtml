@@ -1,0 +1,136 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@{
+
+    var searchType = Model.SearchType == 0 ? 1 : Model.SearchType;
+    var displayName = "";
+    switch (searchType)
+    {
+        case 1:
+            displayName = "Keyword ";
+            break;
+        case 2:
+            displayName = "Word Search ";
+            break;
+        case 3:
+            displayName = "Exact Phrase ";
+            break;
+    }
+
+    string styleSearchTextBox1;
+    string styleSearchTextBox2;
+    if (searchType == 0 || searchType == 1)
+    {
+        styleSearchTextBox1 = "display:block; float:left;";
+        styleSearchTextBox2 = "display:none; float:left;";
+    }
+    else
+    {
+        styleSearchTextBox1 = "display:none; float:left;";
+        styleSearchTextBox2 = "display:block; float:left;";
+    }
+    var searchbtnsizeClass = "btn-lg";
+    //if (Model.IsAdvanceSearch)
+    //{
+    //    searchbtnsizeClass = "btn-sm";
+    //}
+    var displaySearchPanel = Model.IsAdvanceSearch || Model.IsHomePage ? "block" : "none";
+}
+<div id="search_form" class="clearfix">
+    <div class="row" style="display:@displaySearchPanel">
+        <div class="col-md-12">
+            <div class="input-group input-group">
+                <div class="input-group-btn">
+                    <button type="button" class="btn btn-default dropdown-toggle btnSearchType searchSelectionBtn @searchbtnsizeClass" data-toggle="dropdown">
+                        <span id="btnDisplayName">@displayName </span><span id="btnDisplayName_Short" style="display: none;">
+                            @displayName.Substring(0, 1).ToUpper()
+                        </span>
+                        <span class="fa fa-caret-down" id="downArrow"></span>
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a href="javascript:void(0);" id="1" class="DisplayName">Keyword </a></li>
+                        <li><a href="javascript:void(0);" id="2" class="DisplayName">Word Search</a></li>
+                        <li><a href="javascript:void(0);" id="3" class="DisplayName">Exact Phrase</a></li>
+                    </ul>
+                </div>
+                @Html.TextBox("searchText", Model.DisplayText, new { @class = "form-control SearchTextBox1 searchfill", @style = styleSearchTextBox1, @placeholder = "Search your tender here" })
+                @Html.TextBox("searchText", Model.DisplayText, new { @class = "form-control SearchTextBox2 searchfill", @style = styleSearchTextBox2, @placeholder = "Search your tender here" })
+                @Html.Hidden("searchTextVal", Model.DisplayText)
+                @Html.Hidden("searchProductID", Model.SearchProuctId)
+                @{
+                    if (!Model.IsAdvanceSearch)
+                    {
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-primary SearchBtn searchsubmitbtn searchBtn1 btn-lg" id="btnSearch">
+                                <i class="fa fa-search searchIcon"></i>
+                                <label class="webview nomargin">Search</label>
+                            </button>
+                            @{
+                                if (!Model.IsHomePage)
+                                {
+                                    <button type="button" class="btn btn-danger SearchBtn searchsubmitbtn btn-lg" id="btnReset">
+                                        <i class="fa fa-refresh searchIcon"></i>
+                                        <label class="webview nomargin">Reset</label>
+                                    </button>
+                                }
+                            }
+
+                        </span>
+                                }
+                }
+
+            </div>
+        </div>
+    </div>
+    @Html.Hidden("hdnSearchType", searchType)
+    @Html.Hidden("hdnIsGlobalSearch", Model.IsGlobalTender)
+</div>
+@Html.Hidden("hdnIsAdvanceSearch", Model.IsAdvanceSearch)
+
+@Scripts.Render("~/bundles/search-script")
+
+
+@Html.Hidden("hdnSearchtext", Model.DisplayText)
+@Html.Hidden("hdnWithinSearchedText", Model.DisplayText2)
+@Html.Hidden("hdnSearchType", Model.SearchType)
+@Html.Hidden("hdnSearchProuctId", Model.SearchProuctId)
+@Html.Hidden("hdnFieldId", Model.FieldId)
+@Html.Hidden("hdnFieldName", Model.FieldName)
+
+
+@Html.Hidden("hdnTenderStatus", Model.TenderStatusFlag)
+@if (Model.IsGlobalTender)
+{
+    @Html.Hidden("hdnTendersBy", Model.RegionId)
+    @Html.Hidden("hdnTenderYear", Model.TenderYear)
+    @Html.Hidden("SelectedCountry", Model.SelectedCountry)
+    @Html.Hidden("SelectedProduct", Model.SelectedProduct)
+}
+else
+{
+    @Html.Hidden("hdnTendersBy", Model.TendersBy)
+
+    @Html.Hidden("SelectedLocationIds", Model.SelectedLocationIds)
+    @Html.Hidden("SelectedIndustrySubIndustryIds", Model.SelectedIndustrySubIndustryIds)
+
+    @Html.Hidden("SelectedState", Model.SelectedState)
+    @Html.Hidden("SelectedCity", Model.SelectedCity)
+    @Html.Hidden("SelectedProduct", Model.SelectedProduct)
+    @Html.Hidden("SelectedIndustry", Model.SelectedIndustry)
+    @Html.Hidden("SelectedSubIndustry", Model.SelectedSubIndustry)
+    @Html.Hidden("SelectedSector", Model.SelectedSector)
+    @Html.Hidden("SelectedOwnership", Model.SelectedOwnership)
+
+}
+@Html.Hidden("SelectedAgency", Model.SelectedAgency)
+@Html.Hidden("hdnOurRefNo", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.OurRefNo : null)
+@Html.Hidden("hdnSubDateFrom", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.SubDateFrom : null)
+@Html.Hidden("hdnSubDateTo", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.SubDateTo : null)
+@Html.Hidden("hdnOpDateFrom", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.OpDateFrom : null)
+@Html.Hidden("hdnOpDateTo", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.OpDateTo : null)
+
+
+@Html.Hidden("hdnTotalCount", Model.Total)
+@Html.Hidden("hdnTotalLive", Model.TotalLive)
+@Html.Hidden("hdnTotalFresh", Model.TotalFresh)
+@Html.Hidden("hdnTotalClosed", Model.TotalClosed)

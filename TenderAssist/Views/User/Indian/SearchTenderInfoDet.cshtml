@@ -1,0 +1,115 @@
+﻿@using System.Globalization
+@using TenderAssist.Controllers
+
+@model TenderAssist.ViewModel.TenderDetail
+
+
+@*@Styles.Render("~/Content/pricing-area-css")*@
+<div id="displayPanel" class="display_panel">
+    <div class="row">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs">
+                <li class="active tabCatLinks" id="linkAllTenders">
+                    <a href="#nogo" onclick="
+                       
+                       ('0');">
+                        All
+                        <span id="lblAll" class="tabCatLinksSpans">
+                            @if (Model.TenderStatus == 0)
+                        {
+                                <small><b>(@Model.Total)</b></small>
+                        }
+                        </span>
+                    </a>
+                </li>
+                <li class="tabCatLinks" id="linkFreshTenders">
+                    <a href="#nogo" onclick="ChangeTenderStatus('2');">
+                        Fresh
+                        <span id="lblFresh" class="tabCatLinksSpans">
+                            @if (Model.TenderStatus == 2)
+                        {
+                                <small><b>(@Model.TotalFresh)</b></small>
+                        }
+                        </span>
+                    </a>
+                </li>
+                <li class="tabCatLinks" id="linkLiveTenders">
+                    <a href="#nogo" onclick="ChangeTenderStatus('1');">
+                        Live
+                        <span id="lblLive" class="tabCatLinksSpans">
+                            @if (Model.TenderStatus == 1)
+                        {
+                                <small>(@Model.TotalLive)</small>
+                        }
+                        </span>
+
+                    </a>
+                </li>
+                <li class="tabCatLinks" id="linkArchiveTenders">
+                    <a href="#nogo" onclick="ChangeTenderStatus('3');">
+                        Archive
+                        <span id="lblArchive" class="tabCatLinksSpans">
+                            @if (Model.TenderStatus == 3)
+                        {
+                                <small>(@Model.TotalClosed)</small>
+                        }
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card">
+                @Html.Partial("Search/_WithinSearch")
+                <div class="grayline"></div>
+                <div id="divTenderInfo">
+                    @Html.Partial("Indian/partialSearchResultData")
+                </div>
+                <div id="loader" style="display:none;">
+                    @Html.Partial("partialSpinnerLoadingView")
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row" id="divloadmore">
+        <div class="col-md-12">
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-lg" id="btnLoadMoreData">
+                    <i class="fa fa-eye-slash"></i>
+                    View More...
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+   
+
+
+    @Html.Hidden("hdnDisplayCurrentPage", Model.DisplayCurrentPage)
+    @Html.Hidden("hdnTotalPage", Model.TotalPage)
+    @Html.Hidden("hdnPage", Model.Newpagecnt)
+    @Html.Hidden("hdnAdvanceSearchtext", Model.AdvanceSearchText)
+    @Html.Hidden("hdnAdvanceSearchPara", Model.AdvanceSearchPara)
+
+    @*ADVANCE SEARCH PARA*@
+    @Html.Hidden("hdnStateId", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.StateId : null)
+    @Html.Hidden("hdnCityId", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.CityId : null)
+    @Html.Hidden("hdnIndustryId", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.IndustryId : null)
+    @Html.Hidden("hdnSubIndustryId", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.SubIndustryId : null)
+    @Html.Hidden("hdnAgencyId", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.AgencyId : null)
+    @Html.Hidden("hdnSectorId", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.SectorId : null)
+    @Html.Hidden("hdnOwnershipId", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.OwnershipId : null)
+    @Html.Hidden("hdnTenderValFlag", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.TenderValFlag : null)
+    @Html.Hidden("hdnTenderValue", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.TenderValue : null)
+
+    @Html.Hidden("hdnTenderTypeId", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.TenderTypeId : null)
+    @Html.Hidden("hdnTenderStatusFlag", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.TenderStatusFlag : null)
+
+    @*@Html.Hidden("hdnSubDateFlag", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.SubDateFlag : null)
+        @Html.Hidden("hdnOpDateFlag", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.OpDateFlag : null)*@
+    @Html.Hidden("hdnFilterType", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.FilterType : null)
+
+    @*<script src="@Url.Content("~/Scripts/JS/masterTooltip.js")" type="text/javascript"></script>*@

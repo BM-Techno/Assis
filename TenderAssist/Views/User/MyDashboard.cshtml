@@ -1,0 +1,104 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Title = "My Dashboard";
+
+
+    var isIndianServiceAccess = (bool)ViewData["IndianTenderServiceAccess"];
+    var isGlobalServiceAccess = (bool)ViewData["GlobalTenderServiceAccess"];
+    var isAwardedServiceAccess = (bool)ViewData["AwardedTenderServiceAccess"];
+    var isProjectServiceAccess = (bool)ViewData["ProjectTenderServiceAccess"];
+
+
+    var indianPermissionCount = (int)ViewData["IndianTenderPermissionCount"];
+    var globalPermissionCount = (int)ViewData["GlobalTenderPermissionCount"];
+    var awardedPermissionCount = (int)ViewData["AwardedTenderPermissionCount"];
+    var projectPermissionCount = (int)ViewData["ProjectTenderPermissionCount"];
+}
+
+<div class="container_fullMiddle">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="well wellWhiteBg well-sm">
+                <h1 class="pagetitle">
+                    My Dashboard
+                </h1>
+                <h2 class="pagedescription">
+                    In the dashboard, you can find the assigned services as below and the related permission list of particular service. <br />
+                    You can also view the tender/project list for selected permission.
+                </h2>
+                <div class="grayline"></div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="pagetitle">
+                                    <span>
+                                        @(
+        isIndianServiceAccess == true
+        ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>")
+        : Html.Raw("<i class=\"fa fa-times-circle text-danger\"></i>")
+                                        )
+                                        Indian Service
+                                    </span>
+                                </h2>
+                                <h3 class="pagedescription">
+                                    @(
+        isIndianServiceAccess == true
+        ? Html.Raw("You have been assigned the Indian tender service. You can access the assigned <b>" + indianPermissionCount + "</b> permission(s) for Indian tender service.")
+        : Html.Raw("You don't have sufficient privileges to access the Indian tender service.")
+                                    )
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="pull-right">
+                                    <a href="/User/IndianService" class="btn-link">
+                                        <label class="seperator">›</label>
+                                        View
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="grayline"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h2 class="pagetitle">
+                                    <span>
+                                        @(
+        isGlobalServiceAccess == true
+        ? Html.Raw("<i class=\"fa fa-check-circle text-success\"></i>")
+        : Html.Raw("<i class=\"fa fa-times-circle text-danger\"></i>")
+                                        )
+                                        Global Service
+                                    </span>
+                                </h2>
+                                <h3 class="pagedescription">
+                                    @(
+        isGlobalServiceAccess == true
+        ? Html.Raw("You have been assigned the Global tender service. You can access the assigned <b>" + globalPermissionCount + "</b> permission(s) for Global tender service.")
+        : Html.Raw("You don't have sufficient privileges to access the Global tender service.")
+                                    )
+                                </h3>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <span class="pull-right">
+                                    <a href="/User/GlobalService" class="btn-link">
+                                        <label class="seperator">›</label>
+                                        View
+                                    </a>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="grayline"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

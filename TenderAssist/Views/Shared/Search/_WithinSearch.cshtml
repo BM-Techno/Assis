@@ -1,0 +1,16 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+<div id="withinsearch_form" class="withinsearchpanel">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="input-group input-group">
+                @Html.TextBox("txtWithinSearchData", Model.DisplayText3, new { @class = "f-left no-border img_class ac_input", @placeholder = "Within search" })                
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-warning SearchBtn searchsubmitbtn searchBtn1 btn-lg" id="btnWithinSearchData">
+                        <span class="fa fa-search-plus searchIcon"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

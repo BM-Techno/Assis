@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="32bff84ba17748458a5a0f722ad3f358" Name="Diagram1" ZoomLevel="74">
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientDetail" Width="1.5" PointX="0.75" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientEmailHistory" Width="1.5" PointX="7.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientPermission" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientPermissionWithAgency" Width="1.5" PointX="5.25" PointY="1.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientPermissionWithIndSubIndustry" Width="1.5" PointX="5.25" PointY="4.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientPermissionWithLocation" Width="1.5" PointX="5.25" PointY="7.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientPermissionWithOwnership" Width="1.5" PointX="5.25" PointY="10.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientPermissionWithProduct" Width="1.5" PointX="5.25" PointY="13.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabClientPermissionWithSector" Width="1.5" PointX="5.25" PointY="16.25" IsExpanded="true" />
+        <AssociationConnector Association="LocalTenderAssistModel.FK_tabClientPermission_tabClientDetails" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalTenderAssistModel.FK_tabClientPermissionWithAgency_tabClientPermission" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalTenderAssistModel.FK_tabClientPermissionWithIndSubIndustry_tabClientPermission" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalTenderAssistModel.FK_tabClientPermissionWithLocation_tabClientPermission" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalTenderAssistModel.FK_tabClientPermissionWithOwnership_tabClientPermission" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalTenderAssistModel.FK_tabClientPermissionWithProductClassification_tabClientPermission" ManuallyRouted="false" />
+        <AssociationConnector Association="LocalTenderAssistModel.FK_tabClientPermissionWithSector_tabClientPermission" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabEmpDetail" Width="1.5" PointX="7.375" PointY="5" />
+        <EntityTypeShape EntityType="LocalTenderAssistModel.tabEmpEmailId" Width="1.5" PointX="9.625" PointY="5.875" />
+        <AssociationConnector Association="LocalTenderAssistModel.FK_tabEmpEmailId_tabEmpDetails1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,63 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.CommonHelper
+
+<div class="dropdown">
+    <button class="btn btn-default dropdown-toggle selectButton" id="btnCountryRegionName" type="button" data-toggle="dropdown">
+        <span id="lblCountryRegion">COUNTRY REGION</span>
+        <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+        @{
+            var regionName = "";
+            var hdnRegionId= 0;
+            var selectedRegionText = "";
+
+            var GlobalCountryRegionList = Utility.GlobalCountryRegionList();
+            foreach (var regionId in GlobalCountryRegionList)
+            {
+                hdnRegionId = Model.RegionId;
+                switch (regionId)
+                {
+                    case Utility.TenderTypeList.MiddleEastCountryRegion:
+                        regionName = Utility.TenderTypeDisplayText.DisplayMiddleEastCountryName;
+                        break;
+
+                    case Utility.TenderTypeList.EuropeanCountryRegion:
+                        regionName = Utility.TenderTypeDisplayText.DisplayEuropeanCountryName;
+
+                        break;
+                    case Utility.TenderTypeList.AfricanCountryRegion:
+                        regionName = Utility.TenderTypeDisplayText.DisplayAfricanCountryName;
+
+                        break;
+                    case Utility.TenderTypeList.AsianCountryRegion:
+                        regionName = Utility.TenderTypeDisplayText.DisplayAsianCountryName;
+
+                        break;
+                    case Utility.TenderTypeList.SaarCountryRegion:
+                        regionName = Utility.TenderTypeDisplayText.DisplaySaarCountryName;
+
+                        break;
+                    case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                        regionName = Utility.TenderTypeDisplayText.DisplayAustraliaOceaniaCountryName;
+
+                        break;
+                    case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                        regionName = Utility.TenderTypeDisplayText.DisplaySouthAmericaCountryName;
+
+                        break;
+                    case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                        regionName = Utility.TenderTypeDisplayText.DisplayNorthAmericaCountryName;
+
+                        break;
+                }
+                if (regionId == hdnRegionId)
+                { selectedRegionText = regionName; }
+                <li><a href="javascript:void(0);" id="@regionId" class="CountryRegionName">@regionName </a></li>
+            }
+        }
+
+    </ul>
+</div>
+@Html.Hidden("hdnRegionId", hdnRegionId)
+@Html.Hidden("hdnRegionText", selectedRegionText)

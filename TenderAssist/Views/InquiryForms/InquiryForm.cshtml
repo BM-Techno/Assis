@@ -1,0 +1,263 @@
+﻿@model  TenderAssist.ViewModel.TenderDetail
+
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">@Model.FormTitle</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-3">
+                    @{
+                        switch (Model.Subscribetype)
+                        {
+
+                            case TenderAssist.CommonHelper.Utility.SubscribType.IndianTender:
+                                <img src="~/Images/Services/indian.png" alt="Indian Tender" class="img_left">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.GlobalTender:
+                                <img src="~/Images/Services/global.png" alt="Global Tender" class="img_left">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.TenderResult:
+                                <img src="~/Images/Services/awarded.png" alt="Tender Result" class="img_left">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.TenderAssist:                            
+                                <img src="~/Images/Services/tenderassist.png" alt="Tender Assist" class="img_left" style="width: 300px;height: 300px;">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.VendorEmpanelment:
+                                <img src="~/Images/Services/vendorempanelment.png" alt="Vendor Empanelment" class="img_left">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.SubContractor:
+                                <img src="~/Images/Services/subcontractor.png" alt="SubContractor" class="img_left">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.DigitalSignature:
+                                <img src="~/Images/Services/digitalsignature.png" alt="Digital Signature" class="img_left">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.ISOConsultant:
+                                <img src="~/Images/Services/ISOConsultant.png" alt="ISOConsultant" class="img_left">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.project:
+                                <img src="~/Images/Services/tenderassist.png" alt="Project" class="img_left" style="width: 300px;height: 300px;">
+                                break;
+                            case TenderAssist.CommonHelper.Utility.SubscribType.result:
+                                <img src="~/Images/Services/tenderassist.png" alt="result" class="img_left" style="width: 300px;height: 300px;">
+                                break;
+                        }
+                    }
+                </div>
+                <div class="col-md-9">
+                    <h1 class="pagetitle">
+                        @Model.FormTitle
+                    </h1>
+                    <div class="row">
+                        <div class="col-md-8">
+                            @{
+                                switch (Model.Subscribetype)
+                                {
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.IndianTender:
+                                        <p class="pagedescription">
+                                            Your search for getting Right Tender Information ends here. With over 30 Lac Indian Tenders/ RFQs /RFPs / Auctions being published by government, semi government departments, PSUs and private players from every corner of the country, we ensure that you don't miss any Tender of your category and get only relevant Tender Information on time.
+                                        </p>
+                                        <div class="pagedescription">
+                                            <ul>
+                                                <li>Tenders Alerts on Email, Web & Mobile App.</li>
+                                                <li>12,000+ Fresh Tenders added daily</li>
+                                                <li>Complete Information Tender Documents & Corrigendum</li>
+                                                <li>Classified tenders to ensure you get relevant tenders</li>
+                                                <li>1,00,000 + Registered Users</li>
+                                                <li>24 x 7 Support</li>
+                                            </ul>
+                                        </div>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.GlobalTender:
+                                        <p class="pagedescription">
+                                            Let global tendering opportunity chase you! We track all the Tenders, RFP, RFI from any Tendering Authority, Multilateral Funding Agencies, Federal Agencies or Conglomerate across the Globe. We ensure every Global Opportunity that attracts you, is notified to you as and when it is published with all relevant details.
+                                        </p>
+                                        <div class="pagedescription">
+                                            <ul>
+                                                <li>Tenders Alerts on Email, Web & Mobile App.</li>
+                                                <li>8000+ Fresh Tenders added daily</li>
+                                                <li>Complete Information Tender Documents & Corrigendum</li>
+                                                <li>Classified tenders to ensure you get relevant tenders</li>
+                                                <li>1,00,000 + Registered Users</li>
+                                                <li>24 x 7 Support</li>
+                                            </ul>
+                                        </div>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.TenderResult:
+                                        <p class="pagedescription">
+                                            Our Tender Result service gives you the great market insight by knowing your competition well and simplifies the tender result tracking process. This will help you in preparing yourself for the upcoming tenders. Not only this, but you can also explore subcontracting opportunities. We try to capture every tender results and every detail technical bid, price bid opening, awarded contract detail etc.
+                                        </p>
+                                        <div class="pagedescription">
+                                            <ul>
+                                                <li>Largest Tender Result Database</li>
+                                                <li>Complete Tender Result Email Alert</li>
+                                                <li>Technical & Price bid opening, Bid contract documents</li>
+                                                <li>Well classified tender results</li>
+                                                <li>1,00,000 + Registered Users</li>
+                                                <li>24 x 7 Support</li>
+                                            </ul>
+                                        </div>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.TenderAssist:
+                                        <h3 class="subtitle">
+                                            Why TenderAssist 247?
+                                        </h3>
+                                        <p class="pagedescription">
+                                            Register on TenderAssist 247 and you will never miss a Tender, because it tracks more than 5 Million Tenders/ Annum which is highest in India and more than 100,000 subscription rely on the same. If not a registered member, register today.
+                                        </p>
+                                        <p class="pagedescription">
+                                            We'll Provide you end to end solution for any Kind of tenders i.e Govt E - Marketplace,Semi Government, Non government Organization,Corporations or private sectors. we have subscription plans on annual basis for Tender Assistance.
+                                            <br />
+                                            Tender assistance is a skillful task, one must have the technical acumen & Document Eligibility to influence your chances for winning any kind of Tenders. We have just the right amount of expertise to help you put in your Bid and get you to the next level till bid submission successfully submitted. We have the necessary knowledge and experience to give you customized bidding solutions for your needs 24*7.
+                                            <br />
+                                            We are providing 24*7 help &support service to valued Customers.
+                                        </p>
+                                        <div class="pagedescription">
+                                            <ul>
+                                                <li>Get Tenders before others do</li>
+                                                <li>Never miss a Tender</li>
+                                                <li>No more Junk Tenders</li>
+                                                <li>Bid decision made Quick & Easy</li>
+                                                <li>Get Global Tenders' Information</li>
+                                                <li>Get all types of Tender Documents</li>
+                                            </ul>
+                                        </div>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.result:
+                                        <h3 class="subtitle">
+                                            Why result
+                                        </h3>
+                                        <p class="pagedescription">
+                                            Register on result and you will never miss a Tender, because it tracks more than 5 Million Tenders/ Annum which is highest in India and more than 100,000 subscription rely on the same. If not a registered member, register today.
+                                        </p>
+                                        <p class="pagedescription">
+                                            We'll Provide you end to end solution for any Kind of tenders i.e Govt E - Marketplace,Semi Government, Non government Organization,Corporations or private sectors. we have subscription plans on annual basis for Tender Assistance.
+                                            <br />
+                                            Tender assistance is a skillful task, one must have the technical acumen & Document Eligibility to influence your chances for winning any kind of Tenders. We have just the right amount of expertise to help you put in your Bid and get you to the next level till bid submission successfully submitted. We have the necessary knowledge and experience to give you customized bidding solutions for your needs 24*7.
+                                            <br />
+                                            We are providing 24*7 help &support service to valued Customers.
+                                        </p>
+                                        <div class="pagedescription">
+                                            <ul>
+                                                <li>Get Tenders before others do</li>
+                                                <li>Never miss a Tender</li>
+                                                <li>No more Junk Tenders</li>
+                                                <li>Bid decision made Quick & Easy</li>
+                                                <li>Get Global Tenders' Information</li>
+                                                <li>Get all types of Tender Documents</li>
+                                            </ul>
+                                        </div>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.project:
+                                        <h3 class="subtitle">
+                                            Why project
+                                        </h3>
+                                        <p class="pagedescription">
+                                            Register on project and you will never miss a Tender, because it tracks more than 5 Million Tenders/ Annum which is highest in India and more than 100,000 subscription rely on the same. If not a registered member, register today.
+                                        </p>
+                                        <p class="pagedescription">
+                                            We'll Provide you end to end solution for any Kind of tenders i.e Govt E - Marketplace,Semi Government, Non government Organization,Corporations or private sectors. we have subscription plans on annual basis for Tender Assistance.
+                                            <br />
+                                            Tender assistance is a skillful task, one must have the technical acumen & Document Eligibility to influence your chances for winning any kind of Tenders. We have just the right amount of expertise to help you put in your Bid and get you to the next level till bid submission successfully submitted. We have the necessary knowledge and experience to give you customized bidding solutions for your needs 24*7.
+                                            <br />
+                                            We are providing 24*7 help &support service to valued Customers.
+                                        </p>
+                                        <div class="pagedescription">
+                                            <ul>
+                                                <li>Get Tenders before others do</li>
+                                                <li>Never miss a Tender</li>
+                                                <li>No more Junk Tenders</li>
+                                                <li>Bid decision made Quick & Easy</li>
+                                                <li>Get Global Tenders' Information</li>
+                                                <li>Get all types of Tender Documents</li>
+                                            </ul>
+                                        </div>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.VendorEmpanelment:
+                                        <p class="pagedescription">
+                                            New users can register their business through E Tendering on electronic tendering portal. For registration you can call us for assistance so that our representative/ experts will help you to register on any government department.where you can also find step by step registration guide on Tendering Portal.
+                                        </p>
+                                        <div class="pagedescription">
+                                            <ul>
+                                                <li>1000+ Vendor empanelment opportunities</li>
+                                                <li>Daily Email alert</li>
+                                                <li>Our expert helps you in empanelment process</li>
+                                            </ul>
+                                        </div>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.SubContractor:
+                                        <p class="pagedescription">
+                                            A subcontractor is an individual or in many cases a business that signs a contract to perform part or all of the obligations of another's contract.
+                                        </p>
+                                        <p class="pagedescription">
+                                            While the most common concept of a subcontractor is in building works and civil engineering, the range of opportunities for subcontractor is much wider and it is possible that the greatest number now operate in the information technology and information sectors of business.
+                                        </p>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.DigitalSignature:
+                                        <p class="pagedescription">
+                                            Digital Signature Certificate is the issuance on documents submitted in electronic form in order to ensure the security and authenticity of the documents that are filed electronically. We provide trusted Digital Signature Certificates authorized by a Certifying Authority (CA).
+                                        </p>
+                                        <p class="pagedescription">
+                                            We have a very experienced team which helps clients throughout the process of acquiring a DSC, starting from the verification of the documents to the successful download of the certificates with their E -token.
+                                        </p>
+                                        break;
+                                    case TenderAssist.CommonHelper.Utility.SubscribType.ISOConsultant:
+                                        <p class="pagedescription">
+                                            ISO refers to the International Organization for Standardization. This organization develops the standards, and it does in order to certify businesses or organizations. Certification is handled by third-party and tested annually.
+                                        </p>
+                                        <p class="pagedescription">
+                                            ISO certification certifies that a management system, manufacturing process, service, or documentation procedure has all the requirements for standardization and quality assurance. International Organization for Standardization is an independent, non-governmental, international organization that develops standards to ensure the quality, safety, and efficiency of products, services, and systems.
+                                           <br />
+                                            <br />
+                                            ISO certifications exist in many areas of industry, from energy management and social responsibility to medical devices and energy management. ISO standards are in place to ensure consistency. Each certification has separate standards and criteria and is classified numerically.
+                                        </p>
+                                        
+
+                                        break;
+                                }
+                            }
+                        </div>
+                        <div class="col-md-4">
+                            @Html.Partial("_partialInquiryForm", Model)
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<style>
+    .img_left {
+        margin: 0;
+        border-radius: 50%;
+        box-shadow: 0 1px 9px rgba(43, 59, 93, .29);
+        cursor: pointer;
+        background: #fff;
+        position: relative;
+        -webkit-transition: all .3s ease-out;
+        transition: all .3s ease-out;
+    }
+</style>

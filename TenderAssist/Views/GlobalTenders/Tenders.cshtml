@@ -1,0 +1,91 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.Controllers;
+
+@{
+    GlobalTendersController _global = new GlobalTendersController();
+    var TotalDisplay = 5;
+}
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="https://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="https://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">
+                                Global Tenders
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-9">
+            <div class="well well-sm">
+                <div id="categories">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_panel">
+                                @Html.Partial("Search/partialSearchPanel")
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="lineseperatorOrange"></div>
+                                    </div>
+                                </div>
+                                <div id="loader" style="display:none;">
+                                    @Html.Partial("partialSpinnerLoadingView")
+                                </div>
+                                <div class="section_panel">
+                                    <div id="displayPanel" class="display_panel">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">            
+            @{
+                var tenderDetail = new TenderAssist.ViewModel.TenderDetail
+                {
+                    CountryList= Model.CountryList,
+                    StateList = Model.StateList,
+                    CityList = Model.CityList,
+                    Subscribetype = TenderAssist.CommonHelper.Utility.SubscribType.GlobalTender,
+                    DownloadTenderRefNo = 0,
+                    FormTitle = TenderAssist.CommonHelper.Utility.SubscribTypeDisplsyText.GlobalTender,
+                    FormType = TenderAssist.CommonHelper.Utility.FormType.RegistrationForm
+                };
+                @Html.Partial("_partialInquiryForm", tenderDetail)
+            }
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @{Model.TotalDisplay = TotalDisplay;}
+            @Html.Partial("partialCountryByRegionList_Home", Model)
+        </div>
+    </div>
+</div>
+
+@Html.Partial("_partialInquiryForm", Model)
+
+<script>
+    var loadDataList = '@Url.Action("GetDefaultGlobalTender", "GlobalTenders")';
+    var isHomePage = true;
+</script>
+
+
+
+@Scripts.Render("~/bundles/global-search-script")

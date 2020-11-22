@@ -1,0 +1,68 @@
+﻿
+@{ 
+    var IndianTendersListUrl = Url.Action("Tenders", "IndianTenders");
+    var GlobalTendersUrl = Url.Action("Tenders", "GlobalTenders");
+    var TenderAssistUrl = Url.Action("TenderAssist", "InquiryForms");
+    var SubcontractingUrl = Url.Action("Subcontracting", "InquiryForms");
+    var NewRegistrationUrl = Url.Action("NewRegistration", "InquiryForms");
+}
+
+<div id="defaultmenu" class="navbar navbar-inverse navbar-fixed-top TopNavLinks">
+    <div class="container_full">
+        <div class="navbar-header navbar-header-menu">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.Partial("Header/_Logo")
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="firstlink ">
+                    <a href="@Url.Action("Index","Home")" class="hvr-bounce-to-bottom active ">
+                        <i class="fa fa-home"></i>
+                    </a>
+                </li>
+                <li class="firstlink ">
+                    <a href="@IndianTendersListUrl" class="hvr-bounce-to-bottom active ">
+                    Indian
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@GlobalTendersUrl" class="hvr-bounce-to-bottom ">
+                        Global
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@TenderAssistUrl" class="hvr-bounce-to-bottom ">
+                        Tender Assist
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@SubcontractingUrl" class="hvr-bounce-to-bottom ">
+                        Sub Contractor
+                    </a>
+                </li>
+                <li class="linkSeparator">
+                    <a class="hvr-bounce-to-bottom" href="@Url.Action("PayOnline","Home")"  >
+                        <span class="fa fa-credit-card fa-2x icon"></span>
+                        Pay online
+                    </a>
+                </li>
+                <li class="">
+                    <a href="@NewRegistrationUrl" class="hvr-bounce-to-bottom active ">
+                        <span class="fa fa-user fa-2x icon"></span>
+                        Register
+                    </a>
+                </li>
+                <li class="">
+                    <a class="loginmodel ripple hvr-bounce-to-bottom " href="@Url.Action("UserLogin","Home")">
+                        <span class="fa fa-lock fa-2x icon"></span>
+                        Login
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>

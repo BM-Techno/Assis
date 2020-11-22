@@ -1,0 +1,168 @@
+﻿@using TenderAssist.Controllers
+@using System.Globalization
+@using TenderAssist.CommonHelper
+@using System.Configuration;
+@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    var common = new CommonController();
+    var _global = new GlobalTendersController();
+    var paggingUrl = "";
+    var totalDisplayData = Model.TotalDisplay;
+    var countryWord = Utility.TenderWordNameList.GlobalCountryWord;
+    var regionName = "";
+
+    var GlobalCountryRegionList = Utility.GlobalCountryRegionList();
+
+    var middleEastCountryUrl = ConfigurationManager.AppSettings["TenderByMiddleEastCountryUrl"].ToString();
+    var europeanCountryUrl = ConfigurationManager.AppSettings["TenderByEuropeanCountryUrl"].ToString();
+    var africanCountryUrl = ConfigurationManager.AppSettings["TenderByAfricanCountryUrl"].ToString();
+    var asianCountryUrl = ConfigurationManager.AppSettings["TenderByAsianCountryUrl"].ToString();
+    var saarCountryUrl = ConfigurationManager.AppSettings["TenderBySAARCountryUrl"].ToString();
+    var australiaOceaniaCountryUrl = ConfigurationManager.AppSettings["TenderByAustraliaOceaniaCountryUrl"].ToString();
+    var southAmericaCountryUrl = ConfigurationManager.AppSettings["TenderBySouthAmericaCountryUrl"].ToString();
+    var northAmericaCountryUrl = ConfigurationManager.AppSettings["TenderByNorthAmericaCountryUrl"].ToString();
+    var count = 0;
+    var formclass = "";
+    var btnclass = "";
+    @Html.Raw("<div class=\"row\">")
+
+    foreach (var regionId in GlobalCountryRegionList)
+    {
+        count++;
+        switch (regionId)
+        {
+            case Utility.TenderTypeList.MiddleEastCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayMiddleEastCountryName;
+                paggingUrl = middleEastCountryUrl;
+                formclass = " box-primary ";
+                btnclass = " btn-primary ";
+                break;
+            case Utility.TenderTypeList.EuropeanCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayEuropeanCountryName;
+                paggingUrl = europeanCountryUrl;
+                formclass = " box-warning ";
+                btnclass = " btn-warning ";
+                break;
+            case Utility.TenderTypeList.AfricanCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayAfricanCountryName;
+                paggingUrl = africanCountryUrl;
+                formclass = " box-info ";
+                btnclass = " btn-info ";
+                break;
+            case Utility.TenderTypeList.AsianCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayAsianCountryName;
+                paggingUrl = asianCountryUrl;
+                formclass = " box-danger ";
+                btnclass = " btn-danger ";
+                break;
+            case Utility.TenderTypeList.SaarCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplaySaarCountryName;
+                formclass = " box-primary ";
+                btnclass = " btn-primary ";
+                paggingUrl = saarCountryUrl;
+                break;
+            case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayAustraliaOceaniaCountryName;
+                paggingUrl = australiaOceaniaCountryUrl;
+                formclass = " box-warning ";
+                btnclass = " btn-warning ";
+                break;
+            case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplaySouthAmericaCountryName;
+                paggingUrl = southAmericaCountryUrl;
+                formclass = " box-info ";
+                btnclass = " btn-info ";
+                break;
+            case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayNorthAmericaCountryName;
+                paggingUrl = northAmericaCountryUrl;
+                formclass = " box-danger ";
+                btnclass = " btn-danger ";
+                break;
+        }
+        var countryList = _global.LoadCountryByRegionIdList(regionId, totalDisplayData);
+
+        @Html.Raw("<div class=\"col-md-3\">")
+        <div class="row">
+            <div class="col-md-12">
+                <div class="box box-solid @formclass">
+                    <div class="box-header">
+                        <span class="box-title">
+                            @regionName
+                        </span>
+                    </div>
+                    <div class="box-body">
+                        <ul class="LinkList">
+                            @{
+                                foreach (var item in countryList.AllCountryList)
+                                {
+                                    var countryname = item.CountryName.ToLower().Replace(" ", "-");
+                                    var url = paggingUrl + countryWord + countryname;
+
+                                    <li>
+                                        <span>»</span>
+                                        <a href="@url">
+                                            @CultureInfo.InvariantCulture.TextInfo.ToTitleCase(item.CountryName).Replace("-", " ")
+                                            Tenders
+                                        </a>
+                                    </li>
+                                }
+                            }
+                        </ul>
+                    </div>
+                    <div class="box-footer">
+                        <a href="@paggingUrl" target="_blank" class="btn @btnclass">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+                                if (count % 4 == 0 && count != 8)
+                                { @Html.Raw("</div></div><div class=\"row\">") }
+                                else
+                                { @Html.Raw("</div>")}
+                                }
+
+                                if (count == 8)
+                                { @Html.Raw("</div>")}
+}
+
+
+@Html.Hidden("hdnFieldId", "0")
+@Html.Hidden("hdnFieldName", "All Country")
+
+<style>
+    ul.LinkList {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+
+        ul.LinkList li {
+            margin: 10px 5px;
+        }
+
+            ul.LinkList li a {
+                color: #0a55d5;
+                font-size: 15px;
+            }
+
+            ul.LinkList li.morelink a {
+                color: #f56954;
+                font-size: 15px;
+            }
+
+            ul.LinkList li a:hover {
+                color: #000;
+            }
+
+    ul.LinkList span {
+        font-weight: 700;
+        font-size: 17px;
+        color: #e52f48;
+        /* margin-top: 13px; */
+        /* float: left; */
+        margin-left: 0px;
+        line-height: 0.7;
+    }
+</style>

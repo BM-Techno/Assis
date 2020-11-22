@@ -1,0 +1,185 @@
+﻿@using System.Globalization
+@using TenderAssist.Controllers
+@using System.Configuration;
+@using TenderAssist.CommonHelper;
+@using System.Text.RegularExpressions;
+
+@model TenderAssist.ViewModel.TenderDetail
+
+
+<script type="text/javascript">
+    NewPage = ('@ViewBag.CurrentPage');
+    Total = parseInt('@Model.Total');
+    TotalLive = parseInt('@Model.TotalLive');
+    TotalFresh = parseInt('@Model.TotalFresh');
+    TotalClosed = parseInt('@Model.TotalClosed');
+    TotalPage = parseInt('@ViewBag.TotalPage');
+
+    console.log('TotalPage - ' + TotalPage);
+</script>
+ 
+
+<div class="row">
+    <div class="col-md-12">
+        @{
+            if (Model.AllSearchTenaderInfoWithAllDetail.Any())
+            {
+                var resultList = Model.AllSearchTenaderInfoWithAllDetail.OrderBy(x => x.Rn).ToList();
+
+                foreach (var item in resultList)
+                {
+                    string[] locations = Regex.Split(item.Location.Trim(), " - ");
+                    var country = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[0].ToString(CultureInfo.InvariantCulture).ToLower());
+                    //var city = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[1].ToString(CultureInfo.InvariantCulture).ToLower());
+                    //var state = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[2].ToLower());
+                    var location = country;
+
+                    var url = Utility.LinkUrls.GlobalTenderDetailUrl + item.OurRefNo.ToString(CultureInfo.InvariantCulture);
+                    
+                    <div class="pricing-area price-four searchresult-Data">
+                        <div class="searchresult-DataContent searchresult-DataContentpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-3 text-primary">
+                                            <b>@item.Rn.</b>
+                                            &nbsp;&nbsp;&nbsp;
+                                            GRNo <b>
+                                                #@Html.Raw(item.OurRefNo.ToString(CultureInfo.InvariantCulture))
+                                            </b>
+                                        </div>
+                                        <div class="col-md-2" title="Tender Amount">
+                                            <b><i class="fa fa-rupee"></i></b>
+                                            @{
+                                                if (item.TenderAmount.ToString().Trim() == "0" || item.TenderAmount.ToString().Trim() == "0.0" || item.TenderAmount.ToString().Trim() == "0.00")
+                                                {
+                                                    @Html.Raw("Refer Document")}
+                                                else
+                                                {
+                                                    @Html.Raw(TenderAmount(item.TenderAmount.ToString(CultureInfo.InvariantCulture)).ToString())}
+                                            }
+                                        </div>
+                                        <div class="col-md-2" title="Due Date">
+                                            <b><i class="fa fa-calendar"></i></b>
+                                            @Html.Raw(item.DueDate.ToString("dd MMM, yyyy"))
+                                        </div>
+                                        <div class="col-md-5" title="Location">
+                                            <b><i class="fa fa-map-marker"></i></b>
+                                            @Html.Raw(DisplayLocation(item.Location))
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            @Html.Raw(DisplayOwnership(item.OwnershipName))
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-justify text-info">
+                                            <a href="@url" target="_blank">
+                                                <b>
+                                                    @Html.Raw(DisplayTenderInfo(item.WorkDesc, Model.DisplayText, Model.DisplayText2))
+                                                </b>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <a href="@url" target="_blank">
+                                            <i class="fa fa-eye"></i>
+                                            View
+                                        </a>
+                                        &nbsp;&nbsp;
+                                        <a href="#nogo" onclick="DownloadTender(@item.OurRefNo);" data-toggle="modal" data-target="#myModal">
+                                            <i class="fa fa-download"></i>
+                                            Download
+                                        </a>
+                                        @*&nbsp;&nbsp;
+                                        <a href="@bidwithassisturl" target="_blank">
+                                            <i class="fa fa-user"></i>
+                                            Assist
+                                        </a>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    <div class="alert alert-danger alert-dismissible">
+                                                        <strong>Sorry!</strong> No record found.
+                                                    </div>
+                                                }
+        }
+
+
+    </div>
+
+</div>
+
+
+
+@helper TenderAmount(string tenderAmount)
+{
+var displayAmount = "0";
+var common = new CommonController();
+if (!(tenderAmount.Trim() == "" || Convert.ToDouble(tenderAmount) == 0))
+{
+    displayAmount = common.AmountToWords(tenderAmount.Trim());
+}
+    @Html.Raw(@displayAmount)
+}
+
+
+@helper DisplayLocation(string Location)
+{
+//string[] locations = System.Text.RegularExpressions.Regex.Split(Location.Trim(), " - ");
+//var city = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[0].ToString(CultureInfo.InvariantCulture).ToLower());
+//var state = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[1].ToLower());
+//var location = city + " - " + state;
+
+    @Html.Raw(Location)
+}
+
+
+@helper DisplayOwnership(string OwnershipName)
+{
+var ownership = "";
+if (!(OwnershipName == null || OwnershipName.Trim() == ""))
+{ ownership = new CultureInfo("en-US", false).TextInfo.ToTitleCase(OwnershipName.ToLower()); }
+
+    @Html.Raw(ownership)
+}
+
+
+
+@helper DisplayTenderInfo(string WorkDesc, string DisplayText, string DisplayText2)
+{
+
+var searchdata = DisplayText;
+if (!string.IsNullOrEmpty(DisplayText))
+{
+    searchdata = searchdata.Replace("-", ",").Replace(" ", ",");
+}
+var hidhlightword = searchdata;
+if (!string.IsNullOrEmpty(DisplayText2))
+{
+    searchdata = DisplayText2;
+    searchdata = searchdata.Replace("-", ",").Replace(" ", ",");
+    hidhlightword = hidhlightword == "" ? searchdata : hidhlightword + "," + searchdata;
+}
+
+    @Html.Raw(Highlightsearchtext(WorkDesc, hidhlightword, 1))
+}
+
+
+@helper Highlightsearchtext(string strSource, string strStart, int sarchType)
+{
+var common = new CommonController();
+var color = common.Highlightsearchtext(strSource, strStart, sarchType);
+    @Html.Raw(color)
+}

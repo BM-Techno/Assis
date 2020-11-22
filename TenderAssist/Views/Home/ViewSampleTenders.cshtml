@@ -1,0 +1,871 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@{
+    ViewBag.Title = "View Sample Tenders";
+}
+
+<style>
+    .CriteriaInnerBox {
+        font-size: 16px;
+        padding: 5px;
+        font-weight: bold;
+    }
+
+    .CriteriaInnerSubDetailBox {
+        font-size: 16px;
+        padding: 10px 5px;
+    }
+
+    .tenderFilterationText {
+        font-weight: normal;
+        margin: 5px;
+    }
+
+    .mar5 {
+        margin-right: 5px;
+    }
+
+    .NoDataClass {
+        color: #777 !important;
+        font-weight: normal;
+    }
+
+        .NoDataClass:before {
+            content: "No Data Found";
+        }
+
+    .SearchResultLoader {
+        font-size: 30px;
+        text-align: center;
+        padding: 50px;
+    }
+</style>
+<script type="text/javascript">
+    
+    function loadPermissionCriteriaFilter(permissionId) {
+        $.ajax({
+            type: 'POST',
+            url: "/Home/GetUserTenderPermissionAllListDetails_Local",
+            cache: false,
+            data: ({ permissionId: permissionId }),
+            success: function (result) {
+                var permissionlist = result;
+                if (permissionlist != null) {
+                    $('#divSelectedAgency').html(permissionlist.SelectedAgencyWithName);
+                    $('#divSelectedOwnership').html(permissionlist.SelectedOwnershipWithName);
+                    $('#divSelectedSector').html(permissionlist.SelectedSectorWithName);
+                    $('#divSelectedLocation').html(permissionlist.SelectedLocationWithName);
+                    $('#divSelectedIndSubInd').html(permissionlist.SelectedIndustrySubIndustryWithName);
+                    $('#divSelectedProduct').html(permissionlist.SelectedProductWithName);
+                }
+            }
+        });
+    }
+    function SearchTenderByTenderYear() {
+        //debugger;
+        var currentTenderYear = $('#hdnCurrentTenderYear').val();
+        var selectedTenderYear = $('#hdnSelectedTenderYear').val();
+
+        $('#hdnValuesTenderStatusFlag').val('1');
+        if (parseInt(currentTenderYear) == parseInt(selectedTenderYear))
+        { $('#hdnValuesTenderStatusFlag').val('3'); }
+
+
+
+        var hdnValuesPId = parseInt($('#hdnValuesPId').val());
+        var page = 0;
+        var hdnTenderStatusFlag = $('#hdnValuesTenderStatusFlag').val();
+        //if (this.id == "0")
+        //    hdnTenderStatusFlag = "1";
+        //else
+        //    hdnTenderStatusFlag = "3";
+        var hdnSelectedOwnership = $('#hdnValuesSelectedOwnership').val();
+        var hdnSelectedOwnershipNotIn = $('#hdnValuesSelectedOwnershipNotIn').val();
+        var hdnSelectedSector = $('#hdnValuesSelectedSector').val();
+        var hdnSelectedSectorNotIn = $('#hdnValuesSelectedSectorNotIn').val();
+        var hdnSelectedAgency = $('#hdnValuesSelectedAgency').val();
+        var hdnSelectedAgencyNotIn = $('#hdnValuesSelectedAgencyNotIn').val();
+        var hdnSelectedIndustrySubIndustry = $('#hdnValuesSelectedIndustrySubIndustry').val();
+        var hdnSelectedIndustrySubIndustryNotIn = $('#hdnValuesSelectedIndustrySubIndustryNotIn').val();
+        var hdnSelectedLocation = $('#hdnValuesSelectedLocation').val();
+        var hdnSelectedLocationNotIn = $('#hdnValuesSelectedLocationNotIn').val();
+        var hdnSelectedKeyword1 = $('#hdnValuesSelectedKeyword1').val();
+        var hdnSelectedKeyword2 = $('#hdnValuesSelectedKeyword2').val();
+        var hdnSelectedKeyword3 = $('#hdnValuesSelectedKeyword3').val();
+        var hdnOtherKeywords = $('#hdnValuesOtherKeywords').val();
+        var hdnNotUsedKeywords = $('#hdnValuesNotUsedKeywords').val();
+        var hdnDocumentType = $('#hdnValuesDocumentType').val();
+        var hdnIsICBNcb = $('#hdnValuesIsICBNcb').val();
+        var hdnTenderValue = $('#hdnValuesTenderValue').val();
+        var hdnTenderValueFrom = $('#hdnValuesTenderValueFrom').val();
+        var hdnTenderValueTo = $('#hdnValuesTenderValueTo').val();
+        var hdnTenderYear = $('#hdnSelectedTenderYear').val();
+        var hdnOrderBys = $('#orderBy').val();
+        var hdnAscDesc = $('#ascDesc').val();
+
+        ShowLoading();
+        $("div#divTenderInfo").html('');
+
+        $('html, body').animate({ scrollTop: 0 }, 0);
+        $.ajax({
+            type: 'POST',
+            url: "/Home/ViewSampleTendersPartial",
+            cache: false,
+            data: ({
+                pId: hdnValuesPId, page: page, tenderStatusFlag: parseInt(hdnTenderStatusFlag),
+                selectedOwnership: hdnSelectedOwnership, selectedOwnershipNotIn: hdnSelectedOwnershipNotIn,
+                selectedSector: hdnSelectedSector, selectedSectorNotIn: hdnSelectedSectorNotIn,
+                selectedAgency: hdnSelectedAgency, selectedAgencyNotIn: hdnSelectedAgencyNotIn,
+                selectedIndustrySubIndustry: hdnSelectedIndustrySubIndustry, selectedIndustrySubIndustryNotIn: hdnSelectedIndustrySubIndustryNotIn,
+                selectedLocation: hdnSelectedLocation, selectedLocationNotIn: hdnSelectedLocationNotIn,
+                selectedKeyword1: hdnSelectedKeyword1, selectedKeyword2: hdnSelectedKeyword2, selectedKeyword3: hdnSelectedKeyword3,
+                otherKeywords: hdnOtherKeywords, notUsedKeywords: hdnNotUsedKeywords,
+                documentType: hdnDocumentType, IsIcbNcb: hdnIsICBNcb,
+                tenderValue: hdnTenderValue, tenderValueFrom: hdnTenderValueFrom, tenderValueTo: hdnTenderValueTo,
+                TenderYear: hdnTenderYear, OrderBys: hdnOrderBys, AscDesc: hdnAscDesc, isFirst: 0
+            }),
+            success: function (data) {
+
+
+                $("div#divTenderInfo").html(data);
+
+                var hdnDisplayCurrentPage = $('#hdnDisplayCurrentPage').val();
+                var hdnTotalPage = $('#hdnTotalPage').val();
+
+                $("#spnCurrentPage").text(hdnDisplayCurrentPage);
+                $("#spnTotalPage").text(hdnTotalPage);
+                $("#lblshowTotalCount").text($('#hdnTotalCount').val());
+
+                
+                HideLoading();
+
+
+                var Newpagecnt = $('#hdnPage').val();
+            }
+        });
+
+    }
+    $(document).ready(function () {
+        $('#btnClosedYearSearchLoading').hide();
+
+        $("#btnmailTenderInfo").click(function () {
+            submitData('1');
+        });
+        $("#btnmailTenderInfo_2").click(function () {
+            submitData('2');
+        });
+
+        var permissionId = parseInt($('#hdnValuesPId').val());
+        loadPermissionCriteriaFilter(permissionId);
+
+        $(".ClosedTenderYearDisplayName").click(function () {
+            //debugger;
+            var dispTxt = this.innerHTML;
+            var tenderYear = this.id;
+            var title = '';
+            var CurrentTenderYear = $('#hdnCurrentTenderYear').val();
+            title = " Tenders Expired In " + tenderYear;
+
+
+            $('#hdnSelectedTenderYear').val(tenderYear);
+            $('#btnClosedTenderYearDisplayName').text(dispTxt);
+        });
+
+        $(".viewTotalFilterCount").click(function () {
+            var tabCatLinks = document.getElementsByClassName("tabCatLinks");
+            for (i = 0; i < tabCatLinks.length; i++) {
+                tabCatLinks[i].className = tabCatLinks[i].className.replace("active", "");
+            }
+
+
+            var thisId = this.id.split('#');
+            var hdnValuesPId = parseInt($('#hdnValuesPId').val());
+            var page = 0;
+            var hdnTenderStatusFlag = parseInt(thisId[0]);
+
+            switch (parseInt(hdnTenderStatusFlag)) {
+                case 0:
+                    $('#linkAllTenders').addClass('active');
+                    break;
+                case 1:
+                    $('#linkLiveTenders').addClass('active');
+                    break;
+                case 2:
+                    $('#linkFreshTenders').addClass('active');
+                    break;
+                //case 3:
+                //    $('#linkArchiveTenders').addClass('active');
+                //    break;
+            }
+            
+
+            var hdnSelectedOwnership = $('#hdnValuesSelectedOwnership').val();
+            var hdnSelectedOwnershipNotIn = $('#hdnValuesSelectedOwnershipNotIn').val();
+            var hdnSelectedSector = $('#hdnValuesSelectedSector').val();
+            var hdnSelectedSectorNotIn = $('#hdnValuesSelectedSectorNotIn').val();
+            var hdnSelectedAgency = $('#hdnValuesSelectedAgency').val();
+            var hdnSelectedAgencyNotIn = $('#hdnValuesSelectedAgencyNotIn').val();
+            var hdnSelectedIndustrySubIndustry = $('#hdnValuesSelectedIndustrySubIndustry').val();
+            var hdnSelectedIndustrySubIndustryNotIn = $('#hdnValuesSelectedIndustrySubIndustryNotIn').val();
+            var hdnSelectedLocation = $('#hdnValuesSelectedLocation').val();
+            var hdnSelectedLocationNotIn = $('#hdnValuesSelectedLocationNotIn').val();
+            var hdnSelectedKeyword1 = $('#hdnValuesSelectedKeyword1').val();
+            var hdnSelectedKeyword2 = $('#hdnValuesSelectedKeyword2').val();
+            var hdnSelectedKeyword3 = $('#hdnValuesSelectedKeyword3').val();
+            var hdnOtherKeywords = $('#hdnValuesOtherKeywords').val();
+            var hdnNotUsedKeywords = $('#hdnValuesNotUsedKeywords').val();
+            var hdnDocumentType = $('#hdnValuesDocumentType').val();
+            var hdnIsICBNcb = $('#hdnValuesIsICBNcb').val();
+            var hdnTenderValue = $('#hdnValuesTenderValue').val();
+            var hdnTenderValueFrom = $('#hdnValuesTenderValueFrom').val();
+            var hdnTenderValueTo = $('#hdnValuesTenderValueTo').val();
+            var totalCount = parseInt(thisId[1]);
+            var hdnTenderYear = $('#hdnValuesTenderYear').val();
+            var hdnOrderBys = $('#orderBy').val();
+            var hdnAscDesc = $('#ascDesc').val();
+
+            $('html, body').animate({ scrollTop: 0 }, 0);
+           
+            ShowLoading();
+            $("div#divTenderInfo").html('');
+            $.ajax({
+                type: 'POST',
+                url: "/Home/ViewSampleTendersPartial",
+                cache: false,
+                data: ({
+                    pId: hdnValuesPId, page: page, tenderStatusFlag: hdnTenderStatusFlag,
+                    selectedOwnership: hdnSelectedOwnership, selectedOwnershipNotIn: hdnSelectedOwnershipNotIn,
+                    selectedSector: hdnSelectedSector, selectedSectorNotIn: hdnSelectedSectorNotIn,
+                    selectedAgency: hdnSelectedAgency, selectedAgencyNotIn: hdnSelectedAgencyNotIn,
+                    selectedIndustrySubIndustry: hdnSelectedIndustrySubIndustry, selectedIndustrySubIndustryNotIn: hdnSelectedIndustrySubIndustryNotIn,
+                    selectedLocation: hdnSelectedLocation, selectedLocationNotIn: hdnSelectedLocationNotIn,
+                    selectedKeyword1: hdnSelectedKeyword1, selectedKeyword2: hdnSelectedKeyword2, selectedKeyword3: hdnSelectedKeyword3,
+                    otherKeywords: hdnOtherKeywords, notUsedKeywords: hdnNotUsedKeywords,
+                    documentType: hdnDocumentType, IsIcbNcb: hdnIsICBNcb,
+                    tenderValue: hdnTenderValue, tenderValueFrom: hdnTenderValueFrom, tenderValueTo: hdnTenderValueTo,
+                    TenderYear: hdnTenderYear, OrderBys: hdnOrderBys, AscDesc: hdnAscDesc, isFirst: 0
+                }),
+                success: function (data) {
+                    $("div#divTenderInfo").html(data);
+
+                    var hdnDisplayCurrentPage = $('#hdnDisplayCurrentPage').val();
+                    var hdnTotalPage = $('#hdnTotalPage').val();
+
+                    $("#spnCurrentPage").text(hdnDisplayCurrentPage);
+                    $("#spnTotalPage").text(hdnTotalPage);
+                    $("#lblshowTotalCount").text(totalCount);
+
+                    var Newpagecnt = $('#hdnPage').val();
+                                        
+                    HideLoading();
+                }
+            });
+        });
+
+        $('#orderBy').change(function () {
+            orderset($('#orderBy').val(), $('#ascDesc').val());
+        });
+        $('#ascDesc').change(function () {
+            orderset($('#orderBy').val(), $('#ascDesc').val());
+        });
+    });
+
+    function Paging(pageId) {
+
+        var hdnValuesPId = parseInt($('#hdnValuesPId').val());
+        var page = parseInt(pageId);
+        var hdnTenderStatusFlag = parseInt($('#hdnTenderStatusFlag').val());
+        var hdnSelectedOwnership = $('#hdnSelectedOwnership').val();
+        var hdnSelectedOwnershipNotIn = $('#hdnSelectedOwnershipNotIn').val();
+        var hdnSelectedSector = $('#hdnSelectedSector').val();
+        var hdnSelectedSectorNotIn = $('#hdnSelectedSectorNotIn').val();
+        var hdnSelectedAgency = $('#hdnSelectedAgency').val();
+        var hdnSelectedAgencyNotIn = $('#hdnSelectedAgencyNotIn').val();
+        var hdnSelectedIndustrySubIndustry = $('#hdnSelectedIndustrySubIndustry').val();
+        var hdnSelectedIndustrySubIndustryNotIn = $('#hdnSelectedIndustrySubIndustryNotIn').val();
+        var hdnSelectedLocation = $('#hdnSelectedLocation').val();
+        var hdnSelectedLocationNotIn = $('#hdnSelectedLocationNotIn').val();
+        var hdnSelectedKeyword1 = $('#hdnSelectedKeyword1').val();
+        var hdnSelectedKeyword2 = $('#hdnSelectedKeyword2').val();
+        var hdnSelectedKeyword3 = $('#hdnSelectedKeyword3').val();
+        var hdnOtherKeywords = $('#hdnOtherKeywords').val();
+        var hdnNotUsedKeywords = $('#hdnNotUsedKeywords').val();
+        var hdnDocumentType = $('#hdnDocumentType').val();
+        var hdnIsICBNcb = $('#hdnIsICBNcb').val();
+        var hdnTenderValue = $('#hdnTenderValue').val();
+        var hdnTenderValueFrom = $('#hdnTenderValueFrom').val();
+        var hdnTenderValueTo = $('#hdnTenderValueTo').val();
+        var hdnTenderYear = $('#hdnTenderYear').val();
+        var hdnOrderBys = $('#orderBy').val();
+        var hdnAscDesc = $('#ascDesc').val();
+
+        $('html, body').animate({ scrollTop: 0 }, 0);
+        $("div#divTenderInfo").html('');
+        ShowLoading();
+        $.ajax({
+            type: 'POST',
+            url: "/Home/ViewSampleTendersPartial",
+            cache: false,
+            data: ({
+                pId: hdnValuesPId, page: page, tenderStatusFlag: hdnTenderStatusFlag,
+                selectedOwnership: hdnSelectedOwnership, selectedOwnershipNotIn: hdnSelectedOwnershipNotIn,
+                selectedSector: hdnSelectedSector, selectedSectorNotIn: hdnSelectedSectorNotIn,
+                selectedAgency: hdnSelectedAgency, selectedAgencyNotIn: hdnSelectedAgencyNotIn,
+                selectedIndustrySubIndustry: hdnSelectedIndustrySubIndustry, selectedIndustrySubIndustryNotIn: hdnSelectedIndustrySubIndustryNotIn,
+                selectedLocation: hdnSelectedLocation, selectedLocationNotIn: hdnSelectedLocationNotIn,
+                selectedKeyword1: hdnSelectedKeyword1, selectedKeyword2: hdnSelectedKeyword2, selectedKeyword3: hdnSelectedKeyword3,
+                otherKeywords: hdnOtherKeywords, notUsedKeywords: hdnNotUsedKeywords,
+                documentType: hdnDocumentType, IsIcbNcb: hdnIsICBNcb,
+                tenderValue: hdnTenderValue, tenderValueFrom: hdnTenderValueFrom, tenderValueTo: hdnTenderValueTo,
+                TenderYear: hdnTenderYear, OrderBys: hdnOrderBys, AscDesc: hdnAscDesc, isFirst: 1
+            }),
+            success: function (data) {
+                $("div#divTenderInfo").html(data);
+                var hdnDisplayCurrentPage = $('#hdnDisplayCurrentPage').val();
+                var hdnTotalPage = $('#hdnTotalPage').val();
+                $("#spnCurrentPage").text(hdnDisplayCurrentPage);
+                $("#spnTotalPage").text(hdnTotalPage);
+                var Newpagecnt = $('#hdnPage').val();
+
+                HideLoading();
+                
+            }
+        });
+    }
+
+    function orderset(hdnOrderBys, hdnAscDesc) {
+
+        var hdnValuesPId = parseInt($('#hdnValuesPId').val());
+        var page = 0;
+        var hdnTenderStatusFlag = parseInt($('#hdnValuesTenderStatusFlag').val());
+        var hdnSelectedOwnership = $('#hdnValuesSelectedOwnership').val();
+        var hdnSelectedOwnershipNotIn = $('#hdnValuesSelectedOwnershipNotIn').val();
+        var hdnSelectedSector = $('#hdnValuesSelectedSector').val();
+        var hdnSelectedSectorNotIn = $('#hdnValuesSelectedSectorNotIn').val();
+        var hdnSelectedAgency = $('#hdnValuesSelectedAgency').val();
+        var hdnSelectedAgencyNotIn = $('#hdnValuesSelectedAgencyNotIn').val();
+        var hdnSelectedIndustrySubIndustry = $('#hdnValuesSelectedIndustrySubIndustry').val();
+        var hdnSelectedIndustrySubIndustryNotIn = $('#hdnValuesSelectedIndustrySubIndustryNotIn').val();
+        var hdnSelectedLocation = $('#hdnValuesSelectedLocation').val();
+        var hdnSelectedLocationNotIn = $('#hdnValuesSelectedLocationNotIn').val();
+        var hdnSelectedKeyword1 = $('#hdnValuesSelectedKeyword1').val();
+        var hdnSelectedKeyword2 = $('#hdnValuesSelectedKeyword2').val();
+        var hdnSelectedKeyword3 = $('#hdnValuesSelectedKeyword3').val();
+        var hdnOtherKeywords = $('#hdnValuesOtherKeywords').val();
+        var hdnNotUsedKeywords = $('#hdnValuesNotUsedKeywords').val();
+        var hdnDocumentType = $('#hdnValuesDocumentType').val();
+        var hdnIsICBNcb = $('#hdnValuesIsICBNcb').val();
+        var hdnTenderValue = $('#hdnValuesTenderValue').val();
+        var hdnTenderValueFrom = $('#hdnValuesTenderValueFrom').val();
+        var hdnTenderValueTo = $('#hdnValuesTenderValueTo').val();
+        var hdnTenderYear = $('#hdnValuesTenderYear').val();
+        var hdnOrderBys = hdnOrderBys;
+        var hdnAscDesc = hdnAscDesc;
+
+        $('html, body').animate({ scrollTop: 0 }, 0);
+        $("div#divTenderInfo").html('');
+        ShowLoading();
+        $.ajax({
+            type: 'POST',
+            url: "/Home/ViewSampleTendersPartial",
+            cache: false,
+            data: ({
+                pId: hdnValuesPId, page: page, tenderStatusFlag: hdnTenderStatusFlag,
+                selectedOwnership: hdnSelectedOwnership, selectedOwnershipNotIn: hdnSelectedOwnershipNotIn,
+                selectedSector: hdnSelectedSector, selectedSectorNotIn: hdnSelectedSectorNotIn,
+                selectedAgency: hdnSelectedAgency, selectedAgencyNotIn: hdnSelectedAgencyNotIn,
+                selectedIndustrySubIndustry: hdnSelectedIndustrySubIndustry, selectedIndustrySubIndustryNotIn: hdnSelectedIndustrySubIndustryNotIn,
+                selectedLocation: hdnSelectedLocation, selectedLocationNotIn: hdnSelectedLocationNotIn,
+                selectedKeyword1: hdnSelectedKeyword1, selectedKeyword2: hdnSelectedKeyword2, selectedKeyword3: hdnSelectedKeyword3,
+                otherKeywords: hdnOtherKeywords, notUsedKeywords: hdnNotUsedKeywords,
+                documentType: hdnDocumentType, IsIcbNcb: hdnIsICBNcb,
+                tenderValue: hdnTenderValue, tenderValueFrom: hdnTenderValueFrom, tenderValueTo: hdnTenderValueTo,
+                TenderYear: hdnTenderYear, OrderBys: hdnOrderBys, AscDesc: hdnAscDesc, isFirst: 0
+            }),
+            success: function (data) {
+
+                $("div#divTenderInfo").html(data);
+
+                var hdnDisplayCurrentPage = $('#hdnDisplayCurrentPage').val();
+                var hdnTotalPage = $('#hdnTotalPage').val();
+
+                $("#spnCurrentPage").text(hdnDisplayCurrentPage);
+                $("#spnTotalPage").text(hdnTotalPage);
+                $("#lblshowTotalCount").text($('#hdnTotalCount').val());
+
+                var Newpagecnt = $('#hdnPage').val();
+                HideLoading();
+                
+            }
+        });
+    }
+
+    function IsValidEmailID(email) {
+        var filter = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        return filter.test(email);
+    }
+
+    function SelectTenderForMail(e) {
+        var Id = e.id.split('_')[1];
+        var ttNo = $("#tenderTTNo_" + Id).val();
+        var IsChecked = $(e).hasClass('text-black');
+        if (IsChecked)
+        { $(e).removeClass("text-black"); $(e).addClass("text-red"); }
+        else {
+            $(e).addClass("text-black"); $(e).removeClass("text-red");
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: "/Home/SetRefNo",
+            cache: false,
+            data: ({ refNo: ttNo, checkUncheck: IsChecked }),
+            success: function (data) {
+                //debugger;
+                $('#selectedOurRefNos').html('Selected Ref. Nos : ' + data.SelectRefNo);
+                $('#SelectedMultipleTenders').val(data.SelectRefNo);
+            }
+        });
+    }
+
+    function submitData(type) {
+        var selectedMultipleTenders = $('#SelectedMultipleTenders').val();
+        if (selectedMultipleTenders.trim() == '') {
+            alert('Please select any Tender for send Email');
+            return false;
+        }
+
+        var myform = $('#submitTenderMail');
+        $('#hdnTTNo').val(selectedMultipleTenders);
+        $('#hdnTest').val(type);
+        $('#hdnFromEmailID').val($('#FromEmailID').val());
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: myform.attr('action'),
+            data: myform.serialize(),
+            success: function (data) {
+                var msg = data.msg;
+                if (msg == "ok") {
+                    alert('Mail Sent Successfully');
+                }
+                else if (msg == "error") {
+                    alert('Mail Sending Problem');
+                }
+            }
+        });
+    }
+
+</script>
+@*<script src="@Url.Content("~/Scripts/nicEdit.js")" type="text/javascript"></script>*@
+
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+
+        <div class="row">
+            <div class="col-md-3">
+                <h3>
+                    <span id="selectedPermissionGroupName">
+                        Welcome,  @Html.Label("Username", Model.Username) !
+                        <br />
+                        <b>Permission : </b>
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseUser" class="text-light-blue">
+                            @ViewBag.PermissionName
+                        </a>
+                        - @Html.Label("TenderAssist247.com", "TenderAssist247.com")
+                    </span>
+                </h3>
+            </div>
+            <div class="col-md-9">
+                @{
+                    if ((string)Session["Display"] == "local" || (string)Session["Display"] == "care")
+                    {
+                        <div class="row">
+                            <div class="col-md-3">
+                                From :
+                                <br />
+                                <div class="input-group">
+                                    @Html.DropDownList("FromEmailID", Model.EmailConfigList, new { @class = "form-control" })
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                To :
+                                <br />
+                                @Html.Label("Email1", Model.Email1)
+                            </div>
+                            <div class="col-md-3">
+                                Cc :
+                                <br />
+                                @Html.Label("Email2", Model.Email2)
+                            </div>
+                            <div class="col-md-3">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-primary btn-flat searchBtn sideMargin" type="button" id="btnmailTenderInfo">
+                                        <i class="fa fa-envelope-square searchIcon"></i>&nbsp;Send Mail
+                                    </button>
+                                    <button class="btn btn-flat btn-warning searchBtn sideMargin" type="button" id="btnmailTenderInfo_2">
+                                        <i class="fa fa-envelope"></i>&nbsp;Test Mail
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+
+                    }
+                }
+
+            </div>
+        </div>
+
+    </div>
+    <form id="submitTenderMail" method="post" action="@Url.Action("PostTenderMail_MS", "Home")">
+        @Html.Hidden("IsMainPage", 0)
+        @{
+            var TenderStatusFlag = Model.TenderStatusFlag;
+            var SelectedOwnership = Model.SelectedOwnership;
+            var SelectedOwnershipNotIn = Model.SelectedOwnershipNotIn;
+            var SelectedSector = Model.SelectedSector;
+            var SelectedSectorNotIn = Model.SelectedSectorNotIn;
+            var SelectedAgency = Model.SelectedAgency;
+            var SelectedAgencyNotIn = Model.SelectedAgencyNotIn;
+            var SelectedIndustrySubIndustry = Model.SelectedIndustrySubIndustry;
+            var SelectedIndustrySubIndustryNotIn = Model.SelectedIndustrySubIndustryNotIn;
+            var SelectedLocation = Model.SelectedLocation;
+            var SelectedLocationNotIn = Model.SelectedLocationNotIn;
+            var SelectedKeyword1 = Model.SelectedKeyword1;
+            var SelectedKeyword2 = Model.SelectedKeyword2;
+            var SelectedKeyword3 = Model.SelectedKeyword3;
+            var OtherKeywords = Model.OtherKeywords;
+            var NotUsedKeywords = Model.NotUsedKeywords;
+            var DocumentType = Model.DocumentType;
+            var IsICBNcb = Model.IsIcbNcb;
+            var TenderValue = Model.TenderValue;
+            var TenderValueFrom = Model.TenderValueFrom;
+            var TenderValueTo = Model.TenderValueTo;
+            var TenderYear = Model.TenderYear;
+            var OrderBys = Model.OrderBys;
+            var AscDesc = Model.AscDesc;
+
+            @Html.Hidden("hdnTTNo")
+            @Html.Hidden("hdnTest")
+            @Html.Hidden("hdnUserId", Model.UserId)
+            @Html.Hidden("hdnUsername", Model.Username)
+            @Html.Hidden("hdnPurpose", Model.Purpose)
+            @Html.Hidden("hdnFromEmailID", "")
+            @Html.Hidden("hdnEmail1", Model.Email1)
+            @Html.Hidden("hdnEmail2", Model.Email2)
+            @Html.Hidden("hdneId", Model.eId)
+            @Html.Hidden("hdnDisplayText", Model.DisplayText)
+            @Html.Hidden("hdnIndianGlobal", Session["IndianGlobal"])
+
+            @Html.Hidden("hdnValuesPId", Session["PId"])
+            @Html.Hidden("hdnValuesTenderStatusFlag", TenderStatusFlag)
+            @Html.Hidden("hdnValuesSelectedOwnership", SelectedOwnership)
+            @Html.Hidden("hdnValuesSelectedOwnershipNotIn", SelectedOwnershipNotIn)
+            @Html.Hidden("hdnValuesSelectedSector", SelectedSector)
+            @Html.Hidden("hdnValuesSelectedSectorNotIn", SelectedSectorNotIn)
+            @Html.Hidden("hdnValuesSelectedAgency", SelectedAgency)
+            @Html.Hidden("hdnValuesSelectedAgencyNotIn", SelectedAgencyNotIn)
+            @Html.Hidden("hdnValuesSelectedIndustrySubIndustry", SelectedIndustrySubIndustry)
+            @Html.Hidden("hdnValuesSelectedIndustrySubIndustryNotIn", SelectedIndustrySubIndustryNotIn)
+            @Html.Hidden("hdnValuesSelectedLocation", SelectedLocation)
+            @Html.Hidden("hdnValuesSelectedLocationNotIn", SelectedLocationNotIn)
+            @Html.Hidden("hdnValuesSelectedKeyword1", SelectedKeyword1)
+            @Html.Hidden("hdnValuesSelectedKeyword2", SelectedKeyword2)
+            @Html.Hidden("hdnValuesSelectedKeyword3", SelectedKeyword3)
+            @Html.Hidden("hdnValuesOtherKeywords", OtherKeywords)
+            @Html.Hidden("hdnValuesNotUsedKeywords", NotUsedKeywords)
+            @Html.Hidden("hdnValuesDocumentType", DocumentType)
+            @Html.Hidden("hdnValuesIsICBNcb", IsICBNcb)
+            @Html.Hidden("hdnValuesTenderValue", TenderValue)
+            @Html.Hidden("hdnValuesTenderValueFrom", TenderValueFrom)
+            @Html.Hidden("hdnValuesTenderValueTo", TenderValueTo)
+            @Html.Hidden("hdnValuesTenderYear", TenderYear)
+            @Html.Hidden("hdnValuesOrderBys", OrderBys)
+            @Html.Hidden("hdnValuesAscDesc", AscDesc)
+            @Html.Hidden("SelectedMultipleTenders", "")
+        }
+        <div class="row">
+            <div class="col-md-3">
+                <div class="box box-solid box-primary">
+                    <div class="box-header">
+                        <span class="box-title" style="width: 100%;">
+                            <i class="fa fa-filter"></i>
+                            @ViewBag.PermissionName - Services
+                        </span>
+                    </div>
+                    <div class="box-body">
+                        <div class="CriteriaInnerBox">
+                            <span>
+                                By Ownership
+                            </span>
+                            <div class="CriteriaInnerSubDetailBox" id="divSelectedOwnership">
+                            </div>
+                        </div>
+                        <div class="lineseperatorGray">
+                        </div>
+                        <div class="CriteriaInnerBox">
+                            <span>
+                                By Sector
+                            </span>
+
+                            <div class="CriteriaInnerSubDetailBox" id="divSelectedSector">
+                            </div>
+                        </div>
+                        <div class="lineseperatorGray">
+                        </div>
+                        <div class="CriteriaInnerBox">
+                            <span>
+                                By Agency
+                            </span>
+
+                            <div class="CriteriaInnerSubDetailBox" id="divSelectedAgency">
+                            </div>
+                        </div>
+                        <div class="lineseperatorGray">
+                        </div>
+                        <div class="CriteriaInnerBox">
+                            <span>
+                                By Location
+                            </span>
+
+                            <div class="CriteriaInnerSubDetailBox" id="divSelectedLocation">
+                            </div>
+                        </div>
+                        <div class="lineseperatorGray">
+                        </div>
+                        <div class="CriteriaInnerBox">
+                            <span>
+                                By SubIndustry/Industry :
+                            </span>
+
+                            <div class="CriteriaInnerSubDetailBox" id="divSelectedIndSubInd">
+                            </div>
+                        </div>
+                        <div class="lineseperatorGray">
+                        </div>
+                        <div class="CriteriaInnerBox">
+                            <span>
+                                By Keyword :
+                            </span>
+
+                            <div class="CriteriaInnerSubDetailBox" id="divSelectedProduct">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box-footer">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="well">
+                    <div id="categories">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="section_panel">
+                                    <div id="SampleTender">
+                                        <div class="row">
+                                            @*<div class="col-md-6">
+                                                    <span class="text-blue meta">Search Result : </span>
+                                                    @if (!Model.AllSearchTenaderInfoWithAllDetail.Any())
+                                                    {
+                                                        <span class="text-black">No records found</span> }
+                                                    else
+                                                    {
+                                                        var totalrec = Session["TotalSampleRecordCount"].ToString();
+                                                        <span class="text-blue meta">
+                                                            <b>( <span id="lblshowTotalCount">@totalrec</span> )</b>
+                                                            Tenders Found <span class="text-muted">|</span>
+                                                        </span>
+                                                        <span class="text-yellow meta">
+                                                            Page <span id="spnCurrentPage" class="text-blue"><b>@ViewBag.DisplayCurrentPage</b></span>
+                                                            out of <span class="text-blue" id="spnTotalPage"><b>@ViewBag.TotalPage</b></span>
+                                                        </span>
+                                                    }
+                                                </div>*@
+                                            <div class="col-md-12">
+                                                <div class="input-group">
+                                                    <div class="row">
+                                                        <div class="col-md-2"><span class="text-blue meta"><b>OrderBy</b></span></div>
+                                                        <div class="col-md-5">@Html.DropDownList("orderBy", Model.orderByList, new { @class = "form-control" })</div>
+                                                        <div class="col-md-5">@Html.DropDownList("ascDesc", Model.ascdescList, new { @class = "form-control" })</div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <span class="text-primary meta" id="selectedOurRefNos"></span>
+                                            </div>
+                                        </div>
+                                        <div class="lineseperatorOrange"></div>
+
+                                        <div id="displayPanel" class="display_panel">                                            
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <ul class="nav nav-tabs">
+
+                                                        @{
+                                                            var closedYear = Model.TenderYear;
+                                                            if (closedYear.ToLower().Trim() == "0" || closedYear.ToLower().Trim() == "current" || closedYear.ToLower().Trim() == "")
+                                                            {
+                                                                var allTendersCountId = "0#" + Session["TotalSampleRecordCount"].ToString();
+                                                                var activeTendersCountId = "1#" + Model.TotalLive;
+                                                                var newTendersCountId = "2#" + Model.TotalFresh;
+                                                                var closeTendersCountId = "3#" + Model.TotalClosed;
+                                                                <li class="active tabCatLinks" id="linkAllTenders">
+                                                                    <a class="pointercursor allCls countFilterClass viewTotalFilterCount" title="Click here to view New Tenders" id="@allTendersCountId">
+                                                                        All
+                                                                        <span id="lblAll" class="tabCatLinksSpans">
+                                                                            @if (Model.TenderStatus == 0)
+                                                                            {
+                                                                                <small><b>(@Session["TotalSampleRecordCount"].ToString())</b></small>
+                                                                            }
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="tabCatLinks" id="linkFreshTenders">
+                                                                    <a class="pointercursor newCls countFilterClass viewTotalFilterCount" title="Click here to view New Tenders" id="@newTendersCountId">
+                                                                        Fresh
+                                                                        <span id="lblFresh" class="tabCatLinksSpans">
+                                                                            @if (Model.TenderStatusFlag == 2)
+                                                                            {
+                                                                                <small><b>(@Model.TotalFresh)</b></small>
+                                                                            }
+                                                                        </span>
+                                                                    </a>
+                                                                </li>
+                                                                <li class="tabCatLinks" id="linkLiveTenders">
+                                                                    <a class="pointercursor activeCls countFilterClass viewTotalFilterCount" title="Click here to view Active Tenders" id="@activeTendersCountId">
+                                                                        Live
+                                                                        <span id="lblLive" class="tabCatLinksSpans">
+                                                                            @if (Model.TenderStatusFlag == 1)
+                                                                            {
+                                                                                <small>(@Model.TotalLive)</small>
+                                                                            }
+                                                                        </span>
+
+                                                                    </a>
+                                                                </li>
+
+                                                                @*<li class="data-float-left">
+                                                                        <span class="searchResultTitle" id="spnTotalFresh">
+                                                                            <a class="newCls countFilterClass viewTotalFilterCount"
+                                                                               title="Click here to view New Tenders" id="@newTendersCountId" href="javascript:void(0)">
+                                                                                <span>New Tenders ( @Model.TotalFresh )</span>
+                                                                            </a>
+                                                                        </span>
+                                                                    </li>
+                                                                    <li class="data-float-left">
+                                                                        <span class="text-black">|</span>
+                                                                    </li>
+                                                                    <li class="data-float-left">
+                                                                        <span class="searchResultTitle" id="spnTotalLive">
+                                                                            <a href="javascript:void(0)" class="activeCls countFilterClass viewTotalFilterCount"
+                                                                               title="Click here to view Active Tenders" id="@activeTendersCountId">
+                                                                                <span>Active Tenders ( @Model.TotalLive )</span>
+                                                                            </a>
+                                                                        </span>
+                                                                    </li>*@
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <li class="active tabCatLinks" id="linkClosedTenders">
+                                                                    <a class="pointercursor closedCls" title="Click here to view Active Tenders">
+                                                                        @Model.ClosedTenderTitle
+                                                                        <span id="lblClosed" class="tabCatLinksSpans">
+                                                                            <small>(@Model.TotalClosed)</small>
+                                                                        </span>
+
+                                                                    </a>
+                                                                    @*<span class="searchResultTitle" id="spnTotalClosed">
+                                                                            <a href="javascript:void(0)" class="closedCls">
+                                                                                <span>@Model.ClosedTenderTitle ( @Model.TotalClosed )</span>
+                                                                            </a>
+                                                                        </span>*@
+                                                                </li>
+                                                            }
+
+                                                            @*<li class="">
+                                                                    @Html.Partial("ClosedYearSelection/partialClosedYearSelection")
+                                                                    <span class="ClosedTenderSettings1">
+                                                                        <a href="javascript:void(0)" class="closedTenderMain1"
+                                                                            title="Click to see other Closed Tenders"></a>
+                                                                    </span>
+                                                                </li>*@
+
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div id="loader" style="display:none;">
+                                                        @Html.Partial("partialSpinnerLoadingView")
+                                                    </div>
+                                                    <table border="0" width="100%">
+                                                        <tr>
+                                                            <td colspan="3">                                                               
+                                                                <div id="divTenderInfo">
+                                                                    @Html.Partial("partialSearchSampleTenders")
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                @*<div id="divSampleTenderLoader" class="hide">
+                        <div class="SearchResultLoader">
+                            <i class="fa fa-spinner fa-spin"></i>&nbsp;Loading, Please wait...
+                        </div>
+                    </div>*@
+
+            </div>
+        </div>
+    </form>    
+</div>
+
+<style>
+    .tabCatLinksSpans {
+        float: right;
+        margin: 0 2px;
+        margin-top: -1px;
+        /*color:#4b4b4b;*/
+    }
+    .pagination {
+        margin: 4em 0 0 0;
+    }
+
+        .pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {
+            background-color: #f15f43 !important;
+            border-color: #f15f43 !important;
+        }
+
+        .pagination > li > a:hover, .pagination > li > span:hover, .pagination > li > a:focus, .pagination > li > span:focus {
+            color: #0a55d5 !important;
+        }
+
+        .pagination > li {
+            display: inline-block;
+        }
+
+            .pagination > li span {
+                padding: 0;
+            }
+
+            .pagination > li > a,
+            .pagination > li > span {
+                /*border: none;*/
+                font-size: 15px;
+                padding: 2px 7px !important;
+            }
+</style>

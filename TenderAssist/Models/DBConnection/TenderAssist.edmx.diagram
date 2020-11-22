@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="65714c77a9f84d99adc19a29dea64078" Name="Diagram1">
+        <EntityTypeShape EntityType="TenderAssistModel.tbAgencyIndian" Width="1.5" PointX="3" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbCountry" Width="1.5" PointX="0.75" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbDocumentType" Width="1.5" PointX="7.75" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbIndustry" Width="1.5" PointX="0.75" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbLocation" Width="1.5" PointX="5.25" PointY="5" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbOwnership" Width="1.5" PointX="0.75" PointY="8.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbProduct" Width="1.5" PointX="5.25" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbReference" Width="1.5" PointX="7.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbSector" Width="1.5" PointX="0.75" PointY="11.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbState" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbSubIndustry" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.TenderInfo_Indian" Width="1.5" PointX="9.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.TenderInfo_Indian_Active" Width="1.5" PointX="9.75" PointY="9.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.TenderClassified" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="TenderAssistModel.TenderDocFile" Width="1.5" PointX="11.75" PointY="0.75" IsExpanded="true" />
+        <AssociationConnector Association="TenderAssistModel.FK_tbAgencyIndian_tbOwnership" ManuallyRouted="false" />
+        <AssociationConnector Association="TenderAssistModel.FK_tbAgencyIndian_tbSector" ManuallyRouted="false" />
+        <AssociationConnector Association="TenderAssistModel.FK_tbState_tbCountry" ManuallyRouted="false" />
+        <AssociationConnector Association="TenderAssistModel.FK_tbSubIndustry_tbIndustry" ManuallyRouted="false" />
+        <AssociationConnector Association="TenderAssistModel.FK_TenderClassified_tbIndustry" ManuallyRouted="false" />
+        <AssociationConnector Association="TenderAssistModel.FK_tbLocation_tbState" ManuallyRouted="false" />
+        <AssociationConnector Association="TenderAssistModel.FK_tbProducts_tbSubIndustry" ManuallyRouted="false" />
+        <AssociationConnector Association="TenderAssistModel.FK_TenderClassified_tbProducts" ManuallyRouted="false" />
+        <AssociationConnector Association="TenderAssistModel.FK_TenderClassified_tbSubIndustry" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientDetail" Width="1.5" PointX="12.375" PointY="7.125" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientDuration" Width="1.5" PointX="12.375" PointY="3.75" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientPermission" Width="1.5" PointX="14.625" PointY="9.625" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientPermissionWithAgency" Width="1.5" PointX="16.875" PointY="7.75" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientPermissionWithIndSubIndustry" Width="1.5" PointX="16.875" PointY="16" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientPermissionWithLocation" Width="1.5" PointX="16.875" PointY="18.875" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientPermissionWithOwnership" Width="1.5" PointX="16.875" PointY="10.5" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientPermissionWithProduct" Width="1.5" PointX="16.875" PointY="4.625" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientPermissionWithSector" Width="1.5" PointX="16.875" PointY="13.25" />
+        <AssociationConnector Association="TenderAssistModel.FK_tabClientPermission_tabClientDetails" />
+        <AssociationConnector Association="TenderAssistModel.FK_tabClientPermissionWithAgency_tabClientPermission" />
+        <AssociationConnector Association="TenderAssistModel.FK_tabClientPermissionWithIndSubIndustry_tabClientPermission" />
+        <AssociationConnector Association="TenderAssistModel.FK_tabClientPermissionWithLocation_tabClientPermission" />
+        <AssociationConnector Association="TenderAssistModel.FK_tabClientPermissionWithOwnership_tabClientPermission" />
+        <AssociationConnector Association="TenderAssistModel.FK_tabClientPermissionWithProductClassification_tabClientPermission" />
+        <AssociationConnector Association="TenderAssistModel.FK_tabClientPermissionWithSector_tabClientPermission" />
+        <EntityTypeShape EntityType="TenderAssistModel.tabClientFavouriteTender" Width="1.5" PointX="0.75" PointY="13.75" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbInquiryRegForm" Width="1.5" PointX="5.375" PointY="10.75" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbRegion" Width="1.5" PointX="0.75" PointY="19.625" />
+        <EntityTypeShape EntityType="TenderAssistModel.TenderInfo_Global" Width="1.5" PointX="3.375" PointY="20.5" />
+        <EntityTypeShape EntityType="TenderAssistModel.TenderInfo_Global_Active" Width="1.5" PointX="5.375" PointY="20.5" />
+        <EntityTypeShape EntityType="TenderAssistModel.tbCountryRegionAssocation" Width="1.5" PointX="3" PointY="0.75" />
+        <AssociationConnector Association="TenderAssistModel.FK_tbCountryRegionAssocation_tbCountry" />
+        <AssociationConnector Association="TenderAssistModel.FK_tbCountryRegionAssocation_tbRegion" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

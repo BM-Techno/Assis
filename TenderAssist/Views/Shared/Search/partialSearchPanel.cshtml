@@ -1,0 +1,18 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+<div class="row searchpanel">
+    <div class="col-md-9">
+        @Html.Partial("Search/_MainSearch")
+    </div>
+    @{
+        if (!Model.IsGlobalTender)
+        {
+            <div class="col-md-3">
+                <a href="@Url.Action("AdvanceSearch","IndianTenders")" class="advanceSearchButton">
+                    <i class="fa fa-search-plus"></i>
+                    &nbsp; Advance Search
+                </a>
+            </div>
+        }
+    }
+
+</div>

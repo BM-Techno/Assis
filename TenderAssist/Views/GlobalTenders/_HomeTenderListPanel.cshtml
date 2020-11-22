@@ -1,0 +1,25 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@*<div class="row">
+    <div class="col-md-12">
+        <ul class="nav nav-tabs">            
+            <li class="tabCatLinks" id="linkLiveTenders">
+                <a onclick="GetGlobalTenderList(1);" class="pointercursor">
+                    Live
+                </a>
+            </li>
+            <li class="active tabCatLinks" id="linkFreshTenders">
+                <a onclick="GetGlobalTenderList(2);" class="pointercursor">
+                    Fresh
+                </a>
+            </li>            
+        </ul>
+    </div>
+</div>*@
+<div class="row">
+    <div class="col-md-12">
+        <div id="divTenderInfo">
+            @Html.Partial("~/Views/GlobalTenders/Partial/partialSearchResultData.cshtml")
+        </div>
+    </div>
+</div>

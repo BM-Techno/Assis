@@ -1,0 +1,41 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    var isIndustryPermission = Model.AllIndustry.Any();
+    var industryLinkId = "Industry_Link_" + Model.PermissionId;
+    var industryPanelId = "Industry_Panel_" + Model.PermissionId; 
+}
+
+<div class="box"> 
+    <div class="box-header">
+        <span class="box-title categoryHeader">
+            
+            <i class="fa fa-check-circle text-success"></i>
+            My Industries
+             
+        </span>
+    </div>
+    <div class="box-body">
+        @if (isIndustryPermission)
+        {
+            <div id="@industryPanelId"> 
+                @{
+                    var count = 0;
+                    foreach (var item in Model.AllIndustry)
+                    {
+                        <a href="#nogo" onclick="CategorySearch(@TenderAssist.CommonHelper.Utility.TenderTypeList.Industry,@item.IndustryId,@Model.PermissionId)">
+                            @item.IndustryName
+                        </a>
+                        count++;
+                        if (count != Model.AllIndustry.Count)
+                        {
+                            <span>,</span>
+                        }
+                    }
+                }
+            </div>
+                    }
+                   
+    </div>
+</div>
+

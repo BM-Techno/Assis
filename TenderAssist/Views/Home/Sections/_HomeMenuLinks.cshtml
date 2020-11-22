@@ -1,0 +1,38 @@
+﻿<ul class="nav nav-pills">
+    <li class="active tablinks" id="linkSampleTenders">
+        <a href="#nogo" onclick="GetDataList(1);">
+            <i class="fa fa-file"></i>
+            GET SAMPLE TENDER
+        </a>
+    </li>
+    <li class="tablinks" id="linkResult">
+        <a href="@Url.Action("result","InquiryForms")">
+            <i class="fa fa-files-o"></i>
+            RESULTS
+        </a>
+    </li>
+    <li class="tablinks" id="linkProject">
+        <a href="@Url.Action("project","InquiryForms")">
+            <i class="fa fa-list-alt"></i>
+            PROJECTS
+        </a>
+    </li>
+    <li class="tablinks">
+        <a href="@Url.Action("TenderAssist","InquiryForms")" >
+            <i class="fa fa-suitcase"></i>
+            TENDER ASSIST
+        </a>
+    </li>
+    <li class="tablinks" id="linkFreeTender">
+        <a href="#nogo" onclick="GetDataList(5);">
+            <i class="fa fa-download"></i>
+            TENDER HOSTING
+        </a>
+    </li>
+    <li class="tablinks" id="linkPrivateTender">
+        <a href="indian-tenders/ownership-List/tenders-by-private-sector">
+            <i class="fa fa-lock"></i>
+            PRIVATE TENDERS
+        </a>
+    </li>
+</ul>

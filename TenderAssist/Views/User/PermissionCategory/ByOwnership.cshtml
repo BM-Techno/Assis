@@ -1,0 +1,41 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    var isOwnershipPermission = Model.AllOwnership.Any();
+    var ownershipLinkId = "Ownership_Link_" + Model.PermissionId;
+    var ownershipPanelId = "Ownership_Panel_" + Model.PermissionId; 
+}
+
+<div class="box ">  
+    <div class="box-header">
+        <span class="box-title categoryHeader"> 
+            <i class="fa fa-check-circle text-success"></i>
+            My Ownerships 
+        </span>
+    </div>
+    <div class="box-body">
+        @if (isOwnershipPermission)
+        {
+            <div id="@ownershipPanelId"> 
+                @{
+                    var count = 0;
+                    foreach (var item in Model.AllOwnership)
+                    {
+                        <a href="#nogo" onclick="CategorySearch(@TenderAssist.CommonHelper.Utility.TenderTypeList.Ownership,@item.OwnershipId,@Model.PermissionId)">
+                            @item.OwnershipName
+                        </a>
+                        count++;
+                        if (count != Model.AllOwnership.Count)
+                        {
+                            <span>,</span>
+                        }
+                    }
+                }
+            </div>
+                    }
+                    @*else
+                    {
+                        <div class="text-danger">You don't have assigned any ownership.</div>
+                    }*@
+    </div>
+</div>

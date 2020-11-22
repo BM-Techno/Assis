@@ -1,0 +1,109 @@
+﻿@using System.Globalization
+@using TenderAssist.Controllers
+@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    bool isIndianGlobal = true;
+    if (Session["IndianGlobal"] != null)
+    { isIndianGlobal = (bool)Session["IndianGlobal"]; }
+}
+
+<div class="advancesearch-area price-four searchresult-Data">
+    <div class="advancesearchresult-DataHeader">
+        <h3>
+            <i class="fa fa-filter text-centericon"></i>
+            Filter My Search
+        </h3>
+    </div>
+    <div class="searchresult-DataContent searchresult-DataContentpanel" id="AdvanceFilterSearch_form">
+        @if (isIndianGlobal)
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.TextBox("txtadvSearchRefNo", "", new { @class = "form-control", @maxlength = "12", @placeholder = "Reference No" })
+
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialState.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialCity.cshtml")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialAgency.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialSector.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialOwnership.cshtml")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialTenderType.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialTenderStatus.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialTenderValue.cshtml")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialIndustry.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialSubIndustry.cshtml")
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.TextBox("txtadvSearchRefNo", "", new { @class = "form-control", @maxlength = "12", @placeholder = "Reference No" })
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialCountryRegion.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialCountry.cshtml")
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialKeywords.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialTenderType.cshtml")
+                </div>
+                <div class="col-md-4">
+                    @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialTenderStatus.cshtml")
+                </div>
+            </div>
+        }
+        <div class="grayline"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-warning" type="button" id="btnadvancesearch" onclick="AdvanceSearchTenderList();">
+                    <i class="fa fa-filter"></i>&nbsp; Filter Search
+                </button>
+                <button class="btn btn-danger" type="button" id="advcClearSearchbtn">
+                    <i class="fa fa-undo"></i>&nbsp; Reset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/advance-search-datepicker-script")
+<style>
+    .filterSearchBtn {
+        margin-right:4px;
+    }
+</style>

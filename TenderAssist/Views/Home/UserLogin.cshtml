@@ -1,0 +1,116 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@Scripts.Render("~/bundles/user-login-script")
+
+<div class="container_fullInner">
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10 well">
+            <div class="breadcrumbgrid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                            <div class="CurrentDiv">
+                                <a href="/" itemprop="url" style="text-decoration: none;">
+                                    <span itemprop="title">Home</span>
+                                </a>
+                            </div>
+                            <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <div class="CurrentDiv">
+                                    <span class="seperator">›</span>
+                                </div>
+                                <div class="CurrentDiv">
+                                    <span itemprop="title" class="text-bold">Login</span>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="padTB10">
+                <div class="col-md-3">
+                    <div class="box box-info">
+                        <div class="box-header">
+                            <span class="box-title">
+                                <i class="fa fa-lock fa-2x icon text-centericon"></i>
+                                TenderAssist - Login
+                            </span>
+                        </div>
+                        <div class="grayline"></div>
+                        <div class="box-body">
+                            <div class="errMsg mar5" id="errmsg">
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-user-md"></i></span>
+                                    @Html.TextBoxFor(model => model.LoginUserDetails.strEmailId1, new { @class = "form-control textbox", @placeholder = "Your Email Id" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="fa fa-key"></i></span>
+                                    @Html.PasswordFor(model => model.LoginUserDetails.strPassword, new { @class = "form-control textbox", @placeholder = "Your Password" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="box-footer">
+                            <div class="row mar5">
+                                <div class="col-md-12">
+                                    <button class="btn btn-info btn-lg btn-block" type="submit" id="btnLogin">
+                                        <i class="fa fa-unlock-alt"></i>&nbsp; Login
+                                    </button>
+                                    <div id="divWait" style="display: none;">
+                                        @Html.Partial("partialSpinnerLoadingView")
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <h2>
+                        <span>New user ?</span>
+                    </h2>
+                    <a href="@Url.Action("NewRegistration", "InquiryForms")">
+                        <i class="fa fa-edit"></i>
+                        Click here to subscrib with us
+                    </a>
+                </div>
+                <div class="col-md-9">
+                    <div id="our-team">
+                        <div class="subscribdetails">
+                            <div class="row">
+                                <div class="col-md-12 plan price-four wow fadeInLeft animated ">
+                                    <br />
+                                    <div class="text-center">
+                                        <p>
+                                            <b>TenderAssist247.com</b> is one of the leading tender portal with the Database of around more than 20,00,000 inquries in the form of <b>Tenders</b>, <b>Auctions</b>, <b>Projects and Contract awards</b> from Government, semi government and private players from every corner of the country who are looking for Vendors like you.<br />
+                                            Every lead is as important for your business growth.
+                                        </p>
+                                        <h2 class="ourteamh2">
+                                            TenderAssist247.com :: Service Details
+                                        </h2>
+                                        <p>
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;Daily tender alert for your category and requirement.<br />
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;Anytime access to tenders.<br />
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;Online tender Documents in one touch.<br />
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;Online support for any querries.<br />
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;Live updates for tender awarded.<br />
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;Apart for tenders information get private leads too.<br />
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;Online Tendering support.<br />
+                                            <i class="fa fa-arrow-circle-right"></i>&nbsp;Bidding consultancy and many more.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+﻿@{ 
+    var TermsConditionsUrl = Url.Action("TermsConditions", "Home");
+    var PrivacyPolicyUrl = Url.Action("PrivacyPolicy", "Home");
+}
+
+<footer class="Footercopyright">
+    <div class="text-center">
+        <div class="copyright">
+            &copy; Copyright 2019 - <a href="https://www.TenderAssist247.com/">www.TenderAssist247.com</a>
+                <div class="credits">
+                    <a  href="@TermsConditionsUrl" target="_blank">Terms & Conditions</a> | 
+                    <a  href="@PrivacyPolicyUrl" target="_blank">Privacy Policy</a>
+                </div>
+        </div>
+    </div>
+</footer>

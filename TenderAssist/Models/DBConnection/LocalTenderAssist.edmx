@@ -1,0 +1,1139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LocalTenderAssistModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="tabClientDetails">
+          <Key>
+            <PropertyRef Name="intClientId" />
+          </Key>
+          <Property Name="intClientId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="strFName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="strLName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="strDesignation" Type="varchar" MaxLength="50" />
+          <Property Name="strCmpName" Type="nvarchar" MaxLength="100" />
+          <Property Name="strAboutUs" Type="nvarchar(max)" />
+          <Property Name="strAddress" Type="nvarchar" MaxLength="255" />
+          <Property Name="intLocId" Type="int" Nullable="false" />
+          <Property Name="intPinCode" Type="int" />
+          <Property Name="intMobileNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="intPhoneNo" Type="nvarchar" MaxLength="20" />
+          <Property Name="strAdditionalContactNo" Type="nvarchar" MaxLength="255" />
+          <Property Name="strEmailId1" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="strEmailId2" Type="nvarchar" MaxLength="50" />
+          <Property Name="strAdditionalEmailid" Type="nvarchar" MaxLength="255" />
+          <Property Name="strWebsite" Type="nvarchar" MaxLength="100" />
+          <Property Name="strInterestProducts" Type="nvarchar(max)" />
+          <Property Name="strRemarks" Type="nvarchar(max)" />
+          <Property Name="intClientPurpose" Type="int" Nullable="false" />
+          <Property Name="bitDc" Type="bit" Nullable="false" />
+          <Property Name="bitSendSampleTender" Type="bit" Nullable="false" />
+          <Property Name="dtSendSampleTender" Type="datetime" />
+          <Property Name="bitSendSampleTenderRegular" Type="bit" Nullable="false" />
+          <Property Name="bitSendPromotional" Type="bit" Nullable="false" />
+          <Property Name="dtSendPromotional" Type="datetime" />
+          <Property Name="intLeadSourceId" Type="int" Nullable="false" />
+          <Property Name="intSalesEmpId" Type="int" Nullable="false" />
+          <Property Name="intClientStatusSalesId" Type="int" />
+          <Property Name="dt_FCC_Date" Type="datetime" />
+          <Property Name="intCareEmpId" Type="int" Nullable="false" />
+          <Property Name="intClientStatusCareId" Type="int" />
+          <Property Name="dt_FUP_Date" Type="datetime" />
+          <Property Name="intActive" Type="int" Nullable="false" />
+          <Property Name="dtStartDate" Type="date" />
+          <Property Name="dtLastDate" Type="date" />
+          <Property Name="strPassword" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="uniUniqueNo" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="bitTenderService" Type="bit" Nullable="false" />
+          <Property Name="bitSubcontractor" Type="bit" Nullable="false" />
+          <Property Name="bitTenderAwarded" Type="bit" Nullable="false" />
+          <Property Name="bitProject" Type="bit" Nullable="false" />
+          <Property Name="bitEmailAlert" Type="bit" Nullable="false" />
+          <Property Name="bitSmsAlert" Type="bit" Nullable="false" />
+          <Property Name="intMailFormat" Type="int" Nullable="false" />
+          <Property Name="bitInterestedForRenewal" Type="bit" Nullable="false" />
+          <Property Name="bitDailyMailSend" Type="bit" Nullable="false" />
+          <Property Name="intCategory" Type="int" Nullable="false" />
+          <Property Name="bitCollectionApprove" Type="bit" Nullable="false" />
+          <Property Name="dtLastLoginDate" Type="datetime" />
+          <Property Name="bitLocked" Type="bit" Nullable="false" />
+          <Property Name="intEntryBy" Type="int" Nullable="false" />
+          <Property Name="dtEntryDate" Type="datetime" Nullable="false" />
+          <Property Name="intUpdateBy" Type="int" />
+          <Property Name="dtUpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tabClientEmailHistory">
+          <Key>
+            <PropertyRef Name="intClientEmailId" />
+          </Key>
+          <Property Name="intClientEmailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intClientId" Type="int" Nullable="false" />
+          <Property Name="intEmailFormType" Type="int" Nullable="false" />
+          <Property Name="dtEnterDate" Type="date" Nullable="false" />
+          <Property Name="strSentEmailLayout" Type="text" />
+          <Property Name="isEmailSent" Type="bit" Nullable="false" />
+          <Property Name="intEnterBy" Type="int" />
+          <Property Name="strFromMailId" Type="nvarchar" MaxLength="1000" />
+          <Property Name="strCCMailID" Type="nvarchar" MaxLength="1000" />
+          <Property Name="strToMailId" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="tabClientPermission">
+          <Key>
+            <PropertyRef Name="intPermissionId" />
+          </Key>
+          <Property Name="intPermissionId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intClientId" Type="int" Nullable="false" />
+          <Property Name="strPermissionName" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="bitActive" Type="bit" Nullable="false" />
+          <Property Name="bitBuy" Type="bit" Nullable="false" />
+          <Property Name="bitCell" Type="bit" Nullable="false" />
+          <Property Name="bitContract" Type="bit" Nullable="false" />
+          <Property Name="bitICB" Type="bit" Nullable="false" />
+          <Property Name="bitIndianOrGlobal" Type="bit" Nullable="false" />
+          <Property Name="intPurpose" Type="int" Nullable="false" />
+          <Property Name="strOtherKeywords" Type="varchar(max)" />
+          <Property Name="strNotUsedKeywords" Type="varchar(max)" />
+          <Property Name="bitTenderAmount" Type="bit" Nullable="false" />
+          <Property Name="moneyTenderAmountFrom" Type="money" Nullable="false" />
+          <Property Name="moneyTenderAmountTo" Type="money" Nullable="false" />
+          <Property Name="intEntryBy" Type="int" Nullable="false" />
+          <Property Name="dtEntryDate" Type="datetime" Nullable="false" />
+          <Property Name="intUpdateBy" Type="int" />
+          <Property Name="dtUpdateDate" Type="datetime" />
+          <Property Name="MachineName" Type="nvarchar" MaxLength="100" />
+          <Property Name="IPAddressOfSQLServer" Type="nvarchar" MaxLength="100" />
+          <Property Name="IPAddressOfClient" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithAgency">
+          <Key>
+            <PropertyRef Name="intAgencyPerId" />
+          </Key>
+          <Property Name="intAgencyPerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intPermissionId" Type="int" Nullable="false" />
+          <Property Name="intAgencyId" Type="int" Nullable="false" />
+          <Property Name="bitIsUsed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithIndSubIndustry">
+          <Key>
+            <PropertyRef Name="intIndSubIndustryPerId" />
+          </Key>
+          <Property Name="intIndSubIndustryPerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intPermissionId" Type="int" Nullable="false" />
+          <Property Name="intIndustryId" Type="int" Nullable="false" />
+          <Property Name="intSubindustryId" Type="int" Nullable="false" />
+          <Property Name="bitIsUsed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithLocation">
+          <Key>
+            <PropertyRef Name="intLocationPerId" />
+          </Key>
+          <Property Name="intLocationPerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intPermissionId" Type="int" Nullable="false" />
+          <Property Name="intCountryId" Type="int" Nullable="false" />
+          <Property Name="intStateId" Type="int" Nullable="false" />
+          <Property Name="intCityId" Type="int" Nullable="false" />
+          <Property Name="bitIsUsed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithOwnership">
+          <Key>
+            <PropertyRef Name="intOwnershipPerId" />
+          </Key>
+          <Property Name="intOwnershipPerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intPermissionId" Type="int" Nullable="false" />
+          <Property Name="intOwnershipId" Type="int" Nullable="false" />
+          <Property Name="bitIsUsed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithProduct">
+          <Key>
+            <PropertyRef Name="intProductClassificationPerId" />
+          </Key>
+          <Property Name="intProductClassificationPerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intPermissionId" Type="int" Nullable="false" />
+          <Property Name="intProductId" Type="int" Nullable="false" />
+          <Property Name="bitIsKeywordSearch" Type="bit" Nullable="false" />
+          <Property Name="bitIsWordSearch" Type="bit" Nullable="false" />
+          <Property Name="bitIsExactPhrase" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithSector">
+          <Key>
+            <PropertyRef Name="intSectorPerId" />
+          </Key>
+          <Property Name="intSectorPerId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intPermissionId" Type="int" Nullable="false" />
+          <Property Name="intSectorId" Type="int" Nullable="false" />
+          <Property Name="bitIsUsed" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tabEmpDetails">
+          <Key>
+            <PropertyRef Name="intEmpId" />
+          </Key>
+          <Property Name="intEmpId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="strFname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="strLname" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="intContactNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="intCompContactNo" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="strPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="strAddress" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="intRoleId" Type="int" Nullable="false" />
+          <Property Name="bitActive" Type="bit" Nullable="false" />
+          <Property Name="bitOnRole" Type="bit" Nullable="false" />
+          <Property Name="bitCommitmentLock" Type="bit" Nullable="false" />
+          <Property Name="bitLogin" Type="bit" Nullable="false" />
+          <Property Name="dtLoginDate" Type="datetime" />
+          <Property Name="dtLogoutDate" Type="datetime" />
+          <Property Name="intEntryBy" Type="int" Nullable="false" />
+          <Property Name="dtEntryDate" Type="datetime" Nullable="false" />
+          <Property Name="intUpdateBy" Type="int" />
+          <Property Name="dtUpdateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tabEmpEmailId">
+          <Key>
+            <PropertyRef Name="intEmailId" />
+          </Key>
+          <Property Name="intEmailId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="intEmpId" Type="int" Nullable="false" />
+          <Property Name="strEmailId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="strPassword" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="strSmtpName" Type="nvarchar" MaxLength="50" />
+          <Property Name="intSmtpPort" Type="int" />
+          <Property Name="intEntryBy" Type="int" Nullable="false" />
+          <Property Name="dtEntryDate" Type="datetime" Nullable="false" />
+          <Property Name="intUpdateBy" Type="int" />
+          <Property Name="dtUpdateDate" Type="datetime" />
+        </EntityType>
+        <Association Name="FK_tabClientPermission_tabClientDetails">
+          <End Role="tabClientDetails" Type="Self.tabClientDetails" Multiplicity="1" />
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientDetails">
+              <PropertyRef Name="intClientId" />
+            </Principal>
+            <Dependent Role="tabClientPermission">
+              <PropertyRef Name="intClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithAgency_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithAgency" Type="Self.tabClientPermissionWithAgency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithAgency">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithIndSubIndustry_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithIndSubIndustry" Type="Self.tabClientPermissionWithIndSubIndustry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithIndSubIndustry">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithLocation_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithLocation" Type="Self.tabClientPermissionWithLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithLocation">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithOwnership_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithOwnership" Type="Self.tabClientPermissionWithOwnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithOwnership">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithProductClassification_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithProduct" Type="Self.tabClientPermissionWithProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithProduct">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithSector_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithSector" Type="Self.tabClientPermissionWithSector" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithSector">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabEmpEmailId_tabEmpDetails1">
+          <End Role="tabEmpDetails" Type="Self.tabEmpDetails" Multiplicity="1" />
+          <End Role="tabEmpEmailId" Type="Self.tabEmpEmailId" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabEmpDetails">
+              <PropertyRef Name="intEmpId" />
+            </Principal>
+            <Dependent Role="tabEmpEmailId">
+              <PropertyRef Name="intEmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="Proc_Site_I_SendSampleTenders" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="intClientId" Type="int" Mode="In" />
+        </Function>
+        <Function Name="Proc_TA_ClientSampleTender_Count" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PermissionId" Type="int" Mode="In" />
+          <Parameter Name="Start" Type="int" Mode="In" />
+          <Parameter Name="Limit" Type="int" Mode="In" />
+          <Parameter Name="TenderStatusFlag" Type="nvarchar" Mode="In" />
+          <Parameter Name="OwnershipID" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="OwnershipIDNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="SectorID" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="SectorIDNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="AgencyID" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="AgencyIDNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="IndSub" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="IndSubNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="Loc" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="LocNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="Keyword1" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="Keyword2" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="Keyword3" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="OtherKeywords" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="NotUsedKeywords" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="DocumentType" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="IsICBNCB" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="bitTenderAmount" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="TenderValueFrom" Type="money" Mode="InOut" />
+          <Parameter Name="TenderValueTo" Type="money" Mode="InOut" />
+          <Parameter Name="IndianGlobal" Type="bit" Mode="InOut" />
+          <Parameter Name="finalSearchText" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="TenderYear" Type="varchar" Mode="In" />
+          <Parameter Name="OrderBys" Type="nvarchar" Mode="In" />
+          <Parameter Name="AscDesc" Type="nvarchar" Mode="In" />
+        </Function>
+        <Function Name="Proc_TA_ClientSampleTender_List" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="PermissionId" Type="int" Mode="In" />
+          <Parameter Name="Start" Type="int" Mode="In" />
+          <Parameter Name="Limit" Type="int" Mode="In" />
+          <Parameter Name="TenderStatusFlag" Type="nvarchar" Mode="In" />
+          <Parameter Name="OwnershipID" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="OwnershipIDNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="SectorID" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="SectorIDNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="AgencyID" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="AgencyIDNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="IndSub" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="IndSubNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="Loc" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="LocNotUsedIn" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="Keyword1" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="Keyword2" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="Keyword3" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="OtherKeywords" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="NotUsedKeywords" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="DocumentType" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="IsICBNCB" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="bitTenderAmount" Type="nvarchar" Mode="InOut" />
+          <Parameter Name="TenderValueFrom" Type="money" Mode="InOut" />
+          <Parameter Name="TenderValueTo" Type="money" Mode="InOut" />
+          <Parameter Name="IndianGlobal" Type="bit" Mode="InOut" />
+          <Parameter Name="finalSearchText" Type="nvarchar(max)" Mode="InOut" />
+          <Parameter Name="TenderYear" Type="varchar" Mode="In" />
+          <Parameter Name="OrderBys" Type="nvarchar" Mode="In" />
+          <Parameter Name="AscDesc" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="LocalTenderAssistModelStoreContainer">
+          <EntitySet Name="tabClientDetails" EntityType="Self.tabClientDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabClientEmailHistory" EntityType="Self.tabClientEmailHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabClientPermission" EntityType="Self.tabClientPermission" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabClientPermissionWithAgency" EntityType="Self.tabClientPermissionWithAgency" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabClientPermissionWithIndSubIndustry" EntityType="Self.tabClientPermissionWithIndSubIndustry" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabClientPermissionWithLocation" EntityType="Self.tabClientPermissionWithLocation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabClientPermissionWithOwnership" EntityType="Self.tabClientPermissionWithOwnership" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabClientPermissionWithProduct" EntityType="Self.tabClientPermissionWithProduct" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabClientPermissionWithSector" EntityType="Self.tabClientPermissionWithSector" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabEmpDetails" EntityType="Self.tabEmpDetails" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tabEmpEmailId" EntityType="Self.tabEmpEmailId" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tabClientPermission_tabClientDetails" Association="Self.FK_tabClientPermission_tabClientDetails">
+            <End Role="tabClientDetails" EntitySet="tabClientDetails" />
+            <End Role="tabClientPermission" EntitySet="tabClientPermission" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithAgency_tabClientPermission" Association="Self.FK_tabClientPermissionWithAgency_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermission" />
+            <End Role="tabClientPermissionWithAgency" EntitySet="tabClientPermissionWithAgency" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithIndSubIndustry_tabClientPermission" Association="Self.FK_tabClientPermissionWithIndSubIndustry_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermission" />
+            <End Role="tabClientPermissionWithIndSubIndustry" EntitySet="tabClientPermissionWithIndSubIndustry" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithLocation_tabClientPermission" Association="Self.FK_tabClientPermissionWithLocation_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermission" />
+            <End Role="tabClientPermissionWithLocation" EntitySet="tabClientPermissionWithLocation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithOwnership_tabClientPermission" Association="Self.FK_tabClientPermissionWithOwnership_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermission" />
+            <End Role="tabClientPermissionWithOwnership" EntitySet="tabClientPermissionWithOwnership" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithProductClassification_tabClientPermission" Association="Self.FK_tabClientPermissionWithProductClassification_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermission" />
+            <End Role="tabClientPermissionWithProduct" EntitySet="tabClientPermissionWithProduct" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithSector_tabClientPermission" Association="Self.FK_tabClientPermissionWithSector_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermission" />
+            <End Role="tabClientPermissionWithSector" EntitySet="tabClientPermissionWithSector" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabEmpEmailId_tabEmpDetails1" Association="Self.FK_tabEmpEmailId_tabEmpDetails1">
+            <End Role="tabEmpDetails" EntitySet="tabEmpDetails" />
+            <End Role="tabEmpEmailId" EntitySet="tabEmpEmailId" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LocalTenderAssistModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="tabClientDetail">
+          <Key>
+            <PropertyRef Name="intClientId" />
+          </Key>
+          <Property Name="intClientId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="strFName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="strLName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="strDesignation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="strCmpName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="strAboutUs" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="strAddress" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="intLocId" Type="Int32" Nullable="false" />
+          <Property Name="intPinCode" Type="Int32" />
+          <Property Name="intMobileNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="intPhoneNo" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strAdditionalContactNo" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="strEmailId1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="strEmailId2" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="strAdditionalEmailid" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="strWebsite" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="strInterestProducts" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="strRemarks" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="intClientPurpose" Type="Int32" Nullable="false" />
+          <Property Name="bitDc" Type="Boolean" Nullable="false" />
+          <Property Name="bitSendSampleTender" Type="Boolean" Nullable="false" />
+          <Property Name="dtSendSampleTender" Type="DateTime" Precision="3" />
+          <Property Name="bitSendSampleTenderRegular" Type="Boolean" Nullable="false" />
+          <Property Name="bitSendPromotional" Type="Boolean" Nullable="false" />
+          <Property Name="dtSendPromotional" Type="DateTime" Precision="3" />
+          <Property Name="intLeadSourceId" Type="Int32" Nullable="false" />
+          <Property Name="intSalesEmpId" Type="Int32" Nullable="false" />
+          <Property Name="intClientStatusSalesId" Type="Int32" />
+          <Property Name="dt_FCC_Date" Type="DateTime" Precision="3" />
+          <Property Name="intCareEmpId" Type="Int32" Nullable="false" />
+          <Property Name="intClientStatusCareId" Type="Int32" />
+          <Property Name="dt_FUP_Date" Type="DateTime" Precision="3" />
+          <Property Name="intActive" Type="Int32" Nullable="false" />
+          <Property Name="dtStartDate" Type="DateTime" Precision="0" />
+          <Property Name="dtLastDate" Type="DateTime" Precision="0" />
+          <Property Name="strPassword" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="uniUniqueNo" Type="Guid" Nullable="false" />
+          <Property Name="bitTenderService" Type="Boolean" Nullable="false" />
+          <Property Name="bitSubcontractor" Type="Boolean" Nullable="false" />
+          <Property Name="bitTenderAwarded" Type="Boolean" Nullable="false" />
+          <Property Name="bitProject" Type="Boolean" Nullable="false" />
+          <Property Name="bitEmailAlert" Type="Boolean" Nullable="false" />
+          <Property Name="bitSmsAlert" Type="Boolean" Nullable="false" />
+          <Property Name="intMailFormat" Type="Int32" Nullable="false" />
+          <Property Name="bitInterestedForRenewal" Type="Boolean" Nullable="false" />
+          <Property Name="bitDailyMailSend" Type="Boolean" Nullable="false" />
+          <Property Name="intCategory" Type="Int32" Nullable="false" />
+          <Property Name="bitCollectionApprove" Type="Boolean" Nullable="false" />
+          <Property Name="dtLastLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="bitLocked" Type="Boolean" Nullable="false" />
+          <Property Name="intEntryBy" Type="Int32" Nullable="false" />
+          <Property Name="dtEntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="intUpdateBy" Type="Int32" />
+          <Property Name="dtUpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tabClientPermissions" Relationship="Self.FK_tabClientPermission_tabClientDetails" FromRole="tabClientDetails" ToRole="tabClientPermission" />
+        </EntityType>
+        <EntityType Name="tabClientEmailHistory">
+          <Key>
+            <PropertyRef Name="intClientEmailId" />
+          </Key>
+          <Property Name="intClientEmailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intClientId" Type="Int32" Nullable="false" />
+          <Property Name="intEmailFormType" Type="Int32" Nullable="false" />
+          <Property Name="dtEnterDate" Type="DateTime" Nullable="false" Precision="0" />
+          <Property Name="strSentEmailLayout" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="isEmailSent" Type="Boolean" Nullable="false" />
+          <Property Name="intEnterBy" Type="Int32" />
+          <Property Name="strFromMailId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="strCCMailID" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="strToMailId" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="tabClientPermission">
+          <Key>
+            <PropertyRef Name="intPermissionId" />
+          </Key>
+          <Property Name="intPermissionId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intClientId" Type="Int32" Nullable="false" />
+          <Property Name="strPermissionName" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="bitActive" Type="Boolean" Nullable="false" />
+          <Property Name="bitBuy" Type="Boolean" Nullable="false" />
+          <Property Name="bitCell" Type="Boolean" Nullable="false" />
+          <Property Name="bitContract" Type="Boolean" Nullable="false" />
+          <Property Name="bitICB" Type="Boolean" Nullable="false" />
+          <Property Name="bitIndianOrGlobal" Type="Boolean" Nullable="false" />
+          <Property Name="intPurpose" Type="Int32" Nullable="false" />
+          <Property Name="strOtherKeywords" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="strNotUsedKeywords" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="bitTenderAmount" Type="Boolean" Nullable="false" />
+          <Property Name="moneyTenderAmountFrom" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="moneyTenderAmountTo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+          <Property Name="intEntryBy" Type="Int32" Nullable="false" />
+          <Property Name="dtEntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="intUpdateBy" Type="Int32" />
+          <Property Name="dtUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="MachineName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddressOfSQLServer" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IPAddressOfClient" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tabClientDetail" Relationship="Self.FK_tabClientPermission_tabClientDetails" FromRole="tabClientPermission" ToRole="tabClientDetails" />
+          <NavigationProperty Name="tabClientPermissionWithAgencies" Relationship="Self.FK_tabClientPermissionWithAgency_tabClientPermission" FromRole="tabClientPermission" ToRole="tabClientPermissionWithAgency" />
+          <NavigationProperty Name="tabClientPermissionWithIndSubIndustries" Relationship="Self.FK_tabClientPermissionWithIndSubIndustry_tabClientPermission" FromRole="tabClientPermission" ToRole="tabClientPermissionWithIndSubIndustry" />
+          <NavigationProperty Name="tabClientPermissionWithLocations" Relationship="Self.FK_tabClientPermissionWithLocation_tabClientPermission" FromRole="tabClientPermission" ToRole="tabClientPermissionWithLocation" />
+          <NavigationProperty Name="tabClientPermissionWithOwnerships" Relationship="Self.FK_tabClientPermissionWithOwnership_tabClientPermission" FromRole="tabClientPermission" ToRole="tabClientPermissionWithOwnership" />
+          <NavigationProperty Name="tabClientPermissionWithProducts" Relationship="Self.FK_tabClientPermissionWithProductClassification_tabClientPermission" FromRole="tabClientPermission" ToRole="tabClientPermissionWithProduct" />
+          <NavigationProperty Name="tabClientPermissionWithSectors" Relationship="Self.FK_tabClientPermissionWithSector_tabClientPermission" FromRole="tabClientPermission" ToRole="tabClientPermissionWithSector" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithAgency">
+          <Key>
+            <PropertyRef Name="intAgencyPerId" />
+          </Key>
+          <Property Name="intAgencyPerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intPermissionId" Type="Int32" Nullable="false" />
+          <Property Name="intAgencyId" Type="Int32" Nullable="false" />
+          <Property Name="bitIsUsed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tabClientPermission" Relationship="Self.FK_tabClientPermissionWithAgency_tabClientPermission" FromRole="tabClientPermissionWithAgency" ToRole="tabClientPermission" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithIndSubIndustry">
+          <Key>
+            <PropertyRef Name="intIndSubIndustryPerId" />
+          </Key>
+          <Property Name="intIndSubIndustryPerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intPermissionId" Type="Int32" Nullable="false" />
+          <Property Name="intIndustryId" Type="Int32" Nullable="false" />
+          <Property Name="intSubindustryId" Type="Int32" Nullable="false" />
+          <Property Name="bitIsUsed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tabClientPermission" Relationship="Self.FK_tabClientPermissionWithIndSubIndustry_tabClientPermission" FromRole="tabClientPermissionWithIndSubIndustry" ToRole="tabClientPermission" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithLocation">
+          <Key>
+            <PropertyRef Name="intLocationPerId" />
+          </Key>
+          <Property Name="intLocationPerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intPermissionId" Type="Int32" Nullable="false" />
+          <Property Name="intCountryId" Type="Int32" Nullable="false" />
+          <Property Name="intStateId" Type="Int32" Nullable="false" />
+          <Property Name="intCityId" Type="Int32" Nullable="false" />
+          <Property Name="bitIsUsed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tabClientPermission" Relationship="Self.FK_tabClientPermissionWithLocation_tabClientPermission" FromRole="tabClientPermissionWithLocation" ToRole="tabClientPermission" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithOwnership">
+          <Key>
+            <PropertyRef Name="intOwnershipPerId" />
+          </Key>
+          <Property Name="intOwnershipPerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intPermissionId" Type="Int32" Nullable="false" />
+          <Property Name="intOwnershipId" Type="Int32" Nullable="false" />
+          <Property Name="bitIsUsed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tabClientPermission" Relationship="Self.FK_tabClientPermissionWithOwnership_tabClientPermission" FromRole="tabClientPermissionWithOwnership" ToRole="tabClientPermission" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithProduct">
+          <Key>
+            <PropertyRef Name="intProductClassificationPerId" />
+          </Key>
+          <Property Name="intProductClassificationPerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intPermissionId" Type="Int32" Nullable="false" />
+          <Property Name="intProductId" Type="Int32" Nullable="false" />
+          <Property Name="bitIsKeywordSearch" Type="Boolean" Nullable="false" />
+          <Property Name="bitIsWordSearch" Type="Boolean" Nullable="false" />
+          <Property Name="bitIsExactPhrase" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tabClientPermission" Relationship="Self.FK_tabClientPermissionWithProductClassification_tabClientPermission" FromRole="tabClientPermissionWithProduct" ToRole="tabClientPermission" />
+        </EntityType>
+        <EntityType Name="tabClientPermissionWithSector">
+          <Key>
+            <PropertyRef Name="intSectorPerId" />
+          </Key>
+          <Property Name="intSectorPerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intPermissionId" Type="Int32" Nullable="false" />
+          <Property Name="intSectorId" Type="Int32" Nullable="false" />
+          <Property Name="bitIsUsed" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="tabClientPermission" Relationship="Self.FK_tabClientPermissionWithSector_tabClientPermission" FromRole="tabClientPermissionWithSector" ToRole="tabClientPermission" />
+        </EntityType>
+        <Association Name="FK_tabClientPermission_tabClientDetails">
+          <End Role="tabClientDetails" Type="Self.tabClientDetail" Multiplicity="1" />
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientDetails">
+              <PropertyRef Name="intClientId" />
+            </Principal>
+            <Dependent Role="tabClientPermission">
+              <PropertyRef Name="intClientId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithAgency_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithAgency" Type="Self.tabClientPermissionWithAgency" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithAgency">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithIndSubIndustry_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithIndSubIndustry" Type="Self.tabClientPermissionWithIndSubIndustry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithIndSubIndustry">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithLocation_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithLocation" Type="Self.tabClientPermissionWithLocation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithLocation">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithOwnership_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithOwnership" Type="Self.tabClientPermissionWithOwnership" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithOwnership">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithProductClassification_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithProduct" Type="Self.tabClientPermissionWithProduct" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithProduct">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tabClientPermissionWithSector_tabClientPermission">
+          <End Role="tabClientPermission" Type="Self.tabClientPermission" Multiplicity="1" />
+          <End Role="tabClientPermissionWithSector" Type="Self.tabClientPermissionWithSector" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabClientPermission">
+              <PropertyRef Name="intPermissionId" />
+            </Principal>
+            <Dependent Role="tabClientPermissionWithSector">
+              <PropertyRef Name="intPermissionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LocalTenderAssistEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="tabClientDetails" EntityType="Self.tabClientDetail" />
+          <EntitySet Name="tabClientEmailHistories" EntityType="Self.tabClientEmailHistory" />
+          <EntitySet Name="tabClientPermissions" EntityType="Self.tabClientPermission" />
+          <EntitySet Name="tabClientPermissionWithAgencies" EntityType="Self.tabClientPermissionWithAgency" />
+          <EntitySet Name="tabClientPermissionWithIndSubIndustries" EntityType="Self.tabClientPermissionWithIndSubIndustry" />
+          <EntitySet Name="tabClientPermissionWithLocations" EntityType="Self.tabClientPermissionWithLocation" />
+          <EntitySet Name="tabClientPermissionWithOwnerships" EntityType="Self.tabClientPermissionWithOwnership" />
+          <EntitySet Name="tabClientPermissionWithProducts" EntityType="Self.tabClientPermissionWithProduct" />
+          <EntitySet Name="tabClientPermissionWithSectors" EntityType="Self.tabClientPermissionWithSector" />
+          <AssociationSet Name="FK_tabClientPermission_tabClientDetails" Association="Self.FK_tabClientPermission_tabClientDetails">
+            <End Role="tabClientDetails" EntitySet="tabClientDetails" />
+            <End Role="tabClientPermission" EntitySet="tabClientPermissions" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithAgency_tabClientPermission" Association="Self.FK_tabClientPermissionWithAgency_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermissions" />
+            <End Role="tabClientPermissionWithAgency" EntitySet="tabClientPermissionWithAgencies" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithIndSubIndustry_tabClientPermission" Association="Self.FK_tabClientPermissionWithIndSubIndustry_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermissions" />
+            <End Role="tabClientPermissionWithIndSubIndustry" EntitySet="tabClientPermissionWithIndSubIndustries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithLocation_tabClientPermission" Association="Self.FK_tabClientPermissionWithLocation_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermissions" />
+            <End Role="tabClientPermissionWithLocation" EntitySet="tabClientPermissionWithLocations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithOwnership_tabClientPermission" Association="Self.FK_tabClientPermissionWithOwnership_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermissions" />
+            <End Role="tabClientPermissionWithOwnership" EntitySet="tabClientPermissionWithOwnerships" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithProductClassification_tabClientPermission" Association="Self.FK_tabClientPermissionWithProductClassification_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermissions" />
+            <End Role="tabClientPermissionWithProduct" EntitySet="tabClientPermissionWithProducts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tabClientPermissionWithSector_tabClientPermission" Association="Self.FK_tabClientPermissionWithSector_tabClientPermission">
+            <End Role="tabClientPermission" EntitySet="tabClientPermissions" />
+            <End Role="tabClientPermissionWithSector" EntitySet="tabClientPermissionWithSectors" />
+          </AssociationSet>
+          <EntitySet Name="tabEmpDetails" EntityType="LocalTenderAssistModel.tabEmpDetail" />
+          <EntitySet Name="tabEmpEmailIds" EntityType="LocalTenderAssistModel.tabEmpEmailId" />
+          <AssociationSet Name="FK_tabEmpEmailId_tabEmpDetails1" Association="LocalTenderAssistModel.FK_tabEmpEmailId_tabEmpDetails1">
+            <End Role="tabEmpDetail" EntitySet="tabEmpDetails" />
+            <End Role="tabEmpEmailId" EntitySet="tabEmpEmailIds" />
+          </AssociationSet>
+          <FunctionImport Name="Proc_TA_ClientSampleTender_Count" ReturnType="Collection(LocalTenderAssistModel.Proc_TA_ClientSampleTender_Count_Result)">
+            <Parameter Name="PermissionId" Mode="In" Type="Int32" />
+            <Parameter Name="Start" Mode="In" Type="Int32" />
+            <Parameter Name="Limit" Mode="In" Type="Int32" />
+            <Parameter Name="TenderStatusFlag" Mode="In" Type="String" />
+            <Parameter Name="OwnershipID" Mode="InOut" Type="String" />
+            <Parameter Name="OwnershipIDNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="SectorID" Mode="InOut" Type="String" />
+            <Parameter Name="SectorIDNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="AgencyID" Mode="InOut" Type="String" />
+            <Parameter Name="AgencyIDNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="IndSub" Mode="InOut" Type="String" />
+            <Parameter Name="IndSubNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="Loc" Mode="InOut" Type="String" />
+            <Parameter Name="LocNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="Keyword1" Mode="InOut" Type="String" />
+            <Parameter Name="Keyword2" Mode="InOut" Type="String" />
+            <Parameter Name="Keyword3" Mode="InOut" Type="String" />
+            <Parameter Name="OtherKeywords" Mode="InOut" Type="String" />
+            <Parameter Name="NotUsedKeywords" Mode="InOut" Type="String" />
+            <Parameter Name="DocumentType" Mode="InOut" Type="String" />
+            <Parameter Name="IsICBNCB" Mode="InOut" Type="String" />
+            <Parameter Name="bitTenderAmount" Mode="InOut" Type="String" />
+            <Parameter Name="TenderValueFrom" Mode="InOut" Type="Decimal" />
+            <Parameter Name="TenderValueTo" Mode="InOut" Type="Decimal" />
+            <Parameter Name="IndianGlobal" Mode="InOut" Type="Boolean" />
+            <Parameter Name="finalSearchText" Mode="InOut" Type="String" />
+            <Parameter Name="TenderYear" Mode="In" Type="String" />
+            <Parameter Name="OrderBys" Mode="In" Type="String" />
+            <Parameter Name="AscDesc" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_TA_ClientSampleTender_List" ReturnType="Collection(LocalTenderAssistModel.Proc_TA_ClientSampleTender_List_Result)">
+            <Parameter Name="PermissionId" Mode="In" Type="Int32" />
+            <Parameter Name="Start" Mode="In" Type="Int32" />
+            <Parameter Name="Limit" Mode="In" Type="Int32" />
+            <Parameter Name="TenderStatusFlag" Mode="In" Type="String" />
+            <Parameter Name="OwnershipID" Mode="InOut" Type="String" />
+            <Parameter Name="OwnershipIDNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="SectorID" Mode="InOut" Type="String" />
+            <Parameter Name="SectorIDNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="AgencyID" Mode="InOut" Type="String" />
+            <Parameter Name="AgencyIDNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="IndSub" Mode="InOut" Type="String" />
+            <Parameter Name="IndSubNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="Loc" Mode="InOut" Type="String" />
+            <Parameter Name="LocNotUsedIn" Mode="InOut" Type="String" />
+            <Parameter Name="Keyword1" Mode="InOut" Type="String" />
+            <Parameter Name="Keyword2" Mode="InOut" Type="String" />
+            <Parameter Name="Keyword3" Mode="InOut" Type="String" />
+            <Parameter Name="OtherKeywords" Mode="InOut" Type="String" />
+            <Parameter Name="NotUsedKeywords" Mode="InOut" Type="String" />
+            <Parameter Name="DocumentType" Mode="InOut" Type="String" />
+            <Parameter Name="IsICBNCB" Mode="InOut" Type="String" />
+            <Parameter Name="bitTenderAmount" Mode="InOut" Type="String" />
+            <Parameter Name="TenderValueFrom" Mode="InOut" Type="Decimal" />
+            <Parameter Name="TenderValueTo" Mode="InOut" Type="Decimal" />
+            <Parameter Name="IndianGlobal" Mode="InOut" Type="Boolean" />
+            <Parameter Name="finalSearchText" Mode="InOut" Type="String" />
+            <Parameter Name="TenderYear" Mode="In" Type="String" />
+            <Parameter Name="OrderBys" Mode="In" Type="String" />
+            <Parameter Name="AscDesc" Mode="In" Type="String" />
+          </FunctionImport>
+          <FunctionImport Name="Proc_Site_I_SendSampleTenders">
+            <Parameter Name="intClientId" Mode="In" Type="Int32" />
+          </FunctionImport>
+        </EntityContainer>
+        <EntityType Name="tabEmpDetail">
+          <Key>
+            <PropertyRef Name="intEmpId" />
+          </Key>
+          <Property Name="intEmpId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="strFname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="strLname" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="intContactNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="intCompContactNo" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="strPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="strAddress" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="intRoleId" Type="Int32" Nullable="false" />
+          <Property Name="bitActive" Type="Boolean" Nullable="false" />
+          <Property Name="bitOnRole" Type="Boolean" Nullable="false" />
+          <Property Name="bitCommitmentLock" Type="Boolean" Nullable="false" />
+          <Property Name="bitLogin" Type="Boolean" Nullable="false" />
+          <Property Name="dtLoginDate" Type="DateTime" Precision="3" />
+          <Property Name="dtLogoutDate" Type="DateTime" Precision="3" />
+          <Property Name="intEntryBy" Type="Int32" Nullable="false" />
+          <Property Name="dtEntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="intUpdateBy" Type="Int32" />
+          <Property Name="dtUpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tabEmpEmailIds" Relationship="LocalTenderAssistModel.FK_tabEmpEmailId_tabEmpDetails1" FromRole="tabEmpDetail" ToRole="tabEmpEmailId" />
+        </EntityType>
+        <EntityType Name="tabEmpEmailId">
+          <Key>
+            <PropertyRef Name="intEmailId" />
+          </Key>
+          <Property Name="intEmailId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="intEmpId" Type="Int32" Nullable="false" />
+          <Property Name="strEmailId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="strPassword" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="strSmtpName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="intSmtpPort" Type="Int32" />
+          <Property Name="intEntryBy" Type="Int32" Nullable="false" />
+          <Property Name="dtEntryDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="intUpdateBy" Type="Int32" />
+          <Property Name="dtUpdateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tabEmpDetail" Relationship="LocalTenderAssistModel.FK_tabEmpEmailId_tabEmpDetails1" FromRole="tabEmpEmailId" ToRole="tabEmpDetail" />
+        </EntityType>
+        <Association Name="FK_tabEmpEmailId_tabEmpDetails1">
+          <End Type="LocalTenderAssistModel.tabEmpDetail" Role="tabEmpDetail" Multiplicity="1" />
+          <End Type="LocalTenderAssistModel.tabEmpEmailId" Role="tabEmpEmailId" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tabEmpDetail">
+              <PropertyRef Name="intEmpId" />
+            </Principal>
+            <Dependent Role="tabEmpEmailId">
+              <PropertyRef Name="intEmpId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <ComplexType Name="Proc_TA_ClientSampleTender_Count_Result">
+          <Property Type="Int32" Name="TenderStatusReturn" Nullable="true" />
+          <Property Type="Int32" Name="TotalRecord" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="Proc_TA_ClientSampleTender_List_Result">
+          <Property Type="Int32" Name="Rn" Nullable="true" />
+          <Property Type="Int32" Name="OurRefNo" Nullable="true" />
+          <Property Type="Int32" Name="StateId" Nullable="true" />
+          <Property Type="String" Name="Location" Nullable="false" MaxLength="103" />
+          <Property Type="String" Name="WorkDesc" Nullable="false" MaxLength="Max" />
+          <Property Type="DateTime" Name="dt" Nullable="true" Precision="23" />
+          <Property Type="DateTime" Name="DueDate" Nullable="true" Precision="23" />
+          <Property Type="String" Name="language" Nullable="false" MaxLength="50" />
+          <Property Type="Int32" Name="RefId" Nullable="true" />
+          <Property Type="String" Name="RefSource" Nullable="false" MaxLength="50" />
+          <Property Type="String" Name="NCBICB" Nullable="false" MaxLength="3" />
+          <Property Type="Boolean" Name="isCorrigendum" Nullable="false" />
+          <Property Type="Decimal" Name="TenderAmount" Nullable="true" Precision="18" Scale="0" />
+          <Property Type="Int32" Name="AgencyId" Nullable="true" />
+          <Property Type="String" Name="AgencyName" Nullable="false" MaxLength="4000" />
+          <Property Type="String" Name="SectorName" Nullable="false" MaxLength="1" />
+          <Property Type="Guid" Name="Rannumber" Nullable="false" />
+          <Property Type="Int32" Name="TenderStatusReturn" Nullable="true" />
+          <Property Type="Int32" Name="CountryId" Nullable="true" />
+          <Property Type="Int32" Name="LocId" Nullable="true" />
+          <Property Type="Int32" Name="OwnershipId" Nullable="false" />
+          <Property Type="Int32" Name="SectorId" Nullable="false" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LocalTenderAssistModelStoreContainer" CdmEntityContainer="LocalTenderAssistEntities">
+          <EntitySetMapping Name="tabClientDetails">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientDetail">
+              <MappingFragment StoreEntitySet="tabClientDetails">
+                <ScalarProperty Name="intClientId" ColumnName="intClientId" />
+                <ScalarProperty Name="strFName" ColumnName="strFName" />
+                <ScalarProperty Name="strLName" ColumnName="strLName" />
+                <ScalarProperty Name="strDesignation" ColumnName="strDesignation" />
+                <ScalarProperty Name="strCmpName" ColumnName="strCmpName" />
+                <ScalarProperty Name="strAboutUs" ColumnName="strAboutUs" />
+                <ScalarProperty Name="strAddress" ColumnName="strAddress" />
+                <ScalarProperty Name="intLocId" ColumnName="intLocId" />
+                <ScalarProperty Name="intPinCode" ColumnName="intPinCode" />
+                <ScalarProperty Name="intMobileNo" ColumnName="intMobileNo" />
+                <ScalarProperty Name="intPhoneNo" ColumnName="intPhoneNo" />
+                <ScalarProperty Name="strAdditionalContactNo" ColumnName="strAdditionalContactNo" />
+                <ScalarProperty Name="strEmailId1" ColumnName="strEmailId1" />
+                <ScalarProperty Name="strEmailId2" ColumnName="strEmailId2" />
+                <ScalarProperty Name="strAdditionalEmailid" ColumnName="strAdditionalEmailid" />
+                <ScalarProperty Name="strWebsite" ColumnName="strWebsite" />
+                <ScalarProperty Name="strInterestProducts" ColumnName="strInterestProducts" />
+                <ScalarProperty Name="strRemarks" ColumnName="strRemarks" />
+                <ScalarProperty Name="intClientPurpose" ColumnName="intClientPurpose" />
+                <ScalarProperty Name="bitDc" ColumnName="bitDc" />
+                <ScalarProperty Name="bitSendSampleTender" ColumnName="bitSendSampleTender" />
+                <ScalarProperty Name="dtSendSampleTender" ColumnName="dtSendSampleTender" />
+                <ScalarProperty Name="bitSendSampleTenderRegular" ColumnName="bitSendSampleTenderRegular" />
+                <ScalarProperty Name="bitSendPromotional" ColumnName="bitSendPromotional" />
+                <ScalarProperty Name="dtSendPromotional" ColumnName="dtSendPromotional" />
+                <ScalarProperty Name="intLeadSourceId" ColumnName="intLeadSourceId" />
+                <ScalarProperty Name="intSalesEmpId" ColumnName="intSalesEmpId" />
+                <ScalarProperty Name="intClientStatusSalesId" ColumnName="intClientStatusSalesId" />
+                <ScalarProperty Name="dt_FCC_Date" ColumnName="dt_FCC_Date" />
+                <ScalarProperty Name="intCareEmpId" ColumnName="intCareEmpId" />
+                <ScalarProperty Name="intClientStatusCareId" ColumnName="intClientStatusCareId" />
+                <ScalarProperty Name="dt_FUP_Date" ColumnName="dt_FUP_Date" />
+                <ScalarProperty Name="intActive" ColumnName="intActive" />
+                <ScalarProperty Name="dtStartDate" ColumnName="dtStartDate" />
+                <ScalarProperty Name="dtLastDate" ColumnName="dtLastDate" />
+                <ScalarProperty Name="strPassword" ColumnName="strPassword" />
+                <ScalarProperty Name="uniUniqueNo" ColumnName="uniUniqueNo" />
+                <ScalarProperty Name="bitTenderService" ColumnName="bitTenderService" />
+                <ScalarProperty Name="bitSubcontractor" ColumnName="bitSubcontractor" />
+                <ScalarProperty Name="bitTenderAwarded" ColumnName="bitTenderAwarded" />
+                <ScalarProperty Name="bitProject" ColumnName="bitProject" />
+                <ScalarProperty Name="bitEmailAlert" ColumnName="bitEmailAlert" />
+                <ScalarProperty Name="bitSmsAlert" ColumnName="bitSmsAlert" />
+                <ScalarProperty Name="intMailFormat" ColumnName="intMailFormat" />
+                <ScalarProperty Name="bitInterestedForRenewal" ColumnName="bitInterestedForRenewal" />
+                <ScalarProperty Name="bitDailyMailSend" ColumnName="bitDailyMailSend" />
+                <ScalarProperty Name="intCategory" ColumnName="intCategory" />
+                <ScalarProperty Name="bitCollectionApprove" ColumnName="bitCollectionApprove" />
+                <ScalarProperty Name="dtLastLoginDate" ColumnName="dtLastLoginDate" />
+                <ScalarProperty Name="bitLocked" ColumnName="bitLocked" />
+                <ScalarProperty Name="intEntryBy" ColumnName="intEntryBy" />
+                <ScalarProperty Name="dtEntryDate" ColumnName="dtEntryDate" />
+                <ScalarProperty Name="intUpdateBy" ColumnName="intUpdateBy" />
+                <ScalarProperty Name="dtUpdateDate" ColumnName="dtUpdateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabClientEmailHistories">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientEmailHistory">
+              <MappingFragment StoreEntitySet="tabClientEmailHistory">
+                <ScalarProperty Name="intClientEmailId" ColumnName="intClientEmailId" />
+                <ScalarProperty Name="intClientId" ColumnName="intClientId" />
+                <ScalarProperty Name="intEmailFormType" ColumnName="intEmailFormType" />
+                <ScalarProperty Name="dtEnterDate" ColumnName="dtEnterDate" />
+                <ScalarProperty Name="strSentEmailLayout" ColumnName="strSentEmailLayout" />
+                <ScalarProperty Name="isEmailSent" ColumnName="isEmailSent" />
+                <ScalarProperty Name="intEnterBy" ColumnName="intEnterBy" />
+                <ScalarProperty Name="strFromMailId" ColumnName="strFromMailId" />
+                <ScalarProperty Name="strCCMailID" ColumnName="strCCMailID" />
+                <ScalarProperty Name="strToMailId" ColumnName="strToMailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabClientPermissions">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientPermission">
+              <MappingFragment StoreEntitySet="tabClientPermission">
+                <ScalarProperty Name="intPermissionId" ColumnName="intPermissionId" />
+                <ScalarProperty Name="intClientId" ColumnName="intClientId" />
+                <ScalarProperty Name="strPermissionName" ColumnName="strPermissionName" />
+                <ScalarProperty Name="bitActive" ColumnName="bitActive" />
+                <ScalarProperty Name="bitBuy" ColumnName="bitBuy" />
+                <ScalarProperty Name="bitCell" ColumnName="bitCell" />
+                <ScalarProperty Name="bitContract" ColumnName="bitContract" />
+                <ScalarProperty Name="bitICB" ColumnName="bitICB" />
+                <ScalarProperty Name="bitIndianOrGlobal" ColumnName="bitIndianOrGlobal" />
+                <ScalarProperty Name="intPurpose" ColumnName="intPurpose" />
+                <ScalarProperty Name="strOtherKeywords" ColumnName="strOtherKeywords" />
+                <ScalarProperty Name="strNotUsedKeywords" ColumnName="strNotUsedKeywords" />
+                <ScalarProperty Name="bitTenderAmount" ColumnName="bitTenderAmount" />
+                <ScalarProperty Name="moneyTenderAmountFrom" ColumnName="moneyTenderAmountFrom" />
+                <ScalarProperty Name="moneyTenderAmountTo" ColumnName="moneyTenderAmountTo" />
+                <ScalarProperty Name="intEntryBy" ColumnName="intEntryBy" />
+                <ScalarProperty Name="dtEntryDate" ColumnName="dtEntryDate" />
+                <ScalarProperty Name="intUpdateBy" ColumnName="intUpdateBy" />
+                <ScalarProperty Name="dtUpdateDate" ColumnName="dtUpdateDate" />
+                <ScalarProperty Name="MachineName" ColumnName="MachineName" />
+                <ScalarProperty Name="IPAddressOfSQLServer" ColumnName="IPAddressOfSQLServer" />
+                <ScalarProperty Name="IPAddressOfClient" ColumnName="IPAddressOfClient" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabClientPermissionWithAgencies">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientPermissionWithAgency">
+              <MappingFragment StoreEntitySet="tabClientPermissionWithAgency">
+                <ScalarProperty Name="intAgencyPerId" ColumnName="intAgencyPerId" />
+                <ScalarProperty Name="intPermissionId" ColumnName="intPermissionId" />
+                <ScalarProperty Name="intAgencyId" ColumnName="intAgencyId" />
+                <ScalarProperty Name="bitIsUsed" ColumnName="bitIsUsed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabClientPermissionWithIndSubIndustries">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientPermissionWithIndSubIndustry">
+              <MappingFragment StoreEntitySet="tabClientPermissionWithIndSubIndustry">
+                <ScalarProperty Name="intIndSubIndustryPerId" ColumnName="intIndSubIndustryPerId" />
+                <ScalarProperty Name="intPermissionId" ColumnName="intPermissionId" />
+                <ScalarProperty Name="intIndustryId" ColumnName="intIndustryId" />
+                <ScalarProperty Name="intSubindustryId" ColumnName="intSubindustryId" />
+                <ScalarProperty Name="bitIsUsed" ColumnName="bitIsUsed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabClientPermissionWithLocations">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientPermissionWithLocation">
+              <MappingFragment StoreEntitySet="tabClientPermissionWithLocation">
+                <ScalarProperty Name="intLocationPerId" ColumnName="intLocationPerId" />
+                <ScalarProperty Name="intPermissionId" ColumnName="intPermissionId" />
+                <ScalarProperty Name="intCountryId" ColumnName="intCountryId" />
+                <ScalarProperty Name="intStateId" ColumnName="intStateId" />
+                <ScalarProperty Name="intCityId" ColumnName="intCityId" />
+                <ScalarProperty Name="bitIsUsed" ColumnName="bitIsUsed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabClientPermissionWithOwnerships">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientPermissionWithOwnership">
+              <MappingFragment StoreEntitySet="tabClientPermissionWithOwnership">
+                <ScalarProperty Name="intOwnershipPerId" ColumnName="intOwnershipPerId" />
+                <ScalarProperty Name="intPermissionId" ColumnName="intPermissionId" />
+                <ScalarProperty Name="intOwnershipId" ColumnName="intOwnershipId" />
+                <ScalarProperty Name="bitIsUsed" ColumnName="bitIsUsed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabClientPermissionWithProducts">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientPermissionWithProduct">
+              <MappingFragment StoreEntitySet="tabClientPermissionWithProduct">
+                <ScalarProperty Name="intProductClassificationPerId" ColumnName="intProductClassificationPerId" />
+                <ScalarProperty Name="intPermissionId" ColumnName="intPermissionId" />
+                <ScalarProperty Name="intProductId" ColumnName="intProductId" />
+                <ScalarProperty Name="bitIsKeywordSearch" ColumnName="bitIsKeywordSearch" />
+                <ScalarProperty Name="bitIsWordSearch" ColumnName="bitIsWordSearch" />
+                <ScalarProperty Name="bitIsExactPhrase" ColumnName="bitIsExactPhrase" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabClientPermissionWithSectors">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabClientPermissionWithSector">
+              <MappingFragment StoreEntitySet="tabClientPermissionWithSector">
+                <ScalarProperty Name="intSectorPerId" ColumnName="intSectorPerId" />
+                <ScalarProperty Name="intPermissionId" ColumnName="intPermissionId" />
+                <ScalarProperty Name="intSectorId" ColumnName="intSectorId" />
+                <ScalarProperty Name="bitIsUsed" ColumnName="bitIsUsed" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabEmpDetails">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabEmpDetail">
+              <MappingFragment StoreEntitySet="tabEmpDetails">
+                <ScalarProperty Name="dtUpdateDate" ColumnName="dtUpdateDate" />
+                <ScalarProperty Name="intUpdateBy" ColumnName="intUpdateBy" />
+                <ScalarProperty Name="dtEntryDate" ColumnName="dtEntryDate" />
+                <ScalarProperty Name="intEntryBy" ColumnName="intEntryBy" />
+                <ScalarProperty Name="dtLogoutDate" ColumnName="dtLogoutDate" />
+                <ScalarProperty Name="dtLoginDate" ColumnName="dtLoginDate" />
+                <ScalarProperty Name="bitLogin" ColumnName="bitLogin" />
+                <ScalarProperty Name="bitCommitmentLock" ColumnName="bitCommitmentLock" />
+                <ScalarProperty Name="bitOnRole" ColumnName="bitOnRole" />
+                <ScalarProperty Name="bitActive" ColumnName="bitActive" />
+                <ScalarProperty Name="intRoleId" ColumnName="intRoleId" />
+                <ScalarProperty Name="strAddress" ColumnName="strAddress" />
+                <ScalarProperty Name="strPassword" ColumnName="strPassword" />
+                <ScalarProperty Name="intCompContactNo" ColumnName="intCompContactNo" />
+                <ScalarProperty Name="intContactNo" ColumnName="intContactNo" />
+                <ScalarProperty Name="strLname" ColumnName="strLname" />
+                <ScalarProperty Name="strFname" ColumnName="strFname" />
+                <ScalarProperty Name="intEmpId" ColumnName="intEmpId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tabEmpEmailIds">
+            <EntityTypeMapping TypeName="LocalTenderAssistModel.tabEmpEmailId">
+              <MappingFragment StoreEntitySet="tabEmpEmailId">
+                <ScalarProperty Name="dtUpdateDate" ColumnName="dtUpdateDate" />
+                <ScalarProperty Name="intUpdateBy" ColumnName="intUpdateBy" />
+                <ScalarProperty Name="dtEntryDate" ColumnName="dtEntryDate" />
+                <ScalarProperty Name="intEntryBy" ColumnName="intEntryBy" />
+                <ScalarProperty Name="intSmtpPort" ColumnName="intSmtpPort" />
+                <ScalarProperty Name="strSmtpName" ColumnName="strSmtpName" />
+                <ScalarProperty Name="strPassword" ColumnName="strPassword" />
+                <ScalarProperty Name="strEmailId" ColumnName="strEmailId" />
+                <ScalarProperty Name="intEmpId" ColumnName="intEmpId" />
+                <ScalarProperty Name="intEmailId" ColumnName="intEmailId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Proc_TA_ClientSampleTender_Count" FunctionName="LocalTenderAssistModel.Store.Proc_TA_ClientSampleTender_Count">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LocalTenderAssistModel.Proc_TA_ClientSampleTender_Count_Result">
+                <ScalarProperty Name="TenderStatusReturn" ColumnName="TenderStatusReturn" />
+                <ScalarProperty Name="TotalRecord" ColumnName="TotalRecord" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_TA_ClientSampleTender_List" FunctionName="LocalTenderAssistModel.Store.Proc_TA_ClientSampleTender_List">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LocalTenderAssistModel.Proc_TA_ClientSampleTender_List_Result">
+                <ScalarProperty Name="Rn" ColumnName="Rn" />
+                <ScalarProperty Name="OurRefNo" ColumnName="OurRefNo" />
+                <ScalarProperty Name="StateId" ColumnName="StateId" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="WorkDesc" ColumnName="WorkDesc" />
+                <ScalarProperty Name="dt" ColumnName="dt" />
+                <ScalarProperty Name="DueDate" ColumnName="DueDate" />
+                <ScalarProperty Name="language" ColumnName="language" />
+                <ScalarProperty Name="RefId" ColumnName="RefId" />
+                <ScalarProperty Name="RefSource" ColumnName="RefSource" />
+                <ScalarProperty Name="NCBICB" ColumnName="NCBICB" />
+                <ScalarProperty Name="isCorrigendum" ColumnName="isCorrigendum" />
+                <ScalarProperty Name="TenderAmount" ColumnName="TenderAmount" />
+                <ScalarProperty Name="AgencyId" ColumnName="AgencyId" />
+                <ScalarProperty Name="AgencyName" ColumnName="AgencyName" />
+                <ScalarProperty Name="SectorName" ColumnName="SectorName" />
+                <ScalarProperty Name="Rannumber" ColumnName="Rannumber" />
+                <ScalarProperty Name="TenderStatusReturn" ColumnName="TenderStatusReturn" />
+                <ScalarProperty Name="CountryId" ColumnName="CountryId" />
+                <ScalarProperty Name="LocId" ColumnName="LocId" />
+                <ScalarProperty Name="OwnershipId" ColumnName="OwnershipId" />
+                <ScalarProperty Name="SectorId" ColumnName="SectorId" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="Proc_Site_I_SendSampleTenders" FunctionName="LocalTenderAssistModel.Store.Proc_Site_I_SendSampleTenders" />
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,250 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using System.Text.RegularExpressions;
+
+
+<script type="text/javascript">
+    var Total = parseInt('@Model.Total');
+    var TotalLive = parseInt('@Model.TotalLive');
+    var TotalFresh = parseInt('@Model.TotalFresh');
+    var TotalClosed = parseInt('@Model.TotalClosed');
+</script>
+
+<div class="container_fullMiddle">
+
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Partial("Partial/partialBreadCrumbForTenderList", Model)
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-2">
+            @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/partialAdvanceSearch.cshtml")
+        </div>
+        <div class="col-md-8">
+            <div class="well well-sm">
+                <div id="categories">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="section_panel">
+                                @Html.Partial("Search/partialSearchPanel")
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="lineseperatorOrange"></div>
+                                    </div>
+                                </div>
+
+                                <div id="displayPanel" class="display_panel">
+                                    @{
+                                        var activeClassAll = Model.TenderStatus == 0 ? "active tabCatLinks" : "tabCatLinks";
+                                        var activeFreshAll = Model.TenderStatus == 2 ? "active tabCatLinks" : "tabCatLinks";
+                                        var activeLiveAll = Model.TenderStatus == 1 ? "active tabCatLinks" : "tabCatLinks";
+                                        var activeArchiveAll = Model.TenderStatus == 3 ? "active tabCatLinks" : "tabCatLinks";
+                                    }
+
+                                    <div class="row">
+                                        <div class="col-md-9">
+                                            @if (Model.TenderYear.ToString() == "" || Model.TenderYear.ToString() == DateTime.Today.Year.ToString())
+                                            {
+                                                <ul class="nav nav-tabs">
+                                                    <li class="@activeClassAll" id="linkAllTenders">
+                                                        <a class="pointercursor" onclick="ChangeTenderStatus('0');">
+                                                            All
+                                                            <span id="lblAll" class="tabCatLinksSpans">
+                                                                @if (Model.TenderStatus == 0)
+                                                                {
+                                                                    <small><b>(@Model.Total)</b></small>
+                                                                }
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="@activeFreshAll" id="linkFreshTenders">
+                                                        <a class="pointercursor" onclick="ChangeTenderStatus('2');">
+                                                            Fresh
+                                                            <span id="lblFresh" class="tabCatLinksSpans">
+                                                                @if (Model.TenderStatus == 2)
+                                                                {
+                                                                    <small><b>(@Model.TotalFresh)</b></small>
+                                                                }
+                                                            </span>
+                                                        </a>
+                                                    </li>
+                                                    <li class="@activeLiveAll" id="linkLiveTenders">
+                                                        <a class="pointercursor" onclick="ChangeTenderStatus('1');">
+                                                            Live
+                                                            <span id="lblLive" class="tabCatLinksSpans">
+                                                                @if (Model.TenderStatus == 1)
+                                                                {
+                                                                    <small>(@Model.TotalLive)</small>
+                                                                }
+                                                            </span>
+
+                                                        </a>
+                                                    </li>
+                                                    <li class="@activeArchiveAll" id="linkArchiveTenders">
+                                                        <a class="pointercursor" onclick="ChangeTenderStatus('3');">
+                                                            Archive
+                                                            <span id="lblArchive" class="tabCatLinksSpans">
+                                                                @if (Model.TenderStatus == 3)
+                                                                {
+                                                                    <small>(@Model.TotalClosed)</small>
+                                                                }
+                                                            </span>
+                                                        </a>
+                                                    </li>
+
+                                                </ul>
+                                            }
+                                            else
+                                            {  <ul class="nav nav-tabs">
+                                                <li class="@activeClassAll" id="linkAllTenders">
+                                                    <a class="pointercursor" onclick="ChangeTenderStatus('0');">
+                                                        All Tender
+                                                        <span id="lblAll" class="tabCatLinksSpans">
+                                                            <small><b>(@Model.Total)</b></small>
+                                                        </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            }
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div>
+                                                @Html.Partial("ClosedYearSelection/partialClosedYearSelection", new TenderAssist.ViewModel.TenderDetail
+                                           {
+                                               TenderYear = Model.TenderYear,
+                                           })
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="card cardpanel">
+                                                @Html.Partial("Search/_WithinSearch")
+                                                <div>
+                                                    @{
+                                                        if (Model.DisplayText2 != "")
+                                                        {
+                                                            var withinKeywords = Regex.Split(Model.DisplayText2, ",");
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    @foreach (var keyword in withinKeywords)
+                                                                    {
+                                                                        <div class="withinselecteditems" onclick="RemoveWithinSearch('@keyword')">
+                                                                            @keyword
+                                                                            <i class="fa fa-trash-o"></i>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+
+
+                                                        }
+                                                    }
+                                                </div>
+
+                                                <div id="divTenderInfo">
+                                                    @Html.Partial("Partial/partialSearchResultData")
+                                                </div>
+                                                <div id="loader" style="display:none;">
+                                                    @Html.Partial("partialSpinnerLoadingView")
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row" id="divloadmore">
+                                        <div class="col-md-12">
+                                            <div class="pull-right">
+                                                <button type="button" class="btn btn-default btn-lg" id="btnLoadMoreData">
+                                                    <i class="fa fa-eye-slash"></i>
+                                                    View More...
+                                                </button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+            @Html.Partial("~/Views/Home/Sections/_HomeAdvertiesment.cshtml")
+        </div>
+    </div>
+</div>
+
+@Html.Hidden("hdnPageUrl", Model.PaggingUrl)
+
+@Html.Partial("_partialInquiryForm", Model)
+
+<script type="text/javascript">
+
+    var CurrentPage = '@ViewBag.CurrentPage';
+    var TotalPage = parseInt('@ViewBag.TotalPage');
+    var PageSize = '@ViewBag.PageSize';
+    var NewPage = (parseInt('@ViewBag.CurrentPage') + 1);
+
+    console.log('TotalPage - ' + TotalPage);
+
+</script>
+
+<style>
+    .dropdown {
+        margin-bottom: 10px;
+    }
+
+        .dropdown .selectButton {
+            width: 100%;
+            text-align: left;
+        }
+
+    .dropdown-header {
+        padding: 3px 10px !important;
+        font-size: 15px;
+    }
+
+    .dropdown-menu > li > a {
+        padding: 3px 10px !important;
+    }
+
+    .dropdown-menu-class {
+        max-height: 250px;
+        overflow-y: scroll;
+        width: 100%;
+    }
+
+    .tabCatLinksSpans {
+        float: right;
+        margin: 0 2px;
+        margin-top: -1px;
+        /*color:#4b4b4b;*/
+    }
+
+    .cardpanel {
+        padding: 5px;
+    }
+
+    .withinselecteditems {
+        font-size: 14px !important;
+        cursor: pointer;
+        font-size: 12px;
+        background-color: #e0e0e0;
+        box-shadow: 0 2px 4px 0 hsla(0,0%,100%,.5);
+        border-radius: 3px;
+        margin: 0px;
+        overflow: hidden;
+        transition: background-color .1s;
+        max-width: 200px;
+        padding: 6px;
+        display: inline-block;
+    }
+
+        .withinselecteditems:hover {
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+</style>

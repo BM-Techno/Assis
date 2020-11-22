@@ -1,0 +1,82 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@{
+
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Title = "My Indian Tender Service";
+
+    var isIndianServiceAccess = (bool)ViewData["IndianTenderServiceAccess"];
+
+    var assignedPermissions = "";
+    if (Model.ClientPermissionList.Any())
+    {
+        assignedPermissions = (string.Join(",", Model.ClientPermissionList.Select(x => x.intPermissionId.ToString()).ToArray()));
+    }
+}
+ 
+
+
+<div class="container_fullMiddle">
+    <div class="row">         
+        <div class="col-md-12 well wellWhiteBg">
+            <h1 class="pagetitle">
+                My Indian Service
+            </h1>
+            @if (!isIndianServiceAccess)
+            {
+                <h2 class="pagedescription">
+                    <i class="fa fa-times-circle text-danger"></i>
+                    You don't have sufficient privileges to access the Indian tender service.
+                </h2>
+            }
+            else
+            {
+                <h2 class="pagedescription">
+                    <i class="fa fa-check-circle text-success"></i>
+                    You have been assigned the Indian tender service. You can access the assigned <b> @Model.ClientPermissionList.Count </b> permission(s) for Indian tender service as below.
+                </h2>
+            }
+            <div class="grayline"></div>
+            <div class="well">
+                @{
+                    if (Model.ClientPermissionList.Any())
+                    {
+                        var totalPermissions = Model.ClientPermissionList.Count;
+
+                        var countfordiv = 0;
+                        for (int i = 0; i < totalPermissions; i++)
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Partial("Indian/partialPermissionCategoryList", Model.ClientPermissionList[i])
+                                </div>
+                            </div>
+                        } 
+                    }
+
+                }
+            </div>
+        </div>
+         
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/indian-service-js")
+@Scripts.Render("~/bundles/client-search-js")
+
+@Html.Hidden("hdnPageType", "ServiceListPage")
+@Html.Hidden("AssignedPermissions", assignedPermissions)
+
+@Html.Hidden("hdnPermissionId", "")
+@Html.Hidden("SelectedLocationIds", "")
+@Html.Hidden("SelectedIndustrySubIndustryIds", "")
+@Html.Hidden("SelectedState", "")
+@Html.Hidden("SelectedCity", "")
+@Html.Hidden("SelectedProduct", "")
+@Html.Hidden("SelectedIndustry", "")
+@Html.Hidden("SelectedSubIndustry", "")
+@Html.Hidden("SelectedAgency", "")
+@Html.Hidden("SelectedSector", "")
+@Html.Hidden("SelectedOwnership", "")
+@Html.Hidden("hdnTenderStatus", "")
+@Html.Hidden("hdnTenderType", "")
+@Html.Hidden("hdnTenderValue", "")

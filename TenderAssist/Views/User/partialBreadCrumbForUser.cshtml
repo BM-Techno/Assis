@@ -1,0 +1,50 @@
+﻿
+@model string
+@{
+    var permissionName = Model;
+    bool isIndianGlobal = true;
+    if (Session["IndianGlobal"] != null)
+    { isIndianGlobal = (bool)Session["IndianGlobal"]; }
+
+    string url = "";
+    string displayName = "Indian Service";
+
+    if (isIndianGlobal)
+    {  url = Url.Action("IndianService", "User"); displayName = "Indian Service"; }
+    else
+    {   url = Url.Action("GlobalService", "User"); displayName = "Global Service"; }
+
+}
+<div class="breadcrumbgrid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                <div class="CurrentDiv">
+                    <a href="@Url.Action("MyDashboard", "User")" itemprop="url" style="text-decoration: none;">
+                        <span itemprop="title">Home</span>
+                    </a>
+                </div>
+                <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <span class="seperator">›</span>
+                    </div>
+                    <div class="CurrentDiv">
+                        <a href="@url" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">@displayName</span>
+                        </a>
+                    </div>
+                </div>
+                <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <span class="seperator">›</span>
+                    </div>
+                    <div class="CurrentDiv">
+                        <span itemprop="title" class="text-bold">@permissionName </span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

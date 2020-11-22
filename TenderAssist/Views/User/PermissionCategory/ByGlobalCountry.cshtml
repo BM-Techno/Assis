@@ -1,0 +1,36 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    var isCountryPermission = Model.AllCountryList.Any();
+    var countryPanelId = "Country_Panel_" + Model.PermissionId;
+}
+
+<div class="box">
+    <div class="box-header">
+        <span class="box-title categoryHeader">
+            <i class="fa fa-check-circle text-success"></i>
+            Countries
+        </span>
+    </div>
+    <div class="box-body">
+        @if (isCountryPermission)
+        {
+            <div id="@countryPanelId">
+                @{
+                    var count = 0;
+                    foreach (var item in Model.AllCountryList)
+                    {
+                        <a href="#nogo" onclick="CategorySearch(10,@item.CountryId,@Model.PermissionId)">
+                            @item.CountryName
+                        </a>
+                        count++;
+                        if (count != Model.AllCountryList.Count)
+                        {
+                            <span>,</span>
+                        }
+                    }
+                }
+            </div>
+                    }
+    </div>
+</div>

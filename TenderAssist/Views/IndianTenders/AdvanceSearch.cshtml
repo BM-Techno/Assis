@@ -1,0 +1,136 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@*@Styles.Render("~/Content/pricing-area-css")*@
+
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">Advance Search</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="pagetitle">
+                        Filter your tenders with advance search
+                    </h1>
+                </div>
+            </div>
+            <div id="AdvanceFilterSearch_form">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            @Html.Partial("Search/_MainSearch")
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.TextBox("txtadvSearchRefNo", "", new { @class = "form-control", @maxlength = "12", @placeholder = "Reference No" })
+
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialState.cshtml")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialCity.cshtml")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialAgency.cshtml")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialSector.cshtml")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialOwnership.cshtml")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialTenderType.cshtml")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialTenderStatus.cshtml")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialTenderValue.cshtml")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialIndustry.cshtml")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialSubIndustry.cshtml")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialSubmissionDate.cshtml")
+                    </div>
+                    <div class="col-md-4">
+                        @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/_partialOpeningDate.cshtml")
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-warning" type="button" id="btnadvancesearch" onclick="AdvanceSearchTender();">
+                            <i class="fa fa-filter"></i>&nbsp; Filter Search
+                        </button>
+                        <button class="btn btn-danger" type="button" id="advcClearSearchbtn">
+                            <i class="fa fa-undo"></i>&nbsp; Reset
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+    </div>
+
+</div>
+
+@Html.Hidden("hdnSearchType", Model.SearchType)
+@Html.Hidden("SelectedState", Model.SelectedState)
+@Html.Hidden("SelectedCity", Model.SelectedCity)
+@Html.Hidden("SelectedProduct", Model.SelectedProduct)
+@Html.Hidden("SelectedIndustry", Model.SelectedIndustry)
+@Html.Hidden("SelectedSubIndustry", Model.SelectedSubIndustry)
+@Html.Hidden("SelectedAgency", Model.SelectedAgency)
+@Html.Hidden("SelectedSector", Model.SelectedSector)
+@Html.Hidden("SelectedOwnership", Model.SelectedOwnership)
+@Html.Hidden("SelectedLocationIds", Model.SelectedLocationIds)
+@Html.Hidden("SelectedIndustrySubIndustryIds", Model.SelectedIndustrySubIndustryIds)
+@Html.Hidden("hdnTendersBy", Model.TendersBy)
+@Html.Hidden("hdnFieldId", Model.FieldId)
+@Html.Hidden("hdnFieldName", Model.FieldName)
+
+
+@Scripts.Render("~/bundles/search-script")
+@Scripts.Render("~/bundles/advancesearch-js")
+@Scripts.Render("~/bundles/advance-search-datepicker-script")
+
+

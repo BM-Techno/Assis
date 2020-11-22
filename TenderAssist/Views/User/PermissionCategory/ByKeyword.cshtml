@@ -1,0 +1,36 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    var isKeywordPermission = Model.AllProducts.Any();
+    var keywordLinkId = "Keyword_Link_" + Model.PermissionId;
+    var keywordPanelId = "Keyword_Panel_" + Model.PermissionId;
+}
+<div class="box">
+    <div class="box-header">
+        <span class="box-title categoryHeader">
+            <i class="fa fa-check-circle text-success"></i>
+            My Keywords
+        </span>
+    </div>
+    <div class="box-body">
+        @if (isKeywordPermission)
+        {
+            <div id="@keywordPanelId">
+                @{
+                    var count = 0;
+                    foreach (var item in Model.AllProducts)
+                    {
+                        <a href="#nogo" onclick="CategorySearch(@TenderAssist.CommonHelper.Utility.TenderTypeList.Keyword,@item.ProductsId,@Model.PermissionId)">
+                            @item.ProductsName
+                        </a>
+                        count++;
+                        if (count != Model.AllProducts.Count)
+                        {
+                            <span>,</span>
+                        }
+                    }
+                }
+            </div>
+                    }
+    </div>
+</div>

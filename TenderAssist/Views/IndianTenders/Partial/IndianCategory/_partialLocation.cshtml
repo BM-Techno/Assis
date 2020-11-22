@@ -1,0 +1,80 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.Controllers;
+@using TenderAssist.CommonHelper;
+@using System.Configuration;
+
+@{
+    var stateList = Model.AllStateCityForIndianTenders.GroupBy(x => x.StateId, (key, group) => group.First()).OrderBy(x => x.StateName).ToList();
+
+    foreach (var item in stateList)
+    {
+        var datacount = 0;
+        var locations = Model.AllStateCityForIndianTenders.Where(x => x.StateId == item.StateId).ToList();
+        var stateurl = ConfigurationManager.AppSettings["TenderByStateUrl"].ToString() + Utility.TenderWordNameList.StateWord + item.StateName.Replace(" ", "-").ToLower().Trim().ToString();
+        <button class="accordion" onclick="LoadData(this);">
+            <span class="morelink">»</span>
+            @if (!string.IsNullOrEmpty(Model.SearchText))
+            {
+                <a href="@stateurl" title='@item.StateName Tenders'>
+                    @Highlightsearchtext(item.StateName, Model.SearchText, 1)
+
+                </a>
+            }
+            else
+            {
+                <a href="@stateurl" title='@item.StateName Tenders'> @item.StateName Tenders</a>
+            }
+
+        </button>
+        <div class="panel">
+            @foreach (var loc in locations)
+            {
+                var cityurl = ConfigurationManager.AppSettings["TenderByCityUrl"].ToString() + Utility.TenderWordNameList.CityWord + loc.Location.Replace(" ", "-").ToLower().Trim().ToString();
+
+                if (datacount == 0)
+                {
+                    @Html.Raw("<div class=\"row\">")
+                    @Html.Raw("<div class=\"col-md-6\">")
+                }
+                else
+                {
+                    @Html.Raw("<div class=\"col-md-6\">")
+                }
+                @Html.Raw(" <span>»</span>")
+
+                if (!string.IsNullOrEmpty(Model.SearchText))
+                {
+                    <a href="@cityurl" title='@loc.Location Tenders'>
+                        @Highlightsearchtext(loc.Location, Model.SearchText, 1)
+                    </a>
+                }
+                else
+                {
+                    <a href="@cityurl" title='@loc.Location Tenders'> @loc.Location Tenders</a>
+                }
+                @Html.Raw("</div>")
+
+                if (datacount != 0)
+                {   @Html.Raw("</div>") datacount = 0;
+                    }
+                    else
+                    {
+                        datacount++;
+                    }
+                }
+            @if (datacount != 0)
+                {   @Html.Raw("</div>") datacount = 0;
+                }
+
+        </div>
+
+    }
+}
+
+
+@helper Highlightsearchtext(string strSource, string strStart, int sarchType)
+{
+var common = new CommonController();
+var displayText = common.Highlightsearchtext(strSource, strStart, sarchType);
+    @Html.Raw(displayText + " Tenders")
+}

@@ -1,0 +1,110 @@
+﻿@using System.Globalization;
+@using TenderAssist.CommonHelper;
+@model TenderAssist.ViewModel.TenderDetail
+@{
+    var pagetitle = "";
+    string newUrl, tenderWordName;
+    newUrl = string.Empty;
+    tenderWordName = string.Empty;
+    switch (Model.TendersBy)
+    {
+        default://SEARCH
+        case Utility.TenderTypeList.SearchTender:
+            tenderWordName = Utility.TenderTypeDisplayText.AdvanceSearch;
+            break;
+        case Utility.TenderTypeList.Keyword:
+            newUrl = Url.Action("KeywordTenders", "IndianTenders");
+            tenderWordName = Utility.TenderTypeDisplayText.Keyword;
+            break;
+        case Utility.TenderTypeList.State:
+            newUrl = Url.Action("StateTenders", "IndianTenders");
+            tenderWordName = Utility.TenderTypeDisplayText.State;
+            break;
+        case Utility.TenderTypeList.City:
+            newUrl = Url.Action("CityTenders", "IndianTenders");
+            tenderWordName = Utility.TenderTypeDisplayText.City;
+            break;
+        case Utility.TenderTypeList.Industry:
+            newUrl = Url.Action("IndustryTenders", "IndianTenders");
+            tenderWordName = Utility.TenderTypeDisplayText.Industry;
+            break;
+        case Utility.TenderTypeList.SubIndustry:
+            newUrl = Url.Action("SubIndustryTenders", "IndianTenders");
+            tenderWordName = Utility.TenderTypeDisplayText.SubIndustry;
+            break;
+        case Utility.TenderTypeList.Agency:
+            newUrl = Url.Action("AgencyTenders", "IndianTenders");
+            tenderWordName = Utility.TenderTypeDisplayText.Agency;
+            break;
+        case Utility.TenderTypeList.Sector:
+            newUrl = Url.Action("SectorTenders", "IndianTenders");
+            tenderWordName = Utility.TenderTypeDisplayText.Sector;
+            break;
+        case Utility.TenderTypeList.Ownership://Ownership:
+            newUrl = Url.Action("OwnershipTenders", "IndianTenders");
+            tenderWordName = Utility.TenderTypeDisplayText.Ownership;
+            break;
+    }
+
+    pagetitle = Model.FieldName == null ? "" : Model.FieldName.Replace("-", " ").Replace("Tenders", "") + " Tenders";
+    pagetitle = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(pagetitle.ToLower());
+}
+<div class="breadcrumbgrid">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                <div class="CurrentDiv">
+                    <a href="/" itemprop="url" style="text-decoration: none;">
+                        <span itemprop="title">Home</span>
+                    </a>
+                </div>
+                <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <span class="seperator">›</span>
+                    </div>
+                    <div class="CurrentDiv">
+                        <a href="@Url.Action("Tenders", "IndianTenders")" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Indian Tenders</span>
+                        </a>
+
+                    </div>
+                </div>
+                @if (!string.IsNullOrEmpty(newUrl))
+                {
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <a href="@newUrl" itemprop="url" style="text-decoration: none;">
+                                <span itemprop="title">@tenderWordName</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">@pagetitle </span>
+
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">@tenderWordName </span>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+

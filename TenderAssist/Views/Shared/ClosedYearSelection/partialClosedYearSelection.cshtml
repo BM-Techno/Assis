@@ -1,0 +1,40 @@
+﻿@using TenderAssist.Controllers
+
+@model TenderAssist.ViewModel.TenderDetail
+@{
+    CommonController common = new CommonController();
+    Model.ClosedTenderYearList = common.ClosedYearTenderList(Model.TenderYear.ToLower().Trim().ToString());
+
+    var title = "";
+    var CurrentTenderYear = Model.TenderYear == "" ? DateTime.Today.Year.ToString() : Model.TenderYear.ToString();
+    title = " Archived In - " + CurrentTenderYear;
+
+}
+@Html.Hidden("hdnSelectedTenderYear", Model.TenderYear)
+@Html.Hidden("hdnCurrentTenderYear", CurrentTenderYear)
+<div class="pull-right">
+    <div class="input-group">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-info btn-flat" data-toggle="dropdown">
+                <span id="btnClosedTenderYearDisplayName">@title</span>
+                <span class="fa fa-caret-down leftmargin5px" id="downArrow"></span>
+            </button>
+            <ul class="dropdown-menu">
+                @{
+                    var displaytitle = " ";
+                    foreach (var item in Model.ClosedTenderYearList)
+                    {
+                        var activeclass = item.Selected ? "active" : "";
+                        displaytitle = " Archived In - " + item.Text;
+                        <li class="@activeclass"><a href="javascript:void(0);" id="@item.Value" class="ClosedTenderYearDisplayName">@displaytitle</a></li>
+                    }
+                }
+            </ul>
+            <button class="btn btn-primary btn-flat" type="button" id="btnClosedYearSearch" onclick="SearchTenderByTenderYear();">
+                GO
+                <span class="fa fa-arrow-circle-right searchIcon"></span>
+            </button>
+
+        </div>
+    </div>
+</div>

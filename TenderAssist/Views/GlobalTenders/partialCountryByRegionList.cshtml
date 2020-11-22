@@ -1,0 +1,611 @@
+﻿@using TenderAssist.Controllers
+@using System.Globalization
+@using TenderAssist.CommonHelper
+@using System.Configuration;
+@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    var common = new CommonController();
+    var _global = new GlobalTendersController();
+    var paggingUrl = "";
+    var totalDisplayData = Model.TotalDisplay;
+    var countryWord = Utility.TenderWordNameList.GlobalCountryWord;
+    var header = "";
+    var regionName = "";
+    var activeClass = "tablinks";
+    var hideClass = "hide regionPanel";
+
+    var GlobalCountryRegionList = Utility.GlobalCountryRegionList();
+
+    var middleEastCountryUrl = ConfigurationManager.AppSettings["TenderByMiddleEastCountryUrl"].ToString();
+    var europeanCountryUrl = ConfigurationManager.AppSettings["TenderByEuropeanCountryUrl"].ToString();
+    var africanCountryUrl = ConfigurationManager.AppSettings["TenderByAfricanCountryUrl"].ToString();
+    var asianCountryUrl = ConfigurationManager.AppSettings["TenderByAsianCountryUrl"].ToString();
+    var saarCountryUrl = ConfigurationManager.AppSettings["TenderBySAARCountryUrl"].ToString();
+    var australiaOceaniaCountryUrl = ConfigurationManager.AppSettings["TenderByAustraliaOceaniaCountryUrl"].ToString();
+    var southAmericaCountryUrl = ConfigurationManager.AppSettings["TenderBySouthAmericaCountryUrl"].ToString();
+    var northAmericaCountryUrl = ConfigurationManager.AppSettings["TenderByNorthAmericaCountryUrl"].ToString();
+
+
+    if (totalDisplayData == 0)
+    {
+        switch (Model.RegionId)
+        {
+            case Utility.TenderTypeList.MiddleEastCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayMiddleEastCountryName;
+                header = "Latest and live tenders’ information for tender published in Middle East Countries like Egypt, Iran, Israel, Qatar, UAE, Jordan, Oman, Kuwait, Iraq, Lebanon, Yemen, etc.";
+
+                break;
+            case Utility.TenderTypeList.EuropeanCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayEuropeanCountryName;
+                header = "Latest and live tenders’ information for tender published in European Countries like China, Singapore, Pakistan, Tajikistan, Maldives, Sri Lanka, Japan, Cambodia, Malaysia, Thailand, Indonesia, etc.";
+
+                break;
+            case Utility.TenderTypeList.AfricanCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayAfricanCountryName;
+                header = "Latest and live tenders’ information for tender published in African Countries like South Africa, Burundi, Kenya, Algeria, Sudan, Ghana, Ethiopia, Mauritius, Nigeria, Angola, Mali, etc.";
+
+                break;
+            case Utility.TenderTypeList.AsianCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayAsianCountryName;
+                header = "---";
+
+                break;
+            case Utility.TenderTypeList.SaarCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplaySaarCountryName;
+                header = "Latest and live tenders’ information for tender published in SAARC Countries like Pakistan, Afghanistan, Bangladesh, Sri Lanka, Bhutan, Nepal, Maldives.";
+
+                break;
+            case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayAustraliaOceaniaCountryName;
+                header = "Latest and live tenders’ information for tender published in Australia-Oceania Countries like Australia, New Zealand, Guam, Nauru, New Caledonia, Micronesia, Marshall Islands, etc.";
+
+                break;
+            case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplaySouthAmericaCountryName;
+                header = "Latest and live tenders’ information for tender published in South-America Countries like Argentina, Brazil, Chili, Colombia, Ecuador, Peru, Venezuela, Paraguay, etc.";
+
+                break;
+            case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                regionName = Utility.TenderTypeDisplayText.DisplayNorthAmericaCountryName;
+                header = "Latest and live tenders’ information for tender published in North-America Countries like United States of America, Canada, Greenland, Cuba, Haiti, Mexico, Guatemala, Panama etc.";
+
+                break;
+        }
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="pagetitle">
+                    @regionName
+                </h1>
+                <p class="pagedescription">
+                    <span>@Html.Raw(header)</span>
+                </p>
+            </div>
+        </div>
+    }
+    <div class="row">
+        <div class="col-md-12">
+           
+                <div>
+                    <div class="panel">
+                        <div id="Tabs" role="tabpanel">
+                            <!-- Nav tabs -->
+                            <ul class="nav nav-tabs" role="tablist">
+                                @{
+                                    foreach (var regionId in GlobalCountryRegionList)
+                                    {
+                                        activeClass = "tablinks";
+                                        switch (regionId)
+                                        {
+                                            case Utility.TenderTypeList.MiddleEastCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayMiddleEastCountryName;
+                                                if (totalDisplayData != 0) { activeClass = "active tablinks"; }
+                                                else
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = middleEastCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.EuropeanCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayEuropeanCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = europeanCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.AfricanCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayAfricanCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = africanCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.AsianCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayAsianCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = asianCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.SaarCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplaySaarCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = saarCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayAustraliaOceaniaCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = australiaOceaniaCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplaySouthAmericaCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = southAmericaCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayNorthAmericaCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = northAmericaCountryUrl;
+                                                }
+                                                break;
+                                        }
+                                        if (totalDisplayData != 0)
+                                        {
+                                            var regionDivDisplayId = "#region_" + regionId;
+                                            var liid = "linkregion_" + regionId;
+                                            <li class="@activeClass" id="@liid">
+                                                <a class="pointercursor tabdatalink" role="tab" data-toggle="tab" onclick="LoadRegionDataList('@regionId');">
+                                                    @regionName
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="@activeClass">
+                                                <a href="@paggingUrl" class="tabdatalink">
+                                                    @regionName
+                                                </a>
+                                            </li>
+                                        }
+                                        @*<li class="active">
+                                            <a href="#personal" aria-controls="personal" role="tab" data-toggle="tab">
+                                                @regionId
+                                            </a>
+                                        </li>*@
+                                        @*<li><a href="#employment" aria-controls="employment" role="tab" data-toggle="tab">Employment</a></li>*@
+                                    }
+                                }
+                                
+                            </ul>
+                            <!-- Tab panes -->
+                            <div class="tab-content">
+                                @*<div role="tabpanel" class="tab-pane active" id="personal">
+                                    This is Personal Information Tab
+                                </div>*@
+                                <div>
+                                    <div class="section_panel">
+                                        @if (totalDisplayData != 0)
+                                        {
+                                            foreach (var regionId in GlobalCountryRegionList)
+                                            {
+                                                hideClass = "hide regionPanel";
+                                                switch (regionId)
+                                                {
+                                                    case Utility.TenderTypeList.MiddleEastCountryRegion:
+                                                        paggingUrl = middleEastCountryUrl;
+                                                        hideClass = " regionPanel";
+
+                                                        break;
+                                                    case Utility.TenderTypeList.EuropeanCountryRegion:
+                                                        paggingUrl = europeanCountryUrl;
+
+                                                        break;
+                                                    case Utility.TenderTypeList.AfricanCountryRegion:
+                                                        paggingUrl = africanCountryUrl;
+
+                                                        break;
+                                                    case Utility.TenderTypeList.AsianCountryRegion:
+                                                        paggingUrl = asianCountryUrl;
+
+                                                        break;
+                                                    case Utility.TenderTypeList.SaarCountryRegion:
+                                                        paggingUrl = saarCountryUrl;
+
+                                                        break;
+                                                    case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                                                        paggingUrl = australiaOceaniaCountryUrl;
+
+                                                        break;
+                                                    case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                                                        paggingUrl = southAmericaCountryUrl;
+
+                                                        break;
+                                                    case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                                                        paggingUrl = northAmericaCountryUrl;
+
+                                                        break;
+                                                }
+                                                var readmoreUrl = paggingUrl;
+                                                //paggingUrl = ConfigurationManager.AppSettings["ApplicationUrl"].ToString() + paggingUrl;
+                                                var countryList = _global.LoadCountryByRegionIdList(regionId, totalDisplayData);
+                                                var regionDivId = "region_" + regionId;
+                                                <div id="@regionDivId" class="@hideClass">
+                                                    <div class="row">
+                                                        @foreach (var item in countryList.AllCountryList)
+                                                        {
+                                                            //var countryCodeClass = "map" + item.CountryCode;
+                                                            var countryname = item.CountryName.ToLower().Replace(" ", "-");
+                                                            var url = paggingUrl + countryWord + countryname;
+
+                                                            <div class="col-lg-4 col-md-4 col-sm-12">
+                                                                <a href="@url">
+                                                                    @CultureInfo.InvariantCulture.TextInfo.ToTitleCase(item.CountryName).Replace("-", " ")
+                                                                    Tenders
+                                                                </a>
+                                                            </div>
+
+                                                        }
+                                                    </div>
+                                                    <a href="@readmoreUrl" target="_blank" class="btn btn-info">Read More</a>
+                                                </div>
+                                            }
+                                        }
+                                        else
+                                        {
+                                            switch (Model.RegionId)
+                                            {
+                                                case Utility.TenderTypeList.MiddleEastCountryRegion:
+                                                    paggingUrl = middleEastCountryUrl;
+                                                    header = "Latest and live tenders’ information for tender published in Middle East Countries like Egypt, Iran, Israel, Qatar, UAE, Jordan, Oman, Kuwait, Iraq, Lebanon, Yemen, etc.";
+
+                                                    break;
+                                                case Utility.TenderTypeList.EuropeanCountryRegion:
+                                                    paggingUrl = europeanCountryUrl;
+                                                    header = "Latest and live tenders’ information for tender published in European Countries like China, Singapore, Pakistan, Tajikistan, Maldives, Sri Lanka, Japan, Cambodia, Malaysia, Thailand, Indonesia, etc.";
+
+                                                    break;
+                                                case Utility.TenderTypeList.AfricanCountryRegion:
+                                                    paggingUrl = africanCountryUrl;
+                                                    header = "Latest and live tenders’ information for tender published in African Countries like South Africa, Burundi, Kenya, Algeria, Sudan, Ghana, Ethiopia, Mauritius, Nigeria, Angola, Mali, etc.";
+
+                                                    break;
+                                                case Utility.TenderTypeList.AsianCountryRegion:
+                                                    paggingUrl = asianCountryUrl;
+                                                    header = "---";
+
+                                                    break;
+                                                case Utility.TenderTypeList.SaarCountryRegion:
+                                                    paggingUrl = saarCountryUrl;
+                                                    header = "Latest and live tenders’ information for tender published in SAARC Countries like Pakistan, Afghanistan, Bangladesh, Sri Lanka, Bhutan, Nepal, Maldives.";
+
+                                                    break;
+                                                case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                                                    paggingUrl = australiaOceaniaCountryUrl;
+                                                    header = "Latest and live tenders’ information for tender published in Australia-Oceania Countries like Australia, New Zealand, Guam, Nauru, New Caledonia, Micronesia, Marshall Islands, etc.";
+
+                                                    break;
+                                                case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                                                    paggingUrl = southAmericaCountryUrl;
+                                                    header = "Latest and live tenders’ information for tender published in South-America Countries like Argentina, Brazil, Chili, Colombia, Ecuador, Peru, Venezuela, Paraguay, etc.";
+
+                                                    break;
+                                                case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                                                    paggingUrl = northAmericaCountryUrl;
+                                                    header = "Latest and live tenders’ information for tender published in North-America Countries like United States of America, Canada, Greenland, Cuba, Haiti, Mexico, Guatemala, Panama etc.";
+
+                                                    break;
+                                            }
+                                            //paggingUrl = ConfigurationManager.AppSettings["ApplicationUrl"].ToString() + paggingUrl;
+                                            <div>
+                                                <div class="row">
+                                                    @foreach (var item in Model.AllCountryList)
+                                                    {
+                                                        var countryCodeClass = "map" + item.CountryCode;
+                                                        var countryname = item.CountryName.ToLower().Replace(" ", "-");
+                                                        var url = paggingUrl + countryWord + countryname;
+
+                                                        <div class="col-lg-4 col-md-4 col-sm-12">
+                                                            <a href="@url">
+                                                                @CultureInfo.InvariantCulture.TextInfo.ToTitleCase(item.CountryName).Replace("-", " ")
+                                                                Tenders
+                                                            </a>
+                                                        </div>
+                                                    }
+                                                </div>
+                                                <div class="lineseperatorGray">
+                                                </div>
+                                                @{
+                                                    var alltenderurl = paggingUrl + countryWord + "All-Country/";
+                                                    <a href="@alltenderurl" target="_blank" class="btn btn-info">View All Tenders</a>
+                                                }
+                                            </div>
+                                                    }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    @*<div class="row">
+                        <div class="col-md-12">
+                            <ul class="nav nav-pills">
+                                @{
+                                    foreach (var regionId in GlobalCountryRegionList)
+                                    {
+                                        activeClass = "tablinks";
+                                        switch (regionId)
+                                        {
+                                            case Utility.TenderTypeList.MiddleEastCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayMiddleEastCountryName;
+                                                if (totalDisplayData != 0) { activeClass = "active tablinks"; }
+                                                else
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = middleEastCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.EuropeanCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayEuropeanCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = europeanCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.AfricanCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayAfricanCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = africanCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.AsianCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayAsianCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = asianCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.SaarCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplaySaarCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = saarCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayAustraliaOceaniaCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = australiaOceaniaCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplaySouthAmericaCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = southAmericaCountryUrl;
+                                                }
+                                                break;
+                                            case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                                                regionName = Utility.TenderTypeDisplayText.DisplayNorthAmericaCountryName;
+                                                if (totalDisplayData == 0)
+                                                {
+                                                    activeClass = Model.RegionId == regionId ? "active tablinks" : "tablinks";
+                                                    paggingUrl = northAmericaCountryUrl;
+                                                }
+                                                break;
+                                        }
+                                        if (totalDisplayData != 0)
+                                        {
+                                            var regionDivDisplayId = "#region_" + regionId;
+                                            var liid = "linkregion_" + regionId;
+                                            <li class="@activeClass" id="@liid">
+                                                <a class="pointercursor" onclick="LoadRegionDataList('@regionId');">
+                                                    @regionName
+                                                </a>
+                                            </li>
+                                        }
+                                        else
+                                        {
+                                            <li class="@activeClass">
+                                                <a href="@paggingUrl">
+                                                    @regionName
+                                                </a>
+                                            </li>
+                                        }
+                                    }
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id="categories">
+                                <div class="section_panel">
+                                    @if (totalDisplayData != 0)
+                                    {
+                                        foreach (var regionId in GlobalCountryRegionList)
+                                        {
+                                            hideClass = "hide regionPanel";
+                                            switch (regionId)
+                                            {
+                                                case Utility.TenderTypeList.MiddleEastCountryRegion:
+                                                    paggingUrl = middleEastCountryUrl;
+                                                    hideClass = " regionPanel";
+
+                                                    break;
+                                                case Utility.TenderTypeList.EuropeanCountryRegion:
+                                                    paggingUrl = europeanCountryUrl;
+
+                                                    break;
+                                                case Utility.TenderTypeList.AfricanCountryRegion:
+                                                    paggingUrl = africanCountryUrl;
+
+                                                    break;
+                                                case Utility.TenderTypeList.AsianCountryRegion:
+                                                    paggingUrl = asianCountryUrl;
+
+                                                    break;
+                                                case Utility.TenderTypeList.SaarCountryRegion:
+                                                    paggingUrl = saarCountryUrl;
+
+                                                    break;
+                                                case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                                                    paggingUrl = australiaOceaniaCountryUrl;
+
+                                                    break;
+                                                case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                                                    paggingUrl = southAmericaCountryUrl;
+
+                                                    break;
+                                                case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                                                    paggingUrl = northAmericaCountryUrl;
+
+                                                    break;
+                                            }
+                                            var readmoreUrl = paggingUrl;
+                                            //paggingUrl = ConfigurationManager.AppSettings["ApplicationUrl"].ToString() + paggingUrl;
+                                            var countryList = _global.LoadCountryByRegionIdList(regionId, totalDisplayData);
+                                            var regionDivId = "region_" + regionId;
+                                            <div id="@regionDivId" class="@hideClass">
+                                                <div class="row">
+                                                    @foreach (var item in countryList.AllCountryList)
+                                                    {
+                                                        //var countryCodeClass = "map" + item.CountryCode;
+                                                        var countryname = item.CountryName.ToLower().Replace(" ", "-");
+                                                        var url = paggingUrl + countryWord + countryname;
+
+                                                        <div class="col-lg-4 col-md-4 col-sm-12">
+                                                            <a href="@url">
+                                                                @CultureInfo.InvariantCulture.TextInfo.ToTitleCase(item.CountryName).Replace("-", " ")
+                                                                Tenders
+                                                            </a>
+                                                        </div>
+
+                                                    }
+                                                </div>
+                                                <div class="lineseperatorGray">
+
+                                                </div>
+                                                <a href="@readmoreUrl" target="_blank" class="btn btn-info">Read More</a>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        switch (Model.RegionId)
+                                        {
+                                            case Utility.TenderTypeList.MiddleEastCountryRegion:
+                                                paggingUrl = middleEastCountryUrl;
+                                                header = "Latest and live tenders’ information for tender published in Middle East Countries like Egypt, Iran, Israel, Qatar, UAE, Jordan, Oman, Kuwait, Iraq, Lebanon, Yemen, etc.";
+
+                                                break;
+                                            case Utility.TenderTypeList.EuropeanCountryRegion:
+                                                paggingUrl = europeanCountryUrl;
+                                                header = "Latest and live tenders’ information for tender published in European Countries like China, Singapore, Pakistan, Tajikistan, Maldives, Sri Lanka, Japan, Cambodia, Malaysia, Thailand, Indonesia, etc.";
+
+                                                break;
+                                            case Utility.TenderTypeList.AfricanCountryRegion:
+                                                paggingUrl = africanCountryUrl;
+                                                header = "Latest and live tenders’ information for tender published in African Countries like South Africa, Burundi, Kenya, Algeria, Sudan, Ghana, Ethiopia, Mauritius, Nigeria, Angola, Mali, etc.";
+
+                                                break;
+                                            case Utility.TenderTypeList.AsianCountryRegion:
+                                                paggingUrl = asianCountryUrl;
+                                                header = "---";
+
+                                                break;
+                                            case Utility.TenderTypeList.SaarCountryRegion:
+                                                paggingUrl = saarCountryUrl;
+                                                header = "Latest and live tenders’ information for tender published in SAARC Countries like Pakistan, Afghanistan, Bangladesh, Sri Lanka, Bhutan, Nepal, Maldives.";
+
+                                                break;
+                                            case Utility.TenderTypeList.AustraliaOceaniaCountryRegion:
+                                                paggingUrl = australiaOceaniaCountryUrl;
+                                                header = "Latest and live tenders’ information for tender published in Australia-Oceania Countries like Australia, New Zealand, Guam, Nauru, New Caledonia, Micronesia, Marshall Islands, etc.";
+
+                                                break;
+                                            case Utility.TenderTypeList.SouthAmericaCountryRegion:
+                                                paggingUrl = southAmericaCountryUrl;
+                                                header = "Latest and live tenders’ information for tender published in South-America Countries like Argentina, Brazil, Chili, Colombia, Ecuador, Peru, Venezuela, Paraguay, etc.";
+
+                                                break;
+                                            case Utility.TenderTypeList.NorthAmericaCountryRegion:
+                                                paggingUrl = northAmericaCountryUrl;
+                                                header = "Latest and live tenders’ information for tender published in North-America Countries like United States of America, Canada, Greenland, Cuba, Haiti, Mexico, Guatemala, Panama etc.";
+
+                                                break;
+                                        }
+                                        //paggingUrl = ConfigurationManager.AppSettings["ApplicationUrl"].ToString() + paggingUrl;
+                                        <div>
+                                            <div class="row">
+                                                @foreach (var item in Model.AllCountryList)
+                                                {
+                                                    var countryCodeClass = "map" + item.CountryCode;
+                                                    var countryname = item.CountryName.ToLower().Replace(" ", "-");
+                                                    var url = paggingUrl + countryWord + countryname;
+
+                                                    <div class="col-lg-4 col-md-4 col-sm-12">
+                                                        <a href="@url">
+                                                            @CultureInfo.InvariantCulture.TextInfo.ToTitleCase(item.CountryName).Replace("-", " ")
+                                                            Tenders
+                                                        </a>
+                                                    </div>
+                                                }
+                                            </div>
+                                            <div class="lineseperatorGray">
+                                            </div>
+                                            @{
+                                                var alltenderurl = paggingUrl + countryWord + "All-Country/";
+                                                <a href="@alltenderurl" target="_blank" class="btn btn-info">View All Tenders</a>
+                                            }
+                                        </div>
+                                                }
+                                </div>
+                            </div>
+                        </div>
+                    </div>*@
+                </div>
+           
+        </div>
+    </div>
+}
+
+@Html.Hidden("hdnFieldId", "0")
+@Html.Hidden("hdnFieldName", "All Country")
+
+<style>
+    .tabdatalink {
+        font-size:14px !important;
+        padding:10px !important;
+        background-color:#dcdcdc !important;
+        color:#ababab !important;
+    }
+    .tabdatalink:hover{
+        background: #f4543c !important;
+        font-weight: bold !important;
+        color: #fff !important;
+
+    }
+</style>

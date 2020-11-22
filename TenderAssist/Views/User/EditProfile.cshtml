@@ -1,0 +1,335 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Title = "TenderAssist247 :: Edit Profile";
+}
+<style>
+    textarea {
+        resize: none;
+    }
+</style>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#lnkSettings").attr('class', 'treeview active');
+        $("#sublnkSettings").attr('style', 'display: block;');
+        $("#linkprofile").attr('class', 'active');
+
+        $("#btnUpdateData").click(function () {
+            submitData();
+        });
+
+        $('.form-control').keydown(function (e) {
+            if (e.keyCode == 13) {
+                submitData();
+            }
+        });
+
+        $("#drpCountry").change(function () {
+            var countryId = this.value;
+            ShowLoading();
+            $.ajax({
+                type: 'POST',
+                url: "/User/GetStateByCountry",
+                cache: false,
+                data: ({ CountryID: countryId }),
+                success: function (StateList) {
+                    HideLoading();
+                    var items = "";
+                    $.each(StateList, function (i, item) {
+                        items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                    });
+                    $("#drpState").html(items);
+                    var cityitems = "<option value='0'>[CITY]</option>";
+                    $("#drpCity").html(cityitems);
+                }
+            });
+        });
+
+        $("#drpState").change(function () {
+            var stateId = this.value;
+            ShowLoading();
+            $.ajax({
+                type: 'POST',
+                url: "/User/GetCityByState",
+                cache: false,
+                data: ({ StateID: stateId }),
+                success: function (CityList) {
+                    HideLoading();
+                    var items = "";
+                    $.each(CityList, function (i, item) {
+                        items += "<option value='" + item.Value + "'>" + item.Text + "</option>";
+                    });
+                    $("#drpCity").html(items);
+                }
+            });
+        });
+    });
+
+    function IsValidEmailID(email) {
+        var filter = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        return filter.test(email);
+    }
+    function submitData() {
+        $("#errorMsg").html('');
+        var isValid = true;
+        $('#divError').hide();
+        var myform = $('#submitUserInfoData');
+
+        if ($("#LoginUserDetails_strFName").val().trim() == '') {
+            isValid = false;
+            $("#spnFirstName").html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divFirstName").addClass("has-error");
+        } else {
+            $("#spnFirstName").html('');
+            $("#divFirstName").removeClass("has-error");
+        }
+
+        if ($("#LoginUserDetails_strLName").val().trim() == '') {
+            isValid = false;
+            $("#spnLastName").html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divLastName").addClass("has-error");
+        } else {
+            $("#spnLastName").html('');
+            $("#divLastName").removeClass("has-error");
+        }
+
+
+        if ($("#drpCountry").val().trim() == '0') {
+            isValid = false;
+            $('#spnCountry').html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divCountry").addClass("has-error");
+        } else {
+            $("#spnCountry").html('');
+            $("#divCountry").removeClass("has-error");
+        }
+
+        if ($("#drpState").val().trim() == '0') {
+            isValid = false;
+            $('#spnState').html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divState").addClass("has-error");
+        } else {
+            $("#spnState").html('');
+            $("#divState").removeClass("has-error");
+        }
+
+        if ($("#drpCity").val().trim() == '0') {
+            isValid = false;
+            $('#spnCity').html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divCity").addClass("has-error");
+        } else {
+            $("#spnCity").html('');
+            $("#divCity").removeClass("has-error");
+        }
+
+        if ($("#LoginUserDetails_strEmailId2").val().trim() != '') {
+            if (!IsValidEmailID($("#LoginUserDetails_strEmailId2").val())) {
+                isValid = false;
+                $("#spnEmail").html('<i class="fa fa-times-circle-o"></i> Invalid Email.');
+                $("#divEmail").addClass("has-error");
+            } else {
+                $("#spnEmail").html('');
+                $("#divEmail").removeClass("has-error");
+            }
+        }
+
+        if (!isValid) {
+            return false;
+        }
+
+        ShowLoading();
+        $('#btnUpdateData').hide();
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: myform.attr('action'),
+            data: myform.serialize(),
+            success: function (data) {
+                var msg = data.msg;
+                if (msg == "error") {
+                    $('#divError').show();
+                    $("#divError").removeClass("has-success").addClass("has-error");
+                    $('#errorMsg').html('<i class="fa fa-times-circle-o"></i><span class="text-danger"> Your information could not updated, Please try again.</span>');
+                }
+                else if (msg == "ok") {
+                    $('#divError').show();
+                    $("#divError").removeClass("has-error").addClass("has-success");
+                    $('#errorMsg').html('<i class="fa fa-check"></i><span class="text-success">  Your information has beed sent to the Administration successfully. <br/> Also please check your mail for the request of Update Information.</span>');
+                }
+                $('#btnUpdateData').show();
+                HideLoading();
+            }
+        });
+        return true;
+    }
+</script>
+
+<div class="container_fullMiddle">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="well wellWhiteBg well-sm">
+                <div class="breadcrumbgrid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <div class="CurrentDiv">
+                                    <a href="@Url.Action("MyDashboard", "User")" itemprop="url" style="text-decoration: none;">
+                                        <span itemprop="title">Home</span>
+                                    </a>
+                                </div>
+                                <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <div class="CurrentDiv">
+                                        <span class="seperator">›</span>
+                                    </div>
+                                    <div class="CurrentDiv">
+                                        <span itemprop="title" class="text-bold">Edit Profile</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="pagetitle">
+                            My Profile
+                            <small>Edit Personal Information</small>
+                        </h1>
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Partial("partialUserSideMenu", Model)
+                            </div>
+                            <div class="col-md-9">
+                                <div class="box">
+                                    @if (Model.LoginUserDetails == null)
+                                    {
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="box box-warning">
+                                                        <div class="pagination">
+                                                            <span class="awards_detai2"><b>No Personal Information available</b></span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="box-body">
+                                            <div class="form-group has-error" id="divError" style="display: none;">
+                                                <label id="errorMsg"></label>
+                                            </div>
+                                            <div class="row">
+                                                <form id="submitUserInfoData" method="post" action="@Url.Action("PostEditProfile", "User")">
+                                                    <div class="col-md-6">
+                                                        <div class="box box-solid box-success">
+                                                            <div class="box-header">
+                                                                <h3 class="box-title">Personal Detail</h3>
+                                                            </div>
+                                                            <div class="box-body">
+                                                                <div class="row">
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group" id="divFirstName">
+                                                                            <label>First Name</label><label id="spnFirstName" class="text-danger data-float-right-only"></label>
+                                                                            @Html.TextBoxFor(model => Model.LoginUserDetails.strFName, new { @class = "form-control", @placeholder = "Enter First Name" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-6">
+                                                                        <div class="form-group" id="divLastName">
+                                                                            <label>Last Name</label><label id="spnLastName" class="text-danger data-float-right-only"></label>
+                                                                            @Html.TextBoxFor(model => Model.LoginUserDetails.strLName, new { @class = "form-control", @placeholder = "Enter Last Name" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Designation</label>
+                                                                    @Html.TextBoxFor(model => Model.LoginUserDetails.strDesignation, new { @class = "form-control", @placeholder = "Enter Designation" })
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <label>Company</label>
+                                                                    @Html.TextBoxFor(model => Model.LoginUserDetails.strCmpName, new { @class = "form-control", @placeholder = "Enter Company" })
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="box box-solid box-primary">
+                                                            <div class="box-header">
+                                                                <h3 class="box-title">Contact Detail</h3>
+                                                            </div>
+                                                            <div class="box-body">
+                                                                <div class="form-group">
+                                                                    <label>Address</label>
+                                                                    @Html.TextAreaFor(model => Model.LoginUserDetails.strAddress, new { @class = "form-control", @placeholder = "Enter Address" })
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" id="divCountry">
+                                                                            <label>Country</label><label id="spnCountry" class="text-danger data-float-right-only"></label>
+                                                                            @Html.DropDownList("drpCountry", Model.CountryList, new { @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" id="divState">
+                                                                            <label>State</label><label id="spnState" class="text-danger data-float-right-only"></label>
+                                                                            @Html.DropDownList("drpState", Model.StateList, new { @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group" id="divCity">
+                                                                            <label>City</label><label id="spnCity" class="text-danger data-float-right-only"></label>
+                                                                            @Html.DropDownList("drpCity", Model.CityList, new { @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-md-3">
+                                                                        <div class="form-group">
+                                                                            <label>PIN Code</label>
+                                                                            @Html.TextBoxFor(model => Model.LoginUserDetails.intPinCode, new { @class = "form-control", @placeholder = "Enter Pin Code" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="form-group">
+                                                                    <div class="row">
+                                                                        <div class="col-md-6">
+                                                                            <label>Phone No</label>
+                                                                            @Html.TextBoxFor(model => Model.LoginUserDetails.intPhoneNo, new { @class = "form-control", @placeholder = "Enter Phone No" })
+                                                                        </div>
+                                                                        <div class="col-md-6">
+                                                                            <div id="divEmail">
+                                                                                <label>Email</label><label id="spnEmail" class="text-danger data-float-right-only"></label>
+                                                                                @Html.TextBoxFor(model => Model.LoginUserDetails.strEmailId2, new { @class = "form-control", @placeholder = "Enter Email" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <div class="box-footer">
+                                            <button class="btn btn-success" id="btnUpdateData">
+                                                <i class="fa fa-edit"></i>
+                                                Submit
+                                            </button>
+                                            <button class="btn btn-primary" onclick="window.location.href='@Url.Action("Index", "User")'">
+                                                <i class="fa fa-reply"></i>
+                                                Back
+                                            </button>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

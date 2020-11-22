@@ -1,0 +1,74 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@{
+
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Title = "My Global Tender Service";
+
+    var isGlobalServiceAccess = (bool)ViewData["GlobalTenderServiceAccess"];
+
+    var assignedPermissions = "";
+    if (Model.ClientPermissionList.Any())
+    {
+        assignedPermissions = (string.Join(",", Model.ClientPermissionList.Select(x => x.intPermissionId.ToString()).ToArray()));
+    }
+}
+ 
+
+
+<div class="container_fullMiddle">
+    <div class="row">         
+        <div class="col-md-12 well wellWhiteBg">
+            <h1 class="pagetitle">
+                My Global Service
+            </h1>
+            @if (!isGlobalServiceAccess)
+            {
+                <h2 class="pagedescription">
+                    <i class="fa fa-times-circle text-danger"></i>
+                    You don't have sufficient privileges to access the Global tender service.
+                </h2>
+            }
+            else
+            {
+                <h2 class="pagedescription">
+                    <i class="fa fa-check-circle text-success"></i>
+                    You have been assigned the Global tender service. You can access the assigned <b> @Model.ClientPermissionList.Count </b> permission(s) for Global tender service as below.
+                </h2>
+            }
+            <div class="grayline"></div>
+            <div class="well">
+                @{
+                    if (Model.ClientPermissionList.Any())
+                    {
+                        var totalPermissions = Model.ClientPermissionList.Count;
+
+                        var countfordiv = 0;
+                        for (int i = 0; i < totalPermissions; i++)
+                        {
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @Html.Partial("Global/partialPermissionCategoryList", Model.ClientPermissionList[i])
+                                </div>
+                            </div>
+                        } 
+                    }
+
+                }
+            </div>
+        </div>
+         
+    </div>
+</div>
+
+@Scripts.Render("~/bundles/global-service-js")
+@Scripts.Render("~/bundles/client-search-js")
+
+@Html.Hidden("hdnPageType", "ServiceListPage")
+@Html.Hidden("AssignedPermissions", assignedPermissions)
+
+@Html.Hidden("hdnPermissionId", "")
+@Html.Hidden("SelectedCountry", "")
+@Html.Hidden("SelectedProduct", "")
+@Html.Hidden("hdnTenderStatus", "")
+@Html.Hidden("hdnTenderType", "")
+@Html.Hidden("hdnTenderValue", "")

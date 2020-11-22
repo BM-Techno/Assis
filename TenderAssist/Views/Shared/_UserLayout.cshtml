@@ -1,0 +1,82 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>@ViewBag.Title</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+          name='viewport'>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/other-css")
+    @Styles.Render("~/Content/user-css")
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/bundles/common-js")
+        
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    
+</head>
+ 
+<body>
+
+    @Html.Partial("Header/_UserHeader")
+
+    @RenderBody()
+
+    @Html.Partial("Footer/_FooterCopyright")
+
+    @*@Html.Partial("partialLoadingView")*@
+
+
+    @Styles.Render("~/Content/autocomplete-css")
+
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+
+    <script type="text/javascript" src="//cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+
+    @RenderSection("scripts", required: false)   
+    @{ 
+        bool isIndianGlobal = true;
+        if (Session["IndianGlobal"] != null)
+        { isIndianGlobal = (bool)Session["IndianGlobal"]; }
+
+    }
+    @Html.Hidden("hdnIsIndianGlobal", isIndianGlobal)
+    
+</body>
+</html>
+
+
+<style>
+    .Top-header {
+        background: rgba(45,55,72,255);
+        color: #fff;
+        /*height: 40px;*/
+    }
+
+        .Top-header .container-Top-header {
+            padding: 10px 16px !important;
+        }
+
+    .Bottom-header {
+        background: #fcfcff;
+        color: #000;
+    }
+
+        .Bottom-header .container-Bottom-header {
+            padding: 5px 20px !important;
+        }
+
+    .Top-header .contactno {
+        font-size: 16px;
+        float: left;
+        margin-right: 28px;
+    }
+</style>

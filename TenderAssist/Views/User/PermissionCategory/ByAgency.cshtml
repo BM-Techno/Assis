@@ -1,0 +1,37 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@{
+    var isAgencyPermission = Model.AllAgency.Any();
+    var agencyLinkId = "Agency_Link_" + Model.PermissionId;
+    var agencyPanelId = "Agency_Panel_" + Model.PermissionId;
+}
+
+<div class="box ">
+    <div class="box-header">
+        <span class="box-title categoryHeader">
+            <i class="fa fa-check-circle text-success"></i>
+            My Agencies
+        </span>
+    </div>
+    <div class="box-body">
+        @if (isAgencyPermission)
+        {
+            <div id="@agencyPanelId">
+                @{
+                    var count = 0;
+                    foreach (var item in Model.AllAgency)
+                    {
+                        <a href="#nogo" onclick="CategorySearch(@TenderAssist.CommonHelper.Utility.TenderTypeList.Agency,@item.AgencyId,@Model.PermissionId)">
+                            @item.AgencyName
+                        </a>
+                        count++;
+                        if (count != Model.AllAgency.Count)
+                        {
+                            <span>,</span>
+                        }
+                    }
+                }
+            </div>
+                    }
+    </div>
+</div>

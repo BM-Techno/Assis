@@ -1,0 +1,71 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.Controllers;
+@using TenderAssist.CommonHelper;
+
+
+@{
+    var productList = Model.AllProducts.OrderBy(x => x.ProductsName).ToList();
+    var datacount = 0;
+
+    <div class="row pagination">
+        <div class="col-md-12">
+            @foreach (var item in Model.AllAlphabaticWord)
+            {
+                <a onclick="LoadKeywords(true,'@item.Trim()')" class="pointercursor @(Model.SelectedWord.Trim() == item.Trim() ? "page active" : "page")">
+                    @item.Trim()
+                </a>
+            }
+        </div>
+    </div>
+    <div class="lineseperatorGray"></div>
+    <div>
+        @foreach (var item in productList)
+        {
+            var url = "/Indian-Tenders/Products/" + Utility.TenderWordNameList.KeywordWord + item.ProductsName.Replace(" ", "-").ToLower().Trim().ToString();
+
+            if (datacount == 0)
+            {
+                @Html.Raw("<div class=\"row\">")
+                @Html.Raw("<div class=\"col-md-6\">")
+            }
+            else
+            {
+                @Html.Raw("<div class=\"col-md-6\">")
+            }
+            @Html.Raw(" <span>»</span>")
+
+            if (!string.IsNullOrEmpty(Model.SearchText))
+            {
+                <a href="@url" title='@item.ProductsName Tenders'>
+                    @Highlightsearchtext(item.ProductsName, Model.SearchText, 1)
+                </a>
+            }
+            else
+            {
+                <a href="@url" title='@item.ProductsName Tenders'> @item.ProductsName Tenders</a>
+            }
+            @Html.Raw("</div>")
+
+            if (datacount != 0)
+            {   @Html.Raw("</div>") datacount = 0;
+            }
+            else
+            {
+                datacount++;
+            }
+        }
+        @if (datacount != 0)
+        {   @Html.Raw("</div>") datacount = 0;
+        }
+
+    </div>
+
+}
+
+
+@helper Highlightsearchtext(string strSource, string strStart, int sarchType)
+{
+var common = new CommonController();
+var displayText = common.Highlightsearchtext(strSource, strStart, sarchType);
+    @Html.Raw(displayText + " Tenders")
+}

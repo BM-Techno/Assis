@@ -1,0 +1,61 @@
+﻿<div id="defaultmenu" class="navbar navbar-inverse navbar-fixed-top TopNavLinks">
+    <div class="container_full">
+        <div class="navbar-header navbar-header-menu">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            @Html.Partial("Header/_Logo")
+        </div>
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="firstlink">
+                    <a href="@Url.Action("MyDashboard", "User")" class="hvr-bounce-to-bottom active ">
+                        <span class="fa fa-home fa-2x icon"></span>
+                    </a>
+                </li>
+                <li class="link-separator">
+                    <span>|</span>
+                </li>
+                <li class="firstlink wow fadeInDown">
+                    <a href="@Url.Action("IndianService", "User")" class="hvr-bounce-to-bottom active ">
+                        Indian
+                    </a>
+                </li>
+                <li class="firstlink wow fadeInDown">
+                    @*<a href="@Url.Action("Restricted", "User", new { Error = "Access Denied for Global Tender Information Service" })" class="hvr-bounce-to-bottom active ">*@
+                    <a href="@Url.Action("GlobalService", "User")" class="hvr-bounce-to-bottom active ">
+                        Global
+                    </a>
+                </li>
+                <li class="firstlink wow fadeInDown">
+                    <a href="@Url.Action("Restricted", "User", new { Error = "Access Denied for Tender Awarded Information Service" })" class="hvr-bounce-to-bottom active ">
+                        Awarded
+                    </a>
+                </li>
+                <li class="firstlink wow fadeInDown">
+                    <a href="@Url.Action("Restricted", "User", new { Error = "Access Denied for Project Information Service" })" class="hvr-bounce-to-bottom active ">
+                        Project
+                    </a>
+                </li>
+                <li class="link-separator">
+                    <span>|</span>
+                </li>
+                <li class="firstlink wow fadeInDown">
+                    <a href="@Url.Action("Index", "User")" class="hvr-bounce-to-bottom active ">
+                        <span class="fa fa-user"></span>
+                        My Profile
+                    </a>
+                </li>
+                @*<li class="firstlink wow fadeInDown">
+                    <a href="#" class="hvr-bounce-to-bottom active ">
+                        <span class="fa fa-star"></span>
+                        Favourite
+                    </a>
+                </li>*@
+               
+            </ul>
+        </div>
+    </div>
+</div>

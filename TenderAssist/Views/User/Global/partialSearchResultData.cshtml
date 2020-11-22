@@ -1,0 +1,187 @@
+﻿@using System.Globalization
+@using TenderAssist.Controllers
+@model TenderAssist.ViewModel.TenderDetail
+
+
+@helper TenderAmount(string tenderAmount)
+{
+var displayAmount = "0";
+var common = new CommonController();
+if (!(tenderAmount.Trim() == "" || Convert.ToDouble(tenderAmount) == 0))
+{
+    displayAmount = common.AmountToWords(tenderAmount.Trim());
+}
+    @Html.Raw(@displayAmount)
+}
+
+@helper Highlightsearchtext(string strSource, string strStart, int sarchType)
+{
+var common = new CommonController();
+var color = common.Highlightsearchtext(strSource, strStart, sarchType);
+    @Html.Raw(color)
+}
+<script type="text/javascript">
+    NewPage = ('@ViewBag.CurrentPage');
+    //console.log('NewPage - ' + NewPage);
+</script>
+<div class="row">
+    <div class="col-md-12">
+
+        @{
+            Session["searchText"] = Model.DisplayText;
+            Session["searchType"] = Model.SearchType;
+            var intActive = Session["IsActiveUser"] != null ? Convert.ToInt32(Session["IsActiveUser"]) : 2;
+
+            if (Model.AllSearchTenaderInfoWithAllDetail.Any())
+            {
+                foreach (var item in Model.AllSearchTenaderInfoWithAllDetail.OrderBy(x => x.Rn))
+                {
+                    var clsname = "";
+                    var tendername = "";
+
+                    string[] locations = System.Text.RegularExpressions.Regex.Split(item.Location.Trim(), " - ");
+                    var city = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[0].ToString(CultureInfo.InvariantCulture).ToLower());
+                    var state = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[1].ToLower());
+                    var location = city + " - " + state;
+
+                    var url = "";
+                    if (intActive == 2)
+                    { url = Url.Action("Renewal"); }
+                    else
+                    { url = "/User/GlobalTenderDetail/" + item.OurRefNo.ToString(CultureInfo.InvariantCulture); }
+
+                    switch (item.TenderStatusReturn)
+                    {
+                        case 1:
+                            tendername = "Live"; clsname = "badge pull-right bg-yellow";
+                            break;
+                        case 2:
+                            tendername = "New"; clsname = "badge pull-right bg-green";
+                            break;
+                        case 3:
+                            tendername = "Closed"; clsname = "badge pull-right bg-black";
+                            break;
+                    }
+
+                    var ownership = "";
+                    if (!(item.OwnershipName == null || item.OwnershipName.Trim() == ""))
+                    { ownership = new CultureInfo("en-US", false).TextInfo.ToTitleCase(item.OwnershipName.ToLower()); }
+
+                    <div class="pricing-area price-four searchresult-Data">
+                        <div class="searchresult-DataContent searchresult-DataContentpanel">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-12 text-primary">
+                                            <b class="text-success"># @item.Rn</b>
+                                            &nbsp;&nbsp;&nbsp;
+                                            Ref. No <b>#@Html.Raw(item.OurRefNo.ToString(CultureInfo.InvariantCulture))</b>
+                                            <small class="@clsname">@tendername</small>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12" title="Due Date">
+                                            <label class="text-danger">
+                                                <b>@item.AgencyName</b>
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4" title="Location">
+                                            <i class="fa fa-map-marker"></i>
+                                            @Html.Raw(location)
+                                        </div>
+                                        <div class="col-md-4" title="Tender Amount">
+                                            <i class="fa fa-inr"></i>
+                                            @{
+                                                if (item.TenderAmount.ToString().Trim() == "0" || item.TenderAmount.ToString().Trim() == "0.0" || item.TenderAmount.ToString().Trim() == "0.00")
+                                                {
+                                                    <label class="text-orange">
+                                                        @Html.Raw("Refer Document")
+                                                    </label>
+                                                }
+                                                else
+                                                {
+                                                    <label class="text-orange">
+                                                        @Html.Raw(TenderAmount(item.TenderAmount.ToString(CultureInfo.InvariantCulture)).ToString())
+                                                    </label>
+                                                }
+                                            }
+                                        </div>
+                                        <div class="col-md-4" title="Due Date">
+                                            <i class="fa fa-calendar"></i>
+                                            @Html.Raw(item.DueDate.ToString("dd MMM, yyyy"))
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <b>Sector: </b>@item.SectorName
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <b>Ownership: </b>@ownership
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <b>Published In: </b>@item.RefSource
+                                        </div>
+                                        <div class="col-md-6">
+                                            <b>Language: </b>@item.Language
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-justify text-info">
+                                            <a href="@url" target="_blank" class="btn-link">
+                                                @{
+                                                    var searchdata = Model.DisplayText;
+                                                    if (!string.IsNullOrEmpty(Model.DisplayText))
+                                                    {
+                                                        searchdata = searchdata.Replace("-", ",").Replace(" ", ",");
+                                                    }
+                                                    var hidhlightword = searchdata;
+                                                    if (!string.IsNullOrEmpty(Model.DisplayText2))
+                                                    {
+                                                        searchdata = Model.DisplayText2;
+                                                        searchdata = searchdata.Replace("-", ",").Replace(" ", ",");
+                                                        hidhlightword = hidhlightword == "" ? Model.DisplayText2 : hidhlightword + "," + Model.DisplayText2;
+                                                    }
+                                                }
+                                                @Html.Raw(Highlightsearchtext(item.WorkDesc, hidhlightword, 1).ToString())
+                                            </a>
+                                            @*<a href="@url" target="_blank" class="dataDescription">
+
+                                                </a>*@
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="pull-right">
+                                        <a href="@url" target="_blank" class="btn-link">
+                                            @*<i class="fa fa fa-info-circle"></i>*@
+                                            <label class="seperator">›</label>
+                                            View Detail
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                                                        }
+                                                    }
+                                                    else
+                                                    {
+
+                                                        <div class="alert alert-danger alert-dismissible">
+                                                            <strong>Sorry!</strong> No record found.
+                                                        </div>
+
+                                                    }
+        }
+
+    </div>
+</div>

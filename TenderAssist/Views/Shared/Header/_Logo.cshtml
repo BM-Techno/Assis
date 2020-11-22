@@ -1,0 +1,8 @@
+﻿@{ 
+    var homeUrl= Session["ClientID"] != null? Url.Action("MyDashboard", "User") : Url.Action("Index", "Home"); 
+}
+<div class="logo logohead">
+    <a href="@homeUrl">
+        <img src="~/Images/tenderassistlogo.png" id="tenderassist" class="img-responsive" alt="TenderAssist.com" style="width: 230px !important; height: 80px !important; max-width: 250px !important;" />
+    </a>
+</div>

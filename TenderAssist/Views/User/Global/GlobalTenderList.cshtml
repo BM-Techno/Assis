@@ -1,0 +1,158 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.Controllers;
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Title = "My Global Tender :: " + Model.PermissionGroupName;
+
+}
+
+<script type="text/javascript">
+    var TenderResultOnLoadingUrl = '/User/GetTenderResultOnLoading';
+    var tendersBy = '@Model.TendersBy';
+
+    var Total = parseInt('@Model.Total');
+    var TotalLive = parseInt('@Model.TotalLive');
+    var TotalFresh = parseInt('@Model.TotalFresh');
+    var TotalClosed = parseInt('@Model.TotalClosed');
+
+    var resetUrl = '@Model.PaggingUrl';
+
+</script>
+
+@Html.Hidden("NewPage")
+@Html.Hidden("hdnPermissionId", Model.PermissionId)
+<div class="container_fullMiddle">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="well wellWhiteBg">
+
+                @Html.Partial("~/Views/User/partialBreadCrumbForUser.cshtml", Model.PermissionGroupName)
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="pagetitle">
+                            @{
+                            if (!string.IsNullOrEmpty(Model.PermissionGroupName))
+                            {
+                        @Html.Raw(Model.PermissionGroupName.Replace("-", " ").Replace("Tenders", "") + " Tenders")
+                            }
+                            }
+                            <a class="advanceSearchButton" id="filterusersearch">
+                                <i class="fa fa-search-plus"></i>
+                                Filter Search
+                            </a>
+                        </h1>
+                        @if (!string.IsNullOrEmpty(Model.DisplaySearchTextDetail))
+                    {
+                    <h2 class="pagedescription">
+                        @Html.Raw(Model.DisplaySearchTextDetail)
+                    </h2>
+                    }
+                    </div>
+
+                </div>
+                <div id="filterusersearchpanel">
+                    @Html.Partial("~/Views/IndianTenders/Partial/AdvanceSearchPanels/partialUserAdvanceSearch.cshtml")
+                    <div class="grayline"></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <div class="well well-sm">
+                            @Html.Partial("Global/SearchTenderInfoDet")
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        @Html.Partial("Global/partialPermissionCategoryList", Model.ClientPermissionItem)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script type="text/javascript">
+
+    var CurrentPage = '@ViewBag.CurrentPage';
+    var TotalPage = parseInt('@ViewBag.TotalPage');
+    var PageSize = '@ViewBag.PageSize';
+    var NewPage = (parseInt('@ViewBag.CurrentPage') + 1);
+
+    console.log('TotalPage - ' + TotalPage);
+
+
+
+</script>
+
+@Html.Hidden("hdnPageType", "ServiceDetailPage")
+@Html.Hidden("PermissionId", Model.PermissionId)
+
+@Scripts.Render("~/bundles/global-service-js")
+@Scripts.Render("~/bundles/client-search-js")
+
+
+
+@Html.Hidden("hdnSearchtext", Model.DisplayText)
+@Html.Hidden("hdnSearchType", Model.SearchType)
+
+@Html.Hidden("hdnSearchProuctId", Model.SearchProuctId)
+@Html.Hidden("hdnTenderYear", Model.TenderYear)
+@Html.Hidden("hdnTendersBy", Model.TendersBy)
+@Html.Hidden("hdnFieldId", Model.FieldId)
+@Html.Hidden("hdnFieldName", Model.FieldName)
+
+@Html.Hidden("SelectedCountry", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.SelectedCountries : null)
+
+@Html.Hidden("hdnOurRefNo", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.OurRefNo : null)
+@Html.Hidden("hdnSubDateFrom", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.SubDateFrom : null)
+@Html.Hidden("hdnSubDateTo", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.SubDateTo : null)
+@Html.Hidden("hdnOpDateFrom", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.OpDateFrom : null)
+@Html.Hidden("hdnOpDateTo", Model.AdvanceSearchPara != null ? Model.AdvanceSearchPara.OpDateTo : null)
+
+@Html.Hidden("hdnTotalCount", Model.Total)
+@Html.Hidden("hdnTotalLive", Model.TotalLive)
+@Html.Hidden("hdnTotalFresh", Model.TotalFresh)
+@Html.Hidden("hdnTotalClosed", Model.TotalClosed)
+
+
+
+<style>
+    .dropdown {
+        margin-bottom: 10px;
+    }
+
+        .dropdown .selectButton {
+            width: 100%;
+            text-align: left;
+        }
+
+    .dropdown-header {
+        padding: 3px 10px !important;
+        font-size: 15px;
+    }
+
+    .dropdown-menu > li > a {
+        padding: 3px 10px !important;
+    }
+
+    .dropdown-menu-class {
+        max-height: 250px;
+        overflow-y: scroll;
+        width: 100%;
+    }
+
+    .tabCatLinksSpans {
+        float: right;
+        margin: 0 2px;
+        margin-top: -1px;
+        /*color:#4b4b4b;*/
+    }
+
+    .withinsearchpanel {
+        padding: 5px;
+        margin: 0;
+    }
+
+    #divTenderInfo {
+        padding: 5px;
+    }
+</style>

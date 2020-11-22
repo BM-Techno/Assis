@@ -1,0 +1,145 @@
+﻿<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">FAQ - TenderAssist247</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-1">
+
+        </div>
+        <div class="col-md-10">
+            <div id="categories">
+                <h1 class="pagetitle">
+                    Frequently asked questions
+                </h1>
+                <div>
+                    <button class="accordion">No obligation discussion/meeting</button>
+                    <div class="panel">
+                        <p>TenderAssist247 will explain the Government and Public Sector tendering process and discuss how we can help you to bid for contracts.</p>
+                    </div>
+                    <button class="accordion">Tender preparation</button>
+                    <div class="panel">
+                        <p>We will assess your ‘business ready’ status and set up your Bid Library.</p>
+                    </div>
+                    <button class="accordion">Daily monitoring service</button>
+                    <div class="panel">
+                        <p>TenderAssist247 will source relevant tender opportunities and provide advice to help you make your initial bid decision.</p>
+                    </div>
+                    <button class="accordion">Accreditation</button>
+                    <div class="panel">
+                        <p>
+                            TenderAssist247 can help you attain accreditation (e.g. Construction,Safe Contractor, Manufacturer,Service Provider Suppliers etc)
+
+                            We can also advise on achieving Lowest Bid process.
+                        </p>
+                    </div>
+                    <button class="accordion">Pre-qualification questionnaires/invitations to tender</button>
+                    <div class="panel">
+                        <p>
+                            TenderAssist247 will complete and submit all required tender documentation
+                            Alternatively, we can provide a “Tender Check” service on documents that you have already completed
+                        </p>
+                    </div>
+                    <button class="accordion">Presentation interviews</button>
+                    <div class="panel">
+                        <p>
+                            TenderAssist247 can help you to create and deliver succinct presentations
+
+                            Alternatively, we can critique your prepared presentations prior to interview
+                        </p>
+                    </div>
+                    <button class="accordion">Training</button>
+                    <div class="panel">
+                        <p>If you have your own in-house tendering capability, we can review your processes and provide guidance</p>
+                    </div>
+                    <button class="accordion">Procurement workshop</button>
+                    <div class="panel">
+                        <p>We produce bespoke Procurement Workshops to help businesses understand the Public Sector tendering process.</p>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="col-md-1">
+
+        </div>
+    </div>
+
+
+
+</div>
+
+<style>
+    .accordion {
+        background-color: #eee;
+        color: #444;
+        cursor: pointer;
+        padding: 18px;
+        width: 100%;
+        border: none;
+        text-align: left;
+        outline: none;
+        font-size: 18px;
+        transition: 0.4s;
+    }
+
+        .accordion.active, .accordion:hover {
+            background-color: #ccc;
+        }
+
+        .accordion:after {
+            content: '\002B';
+            color: #777;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+
+        .accordion.active:after {
+            content: "\2212";
+        }
+
+    .panel {
+        padding: 2px 18px;
+        background-color: white;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.2s ease-out;
+        margin-bottom: 0px !important;
+        font-size: 15px;
+    }
+</style>
+<script>
+    var acc = document.getElementsByClassName("accordion");
+    var i;
+
+    for (i = 0; i < acc.length; i++) {
+        acc[i].addEventListener("click", function () {
+            this.classList.toggle("active");
+            var panel = this.nextElementSibling;
+            if (panel.style.maxHeight) {
+                panel.style.maxHeight = null;
+            } else {
+                panel.style.maxHeight = panel.scrollHeight + "px";
+            }
+        });
+    }
+</script>

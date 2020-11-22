@@ -1,0 +1,359 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+
+@Scripts.Render("~/bundles/pay-online-script")
+
+<style>
+    .payonlinetext {
+        font-size: 15px;
+        height: 34px;
+        padding: 6px 12px;
+        color: #555555;
+        vertical-align: middle;
+        border: 1px solid #cccccc;
+        margin-top: -5px;
+    }
+</style>
+
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="https://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="https://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">
+                                Pay Online
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col text-left col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+        </div>
+        <div class="col text-left col-xs-10 col-sm-10 col-md-10 col-lg-10">
+            <div id="our-team">
+                <div class="card">
+                    <div class="pagetitle " id="errmsg">
+                    </div>
+                    <div class="row">
+                        <div class="col col-md-4">
+                            <form id="SubmitInquiry" method="post" action="@Url.Action("SubmitInquiryDetail", "InquiryForms")">
+                                <div class="box box-success box-solid">
+                                    <div class="box-header">
+                                        <span class="box-title">
+                                            <i class="fa fa-rupee"></i>
+                                            <label id="payNowTitle">Pay Now</label>
+                                        </span>
+                                    </div>
+                                    <div class="grayline"></div>
+                                    <div class="box-body">
+                                        <div>
+                                            @Html.Hidden("BrowserLink", Request.Url.AbsoluteUri)
+                                            @Html.Hidden("FormType", Model.FormType)
+                                            @Html.Hidden("InquiryTypeName", Model.FormTitle)
+                                            @Html.Hidden("InquiryTypeID", Model.Subscribetype)
+                                            @Html.Hidden("TenderID", 0)
+                                            @Html.ValidationSummary(true)
+
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                    @Html.TextBox("txtName", "", new { @class = "form-control textbox", @placeholder = "Your Name" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-envelope-o"></i></span>
+                                                    @Html.TextBox("txtEmailId", "", new { @class = "form-control textbox", @placeholder = "Email Id" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="input-group">
+                                                    <span class="input-group-addon"><i class="fa fa-phone"></i></span>
+                                                    @Html.TextBox("txtMobileNo", "", new { @class = "form-control textbox", @maxlength = "13", @placeholder = "Phone No" })
+                                                </div>
+                                            </div>
+                                            @*<div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-rupee"></i></span>
+                                                        @Html.TextBox("txtAmount", "", new { @class = "form-control textbox", @placeholder = "Tender Amount" })
+                                                    </div>
+                                                </div>*@
+                                        </div>
+                                    </div>
+                                    <div class="box-footer">
+                                        <div class="text-center">
+                                            <img src="~/Images/payment.png" />
+                                        </div>
+                                        <div class="row mar5">
+                                            <div class="col-md-12">
+                                                <button class="btn btn-success btn-block btn-lg" type="button" id="btnPayNow">
+                                                    <i class="fa fa-envelope"></i>
+                                                    Pay Now
+                                                </button>
+                                                <div id="loader" style="display:none;">
+                                                    @Html.Partial("partialSpinnerLoadingView")
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col col-md-8">
+                            <div style="padding:5px;">
+                                <h3 class="pagetitle">
+                                    Pay Now Securely with ATOM TECHNOLOGIES
+                                    @*Selected Plan : <label id="selectedPlanTitle">Pay Now</label>*@
+                                </h3>
+                                <div class="lineseperatorOrange"></div>
+                                <div>
+                                    <h4>
+                                        Thanks to ATOM TECHNOLOGIES, India's largest online payment gateway, it's safe, easy, and fast to make payments online.
+                                    </h4>
+                                    <br />
+                                    <p>
+                                        Now Pay for TenderAssist247.com Subscription in three easy steps 1-2-3
+                                    </p>
+                                    <ol>
+                                        <li>
+                                            Provide your basic information for subscription and proceed to the Payment page.
+                                            Choose Credit Card, Net Banking, Debit Cards or Mobile Payments for your Online Payment Options.
+                                        </li>
+                                        <li>
+                                            Then you will be redirected to the ATOM website to fill in your payment details.
+                                            From there, we'll take you to your payment provider to request payment for your Tender Subscription.
+                                        </li>
+                                        <li>
+                                            As soon as your payment request is processed, you'll be returned to the TenderAssist247.com Thank You page.
+                                            While we wait for confirmation from your payment provider and ATOM, your order will be marked as Pending.
+                                            Once we receive your payment from ATOM, we'll activate your Tender Information Services and give you Service Activation Call.
+                                        </li>
+                                    </ol>
+                                    <h4>
+                                        <b>
+                                            We accept all Credit Card,Net Banking, Debit Cards, and Mobile payments!
+                                        </b>
+                                    </h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form id="frmPaymentOnline" method="post" action="@Url.Action("PostPaymentDetail", "Home")">
+                    @Html.Hidden("PayFrom", Model.FormType)
+                    @Html.Hidden("PayContactName", "")
+                    @Html.Hidden("PayMobNo", "")
+                    @Html.Hidden("PayEmail", "")
+                    @Html.Hidden("PayUserId", "")
+                    @Html.Hidden("PayCharges", "")
+                    @Html.Hidden("PayPlanId", "0")
+                    <div id="divPaymentPanel">
+                        <div class="text-success mar5 pagetitle" id="paymentmessage">
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="card text-center">
+                                    <div class="box box-solid box-info text-left">
+                                        <div class="box-header">
+                                            <span class="box-title text-center text-bold" style="width:100%;">
+                                                <i class="fa fa-info-circle"></i>
+                                                <label id="planTitle_1">Any 1 State</label>
+                                            </span>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <b>Validity</b>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="text-bold text-green">1 Year</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <b>Services</b>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="text-bold text-blue">E mail + Web Access</span>
+
+                                                </div>
+                                            </div>
+                                            <div class="lineseperatorOrange"></div>
+                                            <div style="font-size:25px; margin-top:10px;" class="text-center text-info">
+                                                <i class="fa fa-rupee margin-bottom"></i>
+                                                @Html.TextBox("txtAmount_1", "7000", new { @class = "payonlinetext textbox", @placeholder = "Tender Amount" })
+                                            </div>
+                                        </div>
+                                        <div class="box-footer text-center">
+                                            <a class="btn btn-info btn-block btn-lg pointercursor" onclick="PlanSelection(1);">
+                                                <i class="fa fa-check-circle planSelected" title="Selected" id="selectedPlan_1"> </i>
+                                                Pay Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-center">
+                                    <div class="box box-solid box-warning text-left">
+                                        <div class="box-header">
+                                            <span class="box-title text-center text-bold" style="width:100%;">
+                                                <i class="fa fa-info-circle"></i>
+                                                <label id="planTitle_2">Multi State</label>
+                                                <i class="fa fa-star pull-right" title="MOST POPULAR"> </i>
+                                            </span>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <b>Validity</b>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="text-bold text-green">1 Year</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <b>Services</b>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="text-bold text-blue">E mail + Web Access</span>
+
+                                                </div>
+                                            </div>
+                                            <div class="lineseperatorOrange"></div>
+                                            <div style="font-size:25px; margin-top:10px;" class="text-center text-warning">
+                                                <i class="fa fa-rupee margin-bottom"></i>
+                                                @Html.TextBox("txtAmount_2", "10000", new { @class = "payonlinetext textbox", @placeholder = "Tender Amount" })
+
+                                            </div>
+                                        </div>
+                                        <div class="box-footer text-center">
+                                            <a class="btn btn-warning btn-block pointercursor" onclick="PlanSelection(2);">
+                                                <i class="fa fa-check-circle planSelected" title="Selected" id="selectedPlan_2"> </i>
+                                                Pay Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-center">
+                                    <div class="box box-solid box-primary text-left">
+                                        <div class="box-header">
+                                            <span class="box-title text-center text-bold" style="width:100%;">
+                                                <i class="fa fa-info-circle"></i>
+                                                <label id="planTitle_3">Pan India</label>
+
+                                            </span>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <b>Validity</b>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="text-bold text-green">1 Year</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <b>Services</b>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="text-bold text-blue">E mail + Web Access</span>
+
+                                                </div>
+                                            </div>
+                                            <div class="lineseperatorOrange"></div>
+                                            <div style="font-size:25px; margin-top:10px;" class="text-center text-primary">
+                                                <i class="fa fa-rupee margin-bottom"></i>
+                                                @Html.TextBox("txtAmount_3", "15000", new { @class = "payonlinetext textbox", @placeholder = "Tender Amount" })
+
+                                            </div>
+                                        </div>
+                                        <div class="box-footer text-center">
+                                            <a class="btn btn-primary btn-block pointercursor" onclick="PlanSelection(3);">
+                                                <i class="fa fa-check-circle planSelected" title="Selected" id="selectedPlan_3"> </i>
+                                                Pay Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="card text-center">
+                                    <div class="box box-solid box-danger text-left">
+                                        <div class="box-header">
+                                            <span class="box-title text-center text-bold" style="width:100%;">
+                                                <i class="fa fa-info-circle"></i>
+                                                <label id="planTitle_4">International</label>
+                                            </span>
+                                        </div>
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <b>Validity</b>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="text-bold text-green">1 Year</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <b>Services</b>
+                                                </div>
+                                                <div class="col-md-8">
+                                                    <span class="text-bold text-blue">E mail + Web Access</span>
+
+                                                </div>
+                                            </div>
+                                            <div class="lineseperatorOrange"></div>
+                                            <div style="font-size:25px; margin-top:10px;" class="text-center text-danger">
+                                                <i class="fa fa-rupee margin-bottom"></i>
+                                                @Html.TextBox("txtAmount_4", "45000", new { @class = "payonlinetext textbox", @placeholder = "Tender Amount" })
+
+                                            </div>
+                                        </div>
+                                        <div class="box-footer text-center">
+                                            <a class="btn btn-danger btn-block pointercursor" onclick="PlanSelection(4);">
+                                                <i class="fa fa-check-circle planSelected" title="Selected" id="selectedPlan_4"> </i>
+                                                Pay Now
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="paymentloader" style="display:none;">
+                            @Html.Partial("partialSpinnerLoadingView")
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col text-left col-xs-1 col-sm-1 col-md-1 col-lg-1">
+
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $('.planSelected').hide();
+        $('#divPaymentPanel').hide();
+    });
+</script>

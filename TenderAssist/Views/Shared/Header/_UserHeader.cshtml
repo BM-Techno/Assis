@@ -1,0 +1,81 @@
+﻿@using TenderAssist.Controllers;
+
+@{
+    UserController us = new UserController();
+    var userName = us.GetUserName();
+    var userLastLoginDate = us.GetUserLastLogin();
+}
+
+<header>
+    @*id="header" class="header"*@
+    <div class="container_full">
+        <div class="Top-header">
+            <div class="container-Top-header row">
+                <div class="col-md-4">
+                    <div class="contactno">
+                        <i class="fa fa-phone"></i>
+                        <span>Sales: +91-97247 00247</span>
+                    </div>
+                    <div class="contactno">
+                        <i class="fa fa-headphones"></i>
+                        <span>Support: +91-96870 00247</span>
+                    </div>
+                </div>
+                <div class="col-sm-8">
+                    <div class="pull-right">
+                        <span class="rightdata">
+                            <label>Welcome,  </label>
+                            <label>@userName</label>
+                            <label>|</label>
+                            <label>Last Login  </label>
+                            <label>@userLastLoginDate</label>
+                            <label>|</label>
+                            <a class="loginmodel ripple hvr-bounce-to-bottom " href="@Url.Action("LogOff", "User")">
+                                <span class="fa fa-sign-out "></span>
+                                Log out
+                            </a>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="Bottom-header">
+            <div class="container-Bottom-header row">
+                <nav class="navbar navbar-static-top" role="navigation">
+                    @Html.Partial("Header/_UserMenuLinks")
+                </nav>
+
+            </div>
+        </div>
+    </div>
+
+    @*<div id="mainHeader">
+            <div class="wrapper">
+                <div class="container">
+                    <div class="row menulink">
+                        <div class="col-md-12">
+                            <div class="topheader">
+                                <span class="rightdata">
+                                    <label>Welcome,  </label>
+                                    <label>@userName</label>
+                                    <label>|</label>
+                                    <label>Last Login  </label>
+                                    <label>@userLastLoginDate</label>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="mobisize">
+                            <div class="menu_main">
+                                <nav class="navbar navbar-static-top" role="navigation">
+                                    @Html.Partial("Header/_UserMenuLinks")
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+</header>
+

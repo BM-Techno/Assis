@@ -1,0 +1,35 @@
+﻿@{
+    ViewBag.Title = ViewBag.ErrorTitle;
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+}
+
+<div class="container_fullMiddle">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="well wellWhiteBg well-sm">
+                <h1 class="pagetitle">
+                    <i class="fa fa-ban"></i>
+                    Access Denied
+                </h1>
+                <h2 class="pagedescription">
+                    <i class="fa fa-lock text-red"></i>
+                    Oops! You dont have permission to access this service.
+                </h2>
+                <div class="grayline"></div>
+                <div class="error-content">
+                    <h4>@ViewBag.ErrorTitle</h4>
+                    <br />
+                    <p>
+                        <button type="button" class="margin-top btn btn-danger">
+                            <i class="fa fa-hand-paper-o"></i>
+                            Request for Permissions
+                        </button>
+                    </p>
+                    <br />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+

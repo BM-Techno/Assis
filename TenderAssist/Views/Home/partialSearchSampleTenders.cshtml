@@ -1,0 +1,337 @@
+﻿@using System.Configuration
+@using System.Globalization
+@using TenderAssist.Controllers
+@using TenderAssist.Models
+@model TenderAssist.ViewModel.TenderDetail
+@{
+    var selectedOwnership = Model.SelectedOwnership;
+    var selectedOwnershipNotIn = Model.SelectedOwnershipNotIn;
+
+    var selectedSector = Model.SelectedSector;
+    var selectedSectorNotIn = Model.SelectedSectorNotIn;
+
+    var selectedAgency = Model.SelectedAgency;
+    var selectedAgencyNotIn = Model.SelectedAgencyNotIn;
+
+    var selectedIndustrySubIndustry = Model.SelectedIndustrySubIndustry;
+    var selectedIndustrySubIndustryNotIn = Model.SelectedIndustrySubIndustryNotIn;
+
+    var selectedLocation = Model.SelectedLocation;
+    var selectedLocationNotIn = Model.SelectedLocationNotIn;
+
+    var selectedKeyword1 = Model.SelectedKeyword1;
+    var selectedKeyword2 = Model.SelectedKeyword2;
+    var selectedKeyword3 = Model.SelectedKeyword3;
+    var otherKeywords = Model.OtherKeywords;
+    var notUsedKeywords = Model.NotUsedKeywords;
+
+    var documentType = Model.DocumentType;
+    var isIcbNcb = Model.IsIcbNcb;
+
+    var tenderValue = Model.TenderValue;
+    var tenderValueFrom = Model.TenderValueFrom;
+    var tenderValueTo = Model.TenderValueTo;
+    var purpose = Model.Purpose;
+    var TenderYear = Model.TenderYear;
+    var OrderBys = Model.OrderBys;
+    var AscDesc = Model.AscDesc;
+
+    List<string> SelectRefNoList = new List<string>();
+    if (Session["SelectRefNo"] != null)
+    {
+        SelectRefNoList = (List<string>)Session["SelectRefNo"];
+    }
+
+}
+
+
+@{
+    if (Model.AllSearchTenaderInfoWithAllDetail.Any())
+    {
+        <div class="row">
+            <div class="col-md-12">
+                @foreach (var item in Model.AllSearchTenaderInfoWithAllDetail)
+                {
+                    var checkForMailId = "tenderChkForMail_" + item.OurRefNo;
+                    var ttId = "tenderTTNo_" + item.OurRefNo;
+
+                    @Html.Hidden(ttId, item.OurRefNo)
+
+                    var checkuncheckClass = "text-black";
+
+                    if (SelectRefNoList.Contains(item.OurRefNo.ToString()))
+                    {
+                        checkuncheckClass = "text-red";
+                    }
+
+                    <div class="pricing-area price-four searchresult-Data">
+                        <div class="searchresult-DataContent searchresult-DataContentpanel">
+                            <div>
+                                <div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-primary">
+                                            <div class="pull-left">
+                                                <i class="fa fa-check-square-o text-bold tenderChkForMail @checkuncheckClass" id="@checkForMailId" style="cursor: pointer;"
+                                                   onclick="SelectTenderForMail(this);"></i>
+                                            </div>
+                                            &nbsp;&nbsp;&nbsp;
+                                            Ref No : <b>#@Html.Raw(item.OurRefNo.ToString())</b>
+                                            <div class="pull-right">
+                                                <small>
+                                                    @switch (item.TenderStatusReturn)
+                                                    {
+                                                        case 1:
+                                                            <label class="text-warning"><b>(ACTIVE)</b></label>
+                                                            break;
+                                                        case 2:
+                                                            <label class="text-success"><b>(NEW)</b></label>
+                                                            break;
+                                                        case 3:
+                                                            <label class="text-danger"><b>(CLOSED)</b></label>
+                                                            break;
+                                                    }
+                                                </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <b>Due date : </b>@Html.Raw(item.DueDate.ToString("dd MMM, yyyy"))
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <b>Tender Value : </b>
+                                            @{string tenderAmount = item.TenderAmount.ToString() == "0.00" ? "Est. Not Specify" : item.TenderAmount.ToString();}
+                                            @Html.Raw(tenderAmount)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <b>Location : </b>
+                                            @{
+                                                string[] locations = System.Text.RegularExpressions.Regex.Split(item.Location.Trim(), " - ");
+                                                var city = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[0].ToLower());
+                                                var state = new CultureInfo("en-US", false).TextInfo.ToTitleCase(locations[1].ToLower());
+                                                var location = "";
+                                                if (state != "")
+                                                { location = city + " - " + state; }
+                                                else
+                                                { location = city; }
+                                                location = location.Replace(" ", "");
+                                            }
+                                            @Html.Raw(location)
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <b>Sector : </b>
+                                            @{
+                                                var sector = "";
+                                                if (!(item.SectorName == null || item.SectorName.Trim() == ""))
+                                                { sector = new CultureInfo("en-US", false).TextInfo.ToTitleCase(item.SectorName.ToLower()); }
+
+                                                if (sector != "")
+                                                {
+                                                    @Html.Raw(sector)
+                                                }
+                                            }
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12 text-justify text-info">
+                                            @{
+                                                var newactiveDocLink = "";
+                                                var closedLink = "";
+                                                var link = "";
+                                                if (Convert.ToBoolean(Session["IndianGlobal"]))
+                                                {
+                                                    newactiveDocLink = ConfigurationManager.AppSettings["ApplicationUrl"] + "Indian-Tenders/Bid-Tenders-Details/";
+                                                    closedLink = ConfigurationManager.AppSettings["ApplicationUrl"] + "Indian-Tenders/Bid-Tenders-Details/";
+                                                }
+                                                                                                
+                                                if (Convert.ToBoolean(Session["IndianGlobal"]))
+                                                {
+                                                    link = newactiveDocLink + item.DueDate.Year + "/" + item.OurRefNo;
+                                                }
+                                            }
+                                            <a href="@Html.Raw(link)" Target="_blank" class="text-bold text-black">
+                                                <b>
+                                                    @Html.Raw(Highlightsearchtext(item.WorkDesc, Model.DisplayText, 1).ToString())
+                                                </b>
+                                            </a>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <span style="font-weight: bold; font-size: 15px; color: #0a55d5;">
+                                                For Tender Registration,
+                                                <span style="color: #000;">
+                                                    <i class="fa fa-phone"></i>
+                                                    Call :
+                                                </span>@(Session["empContactNo1"].ToString() + " / " + Session["empContactNo2"].ToString())
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                                                }
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <ul class="pagination jobs_pagination">
+                    @PageLinks()
+                </ul>
+            </div>
+        </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="CriteriaInnerSubDetailBox">
+                                                        <div class="NoDataClass"></div>
+                                                    </div>
+                                                }
+
+}
+
+<style type="text/css">
+    .vertical-text {
+        transform: rotate(270deg);
+    }
+
+    input[type=checkbox] {
+        display: block;
+    }
+</style>
+
+
+@helper BuildLinks(int start, int end, string innerContent)
+{
+for (int i = start; i <= end; i++)
+{
+    int pagecnt = i - 1;
+    int newpagecnt = (pagecnt * 10);
+
+    var ids = newpagecnt;
+        <li onclick="Paging(@ids);" id="@ids" class="@(i == (int)ViewBag.CurrentPage ? "page active showdetails" : "page showdetails")">
+            <a href="#">
+                @(innerContent ?? i.ToString(CultureInfo.InvariantCulture))
+            </a>
+        </li>
+}
+}
+@helper PageLinks()
+{
+const int maxPages = 11;
+
+if ((int)ViewBag.TotalPage <= maxPages)
+{
+        @BuildLinks(1, (int)ViewBag.TotalPage, null)
+    return;
+}
+
+int pagesAfter = (int)ViewBag.TotalPage - (int)ViewBag.CurrentPage; // Number of pages after current
+int pagesBefore = (int)ViewBag.CurrentPage - 1; // Number of pages before current
+
+if (pagesAfter <= 4)
+{
+        @BuildLinks(1, 1, null) // Show 1st page
+
+    int pageSubset = (int)ViewBag.TotalPage - maxPages - 1 > 1 ? (int)ViewBag.TotalPage - maxPages - 1 : 2;
+        @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+
+        @BuildLinks((int)ViewBag.TotalPage - maxPages + 3, (int)ViewBag.TotalPage, null) // Show last pages
+
+    return; // Exit
+}
+
+if (pagesBefore <= 4)
+{
+        @BuildLinks(1, maxPages - 2, null) // Show 1st pages
+
+
+    int pageSubset = maxPages + 2 < (int)ViewBag.TotalPage ? maxPages + 2 : (int)ViewBag.TotalPage - 1;
+        @BuildLinks(pageSubset, pageSubset, "...") // Show page subset (...)
+
+        @BuildLinks((int)ViewBag.TotalPage, (int)ViewBag.TotalPage, null) // Show last page
+
+    return; // Exit
+
+}
+
+if (pagesAfter > 4)
+{
+        @BuildLinks(1, 1, null) // Show 1st pages
+
+    int pageSubset1 = (int)ViewBag.CurrentPage - 7 > 1 ? (int)ViewBag.CurrentPage - 7 : 2;
+    int pageSubset2 = (int)ViewBag.CurrentPage + 7 < (int)ViewBag.TotalPage ? (int)ViewBag.CurrentPage + 7 : (int)ViewBag.TotalPage - 1;
+
+        @BuildLinks(pageSubset1, pageSubset1, pageSubset1 == (int)ViewBag.CurrentPage - 4 ? null : "...") // Show 1st page subset (...)
+
+        @BuildLinks((int)ViewBag.CurrentPage - 3, (int)ViewBag.CurrentPage + 3, null) // Show middle pages
+
+    // Show 2nd page subset (...)
+    // only show ... if page is contigous to the previous one.
+    @BuildLinks(pageSubset2, pageSubset2, pageSubset2 == (int)ViewBag.CurrentPage + 4 ? null : "...")
+        @BuildLinks((int)ViewBag.TotalPage, (int)ViewBag.TotalPage, null) // Show last page
+}
+}
+@helper Highlightsearchtext(string strSource, string strStart, int sarchType)
+{
+var common = new CommonController();
+var color = common.Highlightsearchtext(strSource, strStart, sarchType);
+    @Html.Raw(color);
+}
+@helper tenderAmount(string TenderAmount)
+{
+string displayAmount = "0";
+var common = new CommonController();
+if (!(TenderAmount.Trim() == "" || Convert.ToDouble(TenderAmount) == 0))
+{
+    displayAmount = common.AmountToWords(TenderAmount.Trim());
+}
+    <span>@displayAmount</span>
+}
+
+@Html.Hidden("hdnDisplayCurrentPage", Model.DisplayCurrentPage)
+@Html.Hidden("hdnTotalPage", Model.TotalPage)
+@Html.Hidden("hdnPage", Model.Newpagecnt)
+@Html.Hidden("hdnSearchtext", Model.DisplayText)
+@Html.Hidden("hdnSearchType", Model.SearchType)
+@Html.Hidden("hdnAdvanceSearchtext", Model.AdvanceSearchText)
+@Html.Hidden("hdnTotalCount", Session["TotalSampleRecordCount"].ToString())
+@Html.Hidden("hdnTotalLive", Model.TotalLive)
+@Html.Hidden("hdnTotalFresh", Model.TotalFresh)
+@Html.Hidden("hdnTotalClosed", Model.TotalClosed)
+@Html.Hidden("hdnSelectedOwnership", selectedOwnership)
+@Html.Hidden("hdnSelectedOwnershipNotIn", selectedOwnershipNotIn)
+@Html.Hidden("hdnSelectedSector", selectedSector)
+@Html.Hidden("hdnSelectedSectorNotIn", selectedSectorNotIn)
+@Html.Hidden("hdnSelectedAgency", selectedAgency)
+@Html.Hidden("hdnSelectedAgencyNotIn", selectedAgencyNotIn)
+@Html.Hidden("hdnSelectedIndustrySubIndustry", selectedIndustrySubIndustry)
+@Html.Hidden("hdnSelectedIndustrySubIndustryNotIn", selectedIndustrySubIndustryNotIn)
+@Html.Hidden("hdnSelectedLocation", selectedLocation)
+@Html.Hidden("hdnSelectedLocationNotIn", selectedLocationNotIn)
+@Html.Hidden("hdnSelectedKeyword1", selectedKeyword1)
+@Html.Hidden("hdnSelectedKeyword2", selectedKeyword2)
+@Html.Hidden("hdnSelectedKeyword3", selectedKeyword3)
+@Html.Hidden("hdnOtherKeywords", otherKeywords)
+@Html.Hidden("hdnNotUsedKeywords", notUsedKeywords)
+@Html.Hidden("hdnIsICBNcb", isIcbNcb)
+@Html.Hidden("hdnDocumentType", documentType)
+@Html.Hidden("hdnTenderValue", tenderValue)
+@Html.Hidden("hdnTenderValueFrom", tenderValueFrom)
+@Html.Hidden("hdnTenderValueTo", tenderValueTo)
+@Html.Hidden("hdnTenderStatusFlag", Model.TenderStatusFlag)
+@Html.Hidden("hdnTenderYear", TenderYear)
+@Html.Hidden("hdnOrderBys", OrderBys)
+@Html.Hidden("hdnAscDesc", AscDesc)
+

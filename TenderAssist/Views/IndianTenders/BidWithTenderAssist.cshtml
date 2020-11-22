@@ -1,0 +1,63 @@
+﻿@model  TenderAssist.ViewModel.TenderDetail
+
+<div class="container_fullMiddle">
+    <div class="breadcrumbgrid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                    <div class="CurrentDiv">
+                        <a href="/" itemprop="url" style="text-decoration: none;">
+                            <span itemprop="title">Home</span>
+                        </a>
+                    </div>
+                    <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                        <div class="CurrentDiv">
+                            <span class="seperator">›</span>
+                        </div>
+                        <div class="CurrentDiv">
+                            <span itemprop="title" class="text-bold">@Model.FormTitle</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="">
+        <div class="col-md-12">
+            <div class="row">                
+                <div class="col-md-12">
+                    <h1 class="pagetitle">
+                        @Model.FormTitle - #@Model.DownloadTenderRefNo
+                    </h1>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.Partial("_partialInquiryForm", Model)
+                        </div>
+                        <div class="col-md-9">
+                            <h3 class="subtitle">
+                                Why TenderAssist 247?
+                            </h3>
+                            <p class="pagedescription">
+                               Bid for @ViewBag.TenderWorkDesc
+                            </p>                            
+                            <div class="pagedescription">
+                                <ul>
+                                    <li>Get Tenders before others do</li>
+                                    <li>Never miss a Tender</li>
+                                    <li>No more Junk Tenders</li>
+                                    <li>Bid decision made Quick & Easy</li>
+                                    <li>Get Global Tenders' Information</li>
+                                    <li>Get all types of Tender Documents</li>
+                                </ul>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+ 

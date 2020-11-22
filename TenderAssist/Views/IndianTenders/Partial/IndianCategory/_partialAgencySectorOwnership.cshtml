@@ -1,0 +1,119 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.Controllers;
+@using TenderAssist.CommonHelper;
+@using System.Configuration;
+@{
+    var ownershipList = Model.AllAgencySectorOwnershipDetail.GroupBy(x => x.OwnershipId, (key, group) => group.First()).OrderBy(x => x.OwnershipName).ToList();
+
+    foreach (var item in ownershipList)
+    {
+        var sectors = Model.AllAgencySectorOwnershipDetail.GroupBy(x => x.SectorId)
+                   .Select(grp => grp.First())
+                   .ToList();
+        var ownershipurl = ConfigurationManager.AppSettings["TenderByOwnershipUrl"].ToString() + Utility.TenderWordNameList.OwnershipWord + item.OwnershipName.Replace(" ", "-").ToLower().Trim().ToString();
+        <button class="accordion" onclick="LoadData(this);">
+            <span class="morelink">»</span>
+            @if (!string.IsNullOrEmpty(Model.SearchText))
+            {
+                <a href="@ownershipurl" title='@item.OwnershipName Tenders'>
+                    @Highlightsearchtext(item.OwnershipName, Model.SearchText, 1)
+
+                </a>
+            }
+            else
+            {
+                <a href="@ownershipurl" title='@item.OwnershipName Tenders'> @item.OwnershipName Tenders</a>
+            }
+
+        </button>
+        <div class="panel">
+            @foreach (var sector in sectors)
+            {
+                var sectorurl = ConfigurationManager.AppSettings["TenderBySectorUrl"].ToString() + Utility.TenderWordNameList.SectorWord + sector.SectorName.Replace(" ", "-").ToLower().Trim().ToString();
+                var datacount = 0;
+                var agencies = Model.AllAgencySectorOwnershipDetail.Where(x => x.OwnershipId == item.OwnershipId && x.SectorId == sector.SectorId).ToList();
+                <button class="accordion2" onclick="LoadData(this);">
+                    <span class="morelink">»</span>
+                    @if (!string.IsNullOrEmpty(Model.SearchText))
+                    {
+                        <a href="@sectorurl" title='@sector.SectorName Tenders'>
+                            @Highlightsearchtext(sector.SectorName, Model.SearchText, 1)
+
+                        </a>
+                    }
+                    else
+                    {
+                        <a href="@sectorurl" title='@sector.SectorName Tenders'> @sector.SectorName Tenders</a>
+                    }
+                </button>
+                <div class="panel">
+                    @{
+                        if (agencies.Any())
+                        {
+                            foreach (var agency in agencies)
+                            {
+                                var agencyurl = ConfigurationManager.AppSettings["TenderByAgencyUrl"].ToString() + Utility.TenderWordNameList.AgencyWord + agency.AgencyName.Replace(" ", "-").ToLower().Trim().ToString();
+
+                                if (datacount == 0)
+                                {
+                                    @Html.Raw("<div class=\"row\">")
+                                    @Html.Raw("<div class=\"col-md-6\">")
+                                }
+                                else
+                                {
+                                    @Html.Raw("<div class=\"col-md-6\">")
+                                }
+                                @Html.Raw(" <span>»</span>")
+
+                                if (!string.IsNullOrEmpty(Model.SearchText))
+                                {
+                                    <a href="@agencyurl" title='@agency.AgencyName Tenders'>
+                                        @Highlightsearchtext(agency.AgencyName, Model.SearchText, 1)
+                                    </a>
+                                }
+                                else
+                                {
+                                    <a href="@agencyurl" title='@agency.AgencyName Tenders'> @agency.AgencyName Tenders</a>
+                                }
+
+                                @Html.Raw("</div>")
+
+                                if (datacount != 0)
+                                {   @Html.Raw("</div>") datacount = 0;
+                                }
+                                else
+                                {
+                                    datacount++;
+                                }
+                            }
+                            if (datacount != 0)
+                            {   @Html.Raw("</div>") datacount = 0;
+                            }
+                        }
+                        else
+                        {
+                            <div class="alert alert-danger alert-dismissible">
+                                <strong>Sorry!</strong> No Agency Found.
+                            </div>
+                        }
+                    }
+                  
+                </div>
+            }
+        </div>
+
+
+
+       
+        
+
+    }
+}
+
+
+@helper Highlightsearchtext(string strSource, string strStart, int sarchType)
+{
+var common = new CommonController();
+var displayText = common.Highlightsearchtext(strSource, strStart, sarchType);
+    @Html.Raw(displayText + " Tenders")
+}

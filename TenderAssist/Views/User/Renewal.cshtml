@@ -1,0 +1,227 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@{
+    Layout = "~/Views/Shared/_UserLayout.cshtml";
+    ViewBag.Title = "TenderAssist247 :: Renewal";
+}
+<style>
+    textarea {
+        resize: none;
+    }
+</style>
+<script type="text/javascript">
+    function IsValidEmailID(email) {
+        var filter = /^([\w-\.]+)@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
+        return filter.test(email);
+    }
+
+    $(document).ready(function () {
+
+        //LoadCaptha();
+
+        //$("#btnUpdateRenewalForm").click(function () {
+        //    submitData();
+        //});
+        //$("#btnReloadCaptcha").click(function () {
+        //    LoadCaptha();
+        //});
+        //$('.form-control').keydown(function (e) {
+        //    if (e.keyCode == 13) {
+        //        submitData();
+        //    }
+        //});
+
+        //jQuery.fn.checkNumericOnly = function () {
+        //    return this.each(function () {
+        //        $(this).keydown(function (e) {
+        //            var key = e.charCode || e.keyCode || 0;
+        //            // allow backspace, tab, delete, arrows, dot, numbers and keypad numbers ONLY
+        //            return (
+        //                key == 8 ||
+        //                    key == 9 ||
+        //                    key == 46 ||
+        //                    key == 110 ||
+        //                    (key >= 37 && key <= 40) ||
+        //                    (key >= 48 && key <= 57) ||
+        //                    (key >= 96 && key <= 105));
+        //        });
+        //    });
+        //};
+        //$("#MobNo").checkNumericOnly();
+    });
+
+    function submitData() {
+        if ($('#IsActive').val == true) {
+            return false;
+        }
+
+        $("#errorMsg").html('');
+        var isValid = true;
+        $('#divError').hide();
+
+        var myform = $('#submitRenewalInfoData');
+
+        if ($("#CompName").val().trim() == '') {
+            isValid = false;
+            $("#spnCompName").html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divCompName").addClass("has-error");
+        } else {
+            $("#spnCompName").html('');
+            $("#divCompName").removeClass("has-error");
+        }
+
+        if ($("#Name").val().trim() == '') {
+            isValid = false;
+            $("#spnName").html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divName").addClass("has-error");
+        } else {
+            $("#spnName").html('');
+            $("#divName").removeClass("has-error");
+        }
+
+        if ($("#MobNo").val().trim() == '') {
+            isValid = false;
+            $("#spnMobNo").html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divMobNo").addClass("has-error");
+        } else {
+            $("#spnMobNo").html('');
+            $("#divMobNo").removeClass("has-error");
+        }
+
+        if ($("#EmailID").val().trim() == '') {
+            isValid = false;
+            $("#spnEmail").html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divEmail").addClass("has-error");
+        } else if (!IsValidEmailID($("#EmailID").val())) {
+            isValid = false;
+            $("#spnEmail").html('<i class="fa fa-times-circle-o"></i> Invalid Email.');
+            $("#divEmail").addClass("has-error");
+        } else {
+            $("#spnEmail").html('');
+            $("#divEmail").removeClass("has-error");
+        }
+
+        if ($("#InterestedTenders").val().trim() == '') {
+            isValid = false;
+            $("#spnInterestedTenders").html('<i class="fa fa-times-circle-o"></i> Required.');
+            $("#divInterestedTenders").addClass("has-error");
+        } else {
+            $("#spnInterestedTenders").html('');
+            $("#divInterestedTenders").removeClass("has-error");
+        }
+
+        if (!isValid) {
+            LoadCaptha();
+            return false;
+        }
+
+        ShowHideControl(1, 'btnUpdateRenewalFormLoading');
+        ShowHideControl(2, 'btnUpdateRenewalForm');
+
+        $.ajax({
+            cache: false,
+            async: true,
+            type: "POST",
+            url: myform.attr('action'),
+            data: myform.serialize(),
+            success: function (data) {
+                var msg = data.msg;
+
+                if (msg == "ok") {
+                    var usermail = data.usermail;
+
+                    $('#divError').show();
+                    $("#divError").removeClass("has-error").addClass("has-success");
+                    $('#errorMsg').html('<i class="fa fa-check"></i> Congratulations! Your Renewal information has beed sent to the Administration successfully.' +
+                        '<br/> Your Renewal process will be completed within 24 hours..' +
+                        '<br/> You have been received our mail at Email Address ' + usermail);
+
+                } else if (msg == "error") {
+                    $('#divError').show();
+                    $("#divError").removeClass("has-success").addClass("has-error");
+                    $('#errorMsg').html('<i class="fa fa-times-circle-o"></i> Your Renewal information could not submitted, Please try again.');
+                }
+                else if (msg == "captchaerror") {
+                    $('#divError').show();
+                    $("#divError").removeClass("has-success").addClass("has-error");
+                    $('#errorMsg').html('<i class="fa fa-times-circle-o"></i> Invalid captcha. Please try again.');
+
+                    ShowHideControl(2, 'btnInquirySearchLoading');
+                    ShowHideControl(1, 'btnInquiryData');
+                }
+
+                LoadCaptha();
+                ShowHideControl(2, 'btnUpdateRenewalFormLoading');
+                ShowHideControl(1, 'btnUpdateRenewalForm');
+            }
+        });
+        return true;
+    }
+
+
+</script>
+
+<div class="container_fullMiddle">
+    <div class="row">
+        <div class="col-md-12 ">
+            <div class="well wellWhiteBg well-sm">
+                <div class="breadcrumbgrid">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="breadcrumb" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                <div class="CurrentDiv">
+                                    <a href="@Url.Action("MyDashboard", "User")" itemprop="url" style="text-decoration: none;">
+                                        <span itemprop="title">Dashboard</span>
+                                    </a>
+                                </div>
+                                <div itemprop="child" itemscope="" itemtype="http://data-vocabulary.org/Breadcrumb">
+                                    <div class="CurrentDiv">
+                                        <span class="seperator">»</span>
+                                    </div>
+                                    <div class="CurrentDiv">
+                                        <span itemprop="title" class="text-bold">Renewal</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="pagetitle">
+                            Renewal
+                            <small>Upgrade your account</small>
+                        </h1>
+                        <div class="row">
+                            <div class="col-md-3">
+                                @Html.Partial("partialUserSideMenu", Model)
+                            </div>
+                            <div class="col-md-9">
+
+                                @if (Model.LoginUserDetails == null)
+                                {
+                                    <div class="box">
+                                        <div class="box-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="pagination">
+                                                        <span class="awards_detai2"><b>No Information available</b></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                                else
+                                {
+                                    @Html.Partial("_partialInquiryForm", Model)
+                                }
+
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

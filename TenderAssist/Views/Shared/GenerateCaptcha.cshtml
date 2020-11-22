@@ -1,0 +1,23 @@
+﻿@using TenderAssist.CommonHelper
+    @{
+        var dynamicCaptchaId = "Captcha_Code";
+        var captchaImageId = "img_" + dynamicCaptchaId;
+        var captchaButtomId = "btn_" + dynamicCaptchaId;
+        var captchaHiddenId = "hdn_" + dynamicCaptchaId;
+
+        var code = Utility.GetRandomText();
+        Session["CaptchaCode"] = code;
+    }
+
+    <div class="filtercaptcha">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="newcaptcha data-float-left" id="@captchaImageId">@code</span>
+                @Html.Hidden(@captchaHiddenId, code)
+                @Html.TextBox("txtCaptcha", "", new { @class = "textbox txtBox data-float-left form-control", @style = "width: 140px !important;", @placeholder = "Varification Code" })
+                <button class="btn marLR5 btn-primary btn-sm ReloadCaptchaGo data-float-right" type="button" id="btnReloadCaptcha" title="Refresh Code">
+                    <i class="fa fa-undo"></i>
+                </button>
+            </div>
+        </div>
+    </div>

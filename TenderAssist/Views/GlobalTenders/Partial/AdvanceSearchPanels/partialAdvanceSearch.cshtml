@@ -1,0 +1,81 @@
+﻿@using System.Globalization
+@using TenderAssist.Controllers
+@model TenderAssist.ViewModel.TenderDetail
+
+
+
+<div class="advancesearch-area price-four searchresult-Data">
+    <div class="advancesearchresult-DataHeader">
+        <h3>
+            <i class="fa fa-filter text-centericon"></i>
+            Advance Filter
+            <div class="pull-right mobileview" id="div_ShowHideAdvSearchPanel">
+                <i class="fa fa-plus-circle" id="ShowHideAdvSearchPanel"></i>
+            </div>
+        </h3>
+    </div>
+    <div class="searchresult-DataContent searchresult-DataContentpanel" id="AdvanceFilterSearch_form">
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialKeywords.cshtml")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialCountry.cshtml")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialAgency.cshtml")
+            </div>
+        </div>
+        @*<div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialCountryRegion.cshtml")
+            </div>
+        </div>*@
+        <div class="grayline"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    @Html.TextBox("txtadvSearchRefNo", "", new { @class = "form-control", @maxlength = "12", @placeholder = "Reference No" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialTenderType.cshtml")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialTenderStatus.cshtml")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialSubmissionDate.cshtml")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                @Html.Partial("~/Views/GlobalTenders/Partial/AdvanceSearchPanels/_partialOpeningDate.cshtml")
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-warning" type="button" id="btnadvancesearch" onclick="AdvanceSearchTenderList_Global();">
+                    <i class="fa fa-filter"></i>&nbsp; Filter Search
+                </button>
+                <button class="btn btn-danger" type="button" id="advcClearSearchbtn">
+                    <i class="fa fa-undo"></i>&nbsp; Reset
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@Scripts.Render("~/bundles/Advance-Search-datepicker-script")
+@Scripts.Render("~/bundles/advancesearch-js")

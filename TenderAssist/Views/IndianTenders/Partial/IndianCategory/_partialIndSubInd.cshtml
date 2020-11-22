@@ -1,0 +1,81 @@
+﻿@model TenderAssist.ViewModel.TenderDetail
+@using TenderAssist.Controllers;
+@using TenderAssist.CommonHelper;
+@using System.Configuration;
+@{
+    var industryList = Model.AllIndustrySubIndustryDetail.GroupBy(x => x.IndustryId, (key, group) => group.First()).OrderBy(x => x.IndustryName).ToList();
+
+    foreach (var item in industryList)
+    {
+        var datacount = 0;
+        var industry = Model.AllIndustrySubIndustryDetail.Where(x => x.IndustryId == item.IndustryId).ToList();
+        var indurl = ConfigurationManager.AppSettings["TenderByIndustryUrl"].ToString() + Utility.TenderWordNameList.IndustryWord + item.IndustryName.Replace(" ", "-").ToLower().Trim().ToString();
+        <button class="accordion" onclick="LoadData(this);">
+            <span class="morelink">»</span>
+            @if (!string.IsNullOrEmpty(Model.SearchText))
+            {
+                <a href="@indurl" title='@item.IndustryName Tenders'>
+                    @Highlightsearchtext(item.IndustryName, Model.SearchText, 1)
+
+                </a>
+            }
+            else
+            {
+                <a href="@indurl" title='@item.IndustryName Tenders'> @item.IndustryName Tenders</a>
+            }
+
+        </button>
+        <div class="panel">
+            @foreach (var subInd in industry)
+            {
+                var subindurl = ConfigurationManager.AppSettings["TenderBySubIndustryUrl"].ToString() + Utility.TenderWordNameList.SubIndustryWord +
+                    subInd.SubIndustryName.Replace(" ", "-").ToLower().Trim().ToString();
+
+                if (datacount == 0)
+                {
+                    @Html.Raw("<div class=\"row\">")
+                    @Html.Raw("<div class=\"col-md-6\">")
+                }
+                else
+                {
+                    @Html.Raw("<div class=\"col-md-6\">")
+                }
+                @Html.Raw(" <span>»</span>")
+
+                if (!string.IsNullOrEmpty(Model.SearchText))
+                {
+                    <a href="@subindurl" title='@subInd.SubIndustryName Tenders'>
+                        @Highlightsearchtext(subInd.SubIndustryName, Model.SearchText, 1)
+                    </a>
+                }
+                else
+                {
+                    <a href="@subindurl" title='@subInd.SubIndustryName Tenders'> @subInd.SubIndustryName Tenders</a>
+                }
+
+                @Html.Raw("</div>")
+
+                if (datacount != 0)
+                {   @Html.Raw("</div>") datacount = 0;
+                    }
+                    else
+                    {
+                        datacount++;
+                    }
+                }
+            @if (datacount != 0)
+                {   @Html.Raw("</div>") datacount = 0;
+                }
+
+        </div>
+
+    }
+}
+
+
+@helper Highlightsearchtext(string strSource, string strStart, int sarchType)
+{
+var common = new CommonController();
+var displayText = common.Highlightsearchtext(strSource, strStart, sarchType);
+    @Html.Raw(displayText + " Tenders")
+}

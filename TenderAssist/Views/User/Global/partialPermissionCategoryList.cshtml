@@ -1,0 +1,58 @@
+﻿@model TenderAssist.Models.DBConnection.tabClientPermission
+
+@{
+    var ClientPermissionItem = Model;
+
+    var permissionName = ClientPermissionItem.strPermissionName;
+
+    var keywordDivId = "Keyword_Div_" + ClientPermissionItem.intPermissionId;
+    var countryDivId = "Country_Div_" + ClientPermissionItem.intPermissionId;
+    //var countryRegionDivId = "CountryRegion_Div_" + ClientPermissionItem.intPermissionId;
+}
+
+<div class="box box-primary">
+    <div class="box-header">
+        <span class="box-title">
+            <span class="fa fa-thumb-tack"></span>
+            Permission :: @permissionName
+        </span>
+    </div>
+    <div class="blueline"></div>
+    <div class="box-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div id="@keywordDivId">
+                    @Html.Partial("partialSpinnerLoadingView")
+                </div>
+            </div>
+        </div>        
+        <div class="row">
+            <div class="col-md-12">
+                <div id="@countryDivId">
+                    @Html.Partial("partialSpinnerLoadingView")
+                </div>
+            </div>
+        </div>    
+        @*<div class="row">
+            <div class="col-md-12">
+                <div id="@countryRegionDivId">
+                    @Html.Partial("partialSpinnerLoadingView")
+                </div>
+            </div>
+        </div>*@      
+    </div>
+    @if (Session["PageName"] != null)
+    {
+        if (Session["PageName"].ToString() == "GlobalService")
+        {
+            <div class="box-footer">
+                <span class="input-group-btn">
+                    <a href="/User/Global-Tender/@ClientPermissionItem.intPermissionId" target="_blank" class="btn btn-primary btn-flat pull-right">
+                        <i class="fa fa-search-plus"></i>
+                        View Tenders
+                    </a>
+                </span>
+            </div>
+        }
+    }
+</div>
